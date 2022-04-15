@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:component>
+        <div class="ui-g">
+            <div class="ui-g-12" style="padding: 0 .5em;">
+                <p:menubar styleClass="persoStarMenu">
+
+                    <p:submenu label="Control"
+                               icon="fa fa-gears"
+                    >
+                        <p:menuitem
+                                value=" Login "
+                                icon="fa fa-play"
+                                outcome="#{navigationController.goToRegistration()}"
+                                actionListener="#"
+                        />
+                    </p:submenu>
+                    <f:facet name="options">
+                        <p:outputPanel class="logged-in-username not-selectable">
+                            <p:link rendered="#{!userController.loggedIn()}"  outcome="#{navigationController.goToLogin()}" value="Login"/>
+                            <i class="fa fa-fw fa-user"/>
+                            <h:outputText rendered="#{userController.loggedIn()}" value="#{userController.username()}"/>
+                            <p:commandLink rendered="#{userController.loggedIn()}" value="Log out" action="#{userController.logOut()}"/>
+                        </p:outputPanel>
+                    </f:facet>
+                </p:menubar>
+            </div>
+        </div>
+
+    </ui:component>
+
+</ui:composition>

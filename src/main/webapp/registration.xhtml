@@ -1,0 +1,49 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/layout.xhtml">
+
+    <f:metadata>
+        <f:viewAction action="#{registrationController.init()}" />
+    </f:metadata>
+
+    <ui:define name="content">
+
+            <p:panel id="panelpanel">
+                <h:panelGrid id="regGrid" columns="2">
+
+                    <p:outputLabel value="Tip korisnika"/>
+                    <p:selectOneMenu id="inputAppReason"
+                                     value="#{registrationController.userType}" required="true"
+                                     styleClass="full-width val-static">
+                        <p:ajax event="change" update="centralForm" process="@this"/>
+                        <f:selectItems value="#{registrationController.allUserTypes}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="UserName"/>
+                    <p:inputText id="userName" value="#{registrationController.client.username}" label="UserName" />
+
+                    <p:outputLabel value="Password"/>
+                    <p:password id="password" value="#{registrationController.client.password}" label="Password"/>
+
+                    <p:outputLabel value="FirstName" rendered="#{registrationController.renderUgostiteljData()}"/>
+                    <p:inputText id="firstName" rendered="#{registrationController.renderUgostiteljData()}" value="#{registrationController.ugostitelj.ime}" label="FirstName"/>
+
+                    <p:outputLabel value="LastName" rendered="#{registrationController.renderUgostiteljData()}"/>
+                    <p:inputText id="lastName" rendered="#{registrationController.renderUgostiteljData()}" value="#{registrationController.ugostitelj.prezime}"/>
+
+                    <p:outputLabel value="Email"/>
+                    <p:inputText id="email" value="#{registrationController.client.email}"/>
+
+                    <p:outputLabel value=""/>
+                    <p:commandButton action="#{registrationController.register()}" value="Register" update="regGrid"/>
+
+                </h:panelGrid>
+            </p:panel>
+            <p><h:link value="Login page" outcome="login" /></p>
+
+
+    </ui:define>
+</ui:composition>

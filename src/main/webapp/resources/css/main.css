@@ -1,0 +1,26 @@
+.wh-no-border {
+    border: none !important;
+}
+
+.wh-full-width-container {
+    width: 100%;
+}
+
+.wh-center {
+    text-align: center;
+}
+
+.wh-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+.wh-center-vertically {
+    vertical-align: middle;
+}
+
+.wh-right-logo {
+    width: 5em;
+    height: 5em;
+    float: right;
+}

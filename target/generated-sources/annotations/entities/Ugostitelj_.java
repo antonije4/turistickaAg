@@ -9,6 +9,8 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class Ugostitelj_ {
 
 	public static volatile SingularAttribute<Ugostitelj, String> ime;
+	public static volatile SingularAttribute<Ugostitelj, String> prezime;
+	public static volatile SingularAttribute<Ugostitelj, String> jmbg;
 	public static volatile SingularAttribute<Ugostitelj, Long> id;
 
 }

@@ -1,0 +1,30 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/layout.xhtml">
+
+  <f:metadata>
+    <f:viewAction action="#{loginController.init()}" />
+  </f:metadata>
+
+  <ui:define name="content">
+      <div  class="centerDiv" style="width: 400px">
+        <p:panel>
+          <h:panelGrid columns="2" cellpadding="5">
+            <h:outputLabel for="username" value="Username:" />
+            <p:inputText id="username" value="#{loginController.username}" required="true" label="username" />
+
+            <h:outputLabel for="password" value="Password:" />
+            <p:password id="password" value="#{loginController.password}" required="true" label="password" />
+
+            <f:facet name="footer">
+              <p:commandButton value="Login" action="#{loginController.login}"/>
+              <p:link value="Registration" outcome="#{navigationController.goToRegistration()}"/>
+            </f:facet>
+          </h:panelGrid>
+        </p:panel>
+      </div>
+  </ui:define>
+</ui:composition>
