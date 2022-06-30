@@ -1,0 +1,40 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/layout.xhtml">
+
+    <f:metadata>
+        <f:viewAction action="#{ugostiteljOverviewController.init()}" />
+    </f:metadata>
+
+    <ui:define name="content">
+
+        <p:panel id="panelpanel">
+            <p:selectOneRadio id="userType"
+                              value="#{registrationController.userType}">
+                <p:ajax event="change" update="centralForm" process="@this"/>
+                <f:selectItems value="#{registrationController.allUserTypes}"/>
+            </p:selectOneRadio>
+            <h:panelGrid id="ugostiteljGrid" columns="2">
+
+                <p:outputLabel value="UserName"/>
+                <p:inputText disabled="#{ugostiteljOverviewController.inputDisabled()}" id="userName" value="#{ugostiteljOverviewController.ugostitelj.username}" label="Username"/>
+
+                <p:outputLabel value="Password"/>
+                <p:password disabled="#{ugostiteljOverviewController.inputDisabled()}" id="password" value="#{ugostiteljOverviewController.ugostitelj.password}" label="Password"/>
+
+                <p:outputLabel value="Email"/>
+                <p:inputText disabled="#{ugostiteljOverviewController.inputDisabled()}" id="email" value="#{ugostiteljOverviewController.ugostitelj.email}"/>
+
+                <p:commandButton action="#{ugostiteljOverviewController.enableInput()}" value="Edit" update="ugostiteljGrid"/>
+                <p:commandButton action="#{ugostiteljOverviewController.saveChanges()}" value="Save changes" update="ugostiteljGrid"/>
+
+            </h:panelGrid>
+        </p:panel>
+        <p><h:link value="Login page" outcome="login" /></p>
+
+
+    </ui:define>
+</ui:composition>

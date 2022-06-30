@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:remove>
+        <!--
+        PARAMS:
+            - panelTitle - panel header title
+            - advancedPanelTitle - panel header title for advacned search parameters
+            - manager - implement interface SearchManager
+         -->
+    </ui:remove>
+
+    <p:panel header="#{panelTitle ne null ? panelTitle : 'Search parameters'}" style="padding-top: 0.571em">
+
+        <ui:insert name="searchParams"/>
+
+    </p:panel>
+
+    <p:panel id="advancedSearchPanelId" header="#{advancedPanelTitle ne null ? advancedPanelTitle : labels['advancedSearchParams']}" style="padding-top: 0.571em"
+             rendered="#{ util.hasRenderedChildren('centralForm:advancedSearchPanelId') }" toggleable="true" collapsed="true" >
+
+        <ui:insert name="advancedSearchParams"/>
+
+    </p:panel>
+
+    <h:panelGrid columns="2" style="width: 100%;">
+
+        <h:panelGrid columns="5">
+            <p:commandButton value="#{labels['search']}"
+                             update="centralForm" action="#{manager.search()}"
+                             icon="fa fa-fw fa-search" />
+            <p:commandButton value="#{labels['reset']}"
+                             update="centralForm"
+                             action="#{manager.reset()}"
+                             icon="fa fa-fw fa-refresh"
+                             process="@this">
+                <p:resetInput target="centralForm"/>
+            </p:commandButton>
+
+            <p:outputLabel value="Max results" />
+            <p:selectOneMenu id="selectOneMaxResultId"
+                             value="#{manager.searchParams.maxResults}"
+                             style="min-width: 120px;">
+                <f:selectItems value="#{manager.maxResults}" />
+            </p:selectOneMenu>
+            <p:outputLabel
+                    value="#{labels['showing']}: #{manager.results.totalResultCount > manager.searchParams.maxResults ? (manager.searchParams.maxResults eq -1 ? manager.results.totalResultCount : manager.searchParams.maxResults) : manager.results.totalResultCount} #{labels['of']} #{manager.results.totalResultCount}"
+                    rendered="#{manager.results.totalResultCount gt 0 }" />
+            <p:outputLabel value="#{labels['noRecordsFound']}"
+                           rendered="#{manager.results.totalResultCount eq 0 and manager.results.resultList.size() eq 0}" />
+        </h:panelGrid>
+    </h:panelGrid>
+</ui:composition>

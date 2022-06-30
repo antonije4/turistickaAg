@@ -1,8 +1,7 @@
 package beans;
 
 
-import entities.Client;
-import org.primefaces.event.CloseEvent;
+import dto.UserDTO;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -13,7 +12,7 @@ import java.io.Serializable;
 @SessionScoped
 public class UserController implements Serializable {
 
-    private Client user;
+    private UserDTO user;
 
     @Inject
     private NavigationController navigationController;
@@ -22,8 +21,8 @@ public class UserController implements Serializable {
         return user != null;
     }
 
-    public void logIn(Client client) {
-        user = client;
+    public void logIn(UserDTO user) {
+        this.user = user;
     }
 
     public void logOut() {
@@ -34,4 +33,9 @@ public class UserController implements Serializable {
     public String username() {
         return user.getUsername();
     }
+
+    public UserDTO getLoggedInUser() {
+        return user;
+    }
+
 }

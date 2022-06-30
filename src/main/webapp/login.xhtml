@@ -12,6 +12,11 @@
   <ui:define name="content">
       <div  class="centerDiv" style="width: 400px">
         <p:panel>
+          <p:selectOneRadio id="userType"
+                            value="#{loginController.userType}">
+            <p:ajax event="change" update="centralForm" process="@this"/>
+            <f:selectItems value="#{loginController.userTypeSet}"/>
+          </p:selectOneRadio>
           <h:panelGrid columns="2" cellpadding="5">
             <h:outputLabel for="username" value="Username:" />
             <p:inputText id="username" value="#{loginController.username}" required="true" label="username" />

@@ -12,8 +12,11 @@ public enum MessageType {
     /**
      * id of message, messages or growl JSF component.
      */
-    @Getter
     private String id;
+
+    public String getId() {
+        return id;
+    }
 
     private MessageType(String id) {
         this.id = id;

@@ -1,0 +1,70 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/layout.xhtml">
+
+    <f:metadata>
+        <f:viewAction action="#{registrationController.init()}" />
+    </f:metadata>
+
+    <ui:define name="content">
+
+        <p:panel id="panelpanel">
+            <p:selectOneRadio id="userType"
+                              value="#{registrationController.userType}">
+                <p:ajax event="change" update="centralForm" process="@this"/>
+                <f:selectItems value="#{registrationController.allUserTypes}"/>
+            </p:selectOneRadio>
+            <h:panelGrid id="ugostiteljGrid" rendered="#{registrationController.renderUgostiteljData()}" columns="2">
+
+                <p:outputLabel value="Tip korisnika"/>
+                <p:selectOneMenu id="ugostiteljType"
+                                 value="#{registrationController.ugostitelj.ugostiteljType}" required="true"
+                                 styleClass="full-width val-static">
+                    <p:ajax event="change" update="centralForm" process="@this"/>
+                    <f:selectItems value="#{registrationController.allUgostiteljTypes}"/>
+                </p:selectOneMenu>
+
+                <p:outputLabel value="UserName"/>
+                <p:inputText id="userName" value="#{registrationController.ugostitelj.username}" label="UserName" />
+
+                <p:outputLabel value="Password"/>
+                <p:password id="password" value="#{registrationController.ugostitelj.password}" label="Password"/>
+
+                <p:outputLabel value="Email"/>
+                <p:inputText id="email" value="#{registrationController.ugostitelj.email}"/>
+
+                <p:outputLabel value=""/>
+                <p:commandButton action="#{registrationController.registerUgostitelj()}" value="Register"/>
+
+            </h:panelGrid>
+            <h:panelGrid rendered="#{!registrationController.renderUgostiteljData()}" id="clientGrid" columns="2">
+
+
+                <p:outputLabel value="Username"/>
+                <p:inputText id="clientUserName" value="#{registrationController.client.username}" label="UserName" />
+
+                <p:outputLabel value="Password"/>
+                <p:password id="clientPassword" value="#{registrationController.client.password}" label="Password"/>
+
+                <p:outputLabel value="FirstName"/>
+                <p:inputText id="clientFirstName" value="#{registrationController.client.firstName}" label="FirstName"/>
+
+                <p:outputLabel value="LastName"/>
+                <p:inputText id="clientLastName" value="#{registrationController.client.lastName}"/>
+
+                <p:outputLabel value="Email"/>
+                <p:inputText id="clientEmail" value="#{registrationController.client.email}"/>
+
+                <p:outputLabel value=""/>
+                <p:commandButton action="#{registrationController.registerClient()}" value="Register" update="regGrid"/>
+
+            </h:panelGrid>
+        </p:panel>
+        <p><h:link value="Login page" outcome="login" /></p>
+
+
+    </ui:define>
+</ui:composition>

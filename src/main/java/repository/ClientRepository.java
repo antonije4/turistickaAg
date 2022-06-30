@@ -1,7 +1,9 @@
 package repository;
 
 
+import com.querydsl.jpa.impl.JPAQuery;
 import entities.Client;
+import entities.QClient;
 import util.JPAHelper;
 
 import javax.ejb.Stateless;
@@ -33,6 +35,10 @@ public class ClientRepository {
         query.setParameter("username", username);
         query.setParameter("password", password);
         return JPAHelper.getUniqueResult(Client.class, query);
+    }
+
+    public void updateClient(Client client) {
+        entityManager.persist(client);
     }
 
     public void createClient(Client client) {

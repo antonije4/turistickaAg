@@ -24,7 +24,7 @@
       <jta-data-source>java:/datasources/turistickaDS</jta-data-source>
       <properties>
          <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect"/>
-         <property name="hibernate.hbm2ddl.auto" value="update"/>
+         <property name="hibernate.hbm2ddl.auto" value="create"/>
       </properties>
    </persistence-unit>
 </persistence>

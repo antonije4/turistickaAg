@@ -12,33 +12,54 @@
     <ui:define name="content">
 
             <p:panel id="panelpanel">
-                <h:panelGrid id="regGrid" columns="2">
+                <p:selectOneRadio id="userType"
+                                  value="#{registrationController.userType}">
+                    <p:ajax event="change" update="centralForm" process="@this"/>
+                    <f:selectItems value="#{registrationController.allUserTypes}"/>
+                </p:selectOneRadio>
+                <h:panelGrid id="ugostiteljGrid" rendered="#{registrationController.renderUgostiteljData()}" columns="2">
 
                     <p:outputLabel value="Tip korisnika"/>
-                    <p:selectOneMenu id="inputAppReason"
-                                     value="#{registrationController.userType}" required="true"
+                    <p:selectOneMenu id="ugostiteljType"
+                                     value="#{registrationController.ugostitelj.ugostiteljType}" required="true"
                                      styleClass="full-width val-static">
                         <p:ajax event="change" update="centralForm" process="@this"/>
-                        <f:selectItems value="#{registrationController.allUserTypes}"/>
+                        <f:selectItems value="#{registrationController.allUgostiteljTypes}"/>
                     </p:selectOneMenu>
 
                     <p:outputLabel value="UserName"/>
-                    <p:inputText id="userName" value="#{registrationController.client.username}" label="UserName" />
+                    <p:inputText id="userName" value="#{registrationController.ugostitelj.username}" label="UserName" />
 
                     <p:outputLabel value="Password"/>
-                    <p:password id="password" value="#{registrationController.client.password}" label="Password"/>
-
-                    <p:outputLabel value="FirstName" rendered="#{registrationController.renderUgostiteljData()}"/>
-                    <p:inputText id="firstName" rendered="#{registrationController.renderUgostiteljData()}" value="#{registrationController.ugostitelj.ime}" label="FirstName"/>
-
-                    <p:outputLabel value="LastName" rendered="#{registrationController.renderUgostiteljData()}"/>
-                    <p:inputText id="lastName" rendered="#{registrationController.renderUgostiteljData()}" value="#{registrationController.ugostitelj.prezime}"/>
+                    <p:password id="password" value="#{registrationController.ugostitelj.password}" label="Password"/>
 
                     <p:outputLabel value="Email"/>
-                    <p:inputText id="email" value="#{registrationController.client.email}"/>
+                    <p:inputText id="email" value="#{registrationController.ugostitelj.email}"/>
 
                     <p:outputLabel value=""/>
-                    <p:commandButton action="#{registrationController.register()}" value="Register" update="regGrid"/>
+                    <p:commandButton action="#{registrationController.registerUgostitelj()}" value="Register"/>
+
+                </h:panelGrid>
+                <h:panelGrid rendered="#{!registrationController.renderUgostiteljData()}" id="clientGrid" columns="2">
+
+
+                    <p:outputLabel value="Username"/>
+                    <p:inputText id="clientUserName" value="#{registrationController.client.username}" label="UserName" />
+
+                    <p:outputLabel value="Password"/>
+                    <p:password id="clientPassword" value="#{registrationController.client.password}" label="Password"/>
+
+                    <p:outputLabel value="FirstName"/>
+                    <p:inputText id="clientFirstName" value="#{registrationController.client.firstName}" label="FirstName"/>
+
+                    <p:outputLabel value="LastName"/>
+                    <p:inputText id="clientLastName" value="#{registrationController.client.lastName}"/>
+
+                    <p:outputLabel value="Email"/>
+                    <p:inputText id="clientEmail" value="#{registrationController.client.email}"/>
+
+                    <p:outputLabel value=""/>
+                    <p:commandButton action="#{registrationController.registerClient()}" value="Register" update="clientGrid"/>
 
                 </h:panelGrid>
             </p:panel>

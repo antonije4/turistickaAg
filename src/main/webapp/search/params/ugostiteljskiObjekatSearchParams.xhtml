@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:remove>
+        <!--
+        PARAMS:
+            - searchParams - machine job search params
+         -->
+    </ui:remove>
+
+    <h:panelGrid columns="1" style="width:100%;">
+        <p:outputLabel class="wh-search-label" for="jobNumber"
+                       value="#{labels['machineJob.jobNumber']}" />
+        <p:inputText class="wh-select-input wh-select-info-item"
+                     id="jobNumber" value="#{searchParams.jobNumber}" />
+    </h:panelGrid>
+
+    <h:panelGrid columns="1" style="width:100%;">
+        <p:outputLabel class="wh-search-label" for="productionSite"
+                       value="#{labels['productionSite']}" />
+        <p:selectCheckboxMenu style="max-width:100%; display:block;"
+                              multiple="true" styleClass="selectCheckboxMenuFixHeight"
+                              id="productionSite" value="#{searchParams.productionSiteIds}">
+            <f:selectItems value="#{locationsSelectItems.productionSitesSelectItems}" />
+        </p:selectCheckboxMenu>
+    </h:panelGrid>
+
+    <ui:include src="/common/search/params/createdDateSearchParams.xhtml" >
+        <ui:param name="searchParams" value="#{searchParams}" />
+    </ui:include>
+
+    <ui:include src="/common/search/params/updatedDateSearchParams.xhtml" >
+        <ui:param name="searchParams" value="#{searchParams}" />
+    </ui:include>
+
+</ui:composition>

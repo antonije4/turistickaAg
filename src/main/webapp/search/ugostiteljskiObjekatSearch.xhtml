@@ -1,0 +1,30 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/common/layout/searchLayout.xhtml">
+
+    <f:metadata>
+        <f:viewAction action="#{ugostiteljskiObjekatSearchController.init()}" />
+    </f:metadata>
+
+    <ui:param name="pageTitle" value="Ugostiteljski objekat search" />
+    <ui:param name="hideTopContent" value="true" />
+
+    <ui:define name="managerParam">
+        <ui:param name="manager" value="#{ugostiteljskiObjekatSearchController}" />
+    </ui:define>
+
+    <ui:define name="searchParams">
+        <ui:include src="/search/ugos">
+            <ui:param name="searchParams" value="#{manager.searchParams}"/>
+        </ui:include>
+    </ui:define>
+
+    <ui:define name="tableContent">
+        <ui:include src="/common/search/columns/machineJobColumns.xhtml" />
+        <ui:include src="/common/search/columns/persoStarEntityColumns.xhtml" />
+    </ui:define>
+
+</ui:composition>

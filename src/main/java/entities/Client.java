@@ -1,7 +1,6 @@
 package entities;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,23 +8,52 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
-@Getter
-@Setter
-public class Client implements Serializable {
-
-    @Id
-    @GeneratedValue
+public class Client extends User{
     @NotNull
-    protected long id;
+    private String firstName;
 
     @NotNull
-    protected String username;
+    private String lastName;
 
     @NotNull
-    protected String password;
+    private Date dateOfBirth;
 
     @NotNull
-    protected String email;
+    @Column(unique = true)
+    private String jmbg;
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getJmbg() {
+        return jmbg;
+    }
+
+    public void setJmbg(String jmbg) {
+        this.jmbg = jmbg;
+    }
 }

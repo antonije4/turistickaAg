@@ -1,0 +1,37 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/layout.xhtml">
+
+    <ui:define name="mainContent">
+
+        <ui:decorate template="/search/searchPanel.xhtml">
+            <ui:param name="manager" value="#{manager}" />
+
+            <ui:define name="searchParams">
+                <h:panelGrid columns="4" style="width: 100%" cellspacing="7" columnClasses="width20Per,width20Per,width20Per,width20Per,width20Per">
+                    <ui:insert name="searchParams"/>
+                </h:panelGrid>
+            </ui:define>
+
+            <ui:define name="actions">
+                <ui:insert name="searchPanelActions"/>
+            </ui:define>
+
+        </ui:decorate>
+
+        <ui:decorate template="/search/searchTable.xhtml">
+            <ui:param name="tableItems" value="#{manager.results.resultList}" />
+
+            <ui:define name="tableContent">
+                <ui:insert name="tableContent"/>
+            </ui:define>
+
+        </ui:decorate>
+
+    </ui:define>
+
+
+</ui:composition>
