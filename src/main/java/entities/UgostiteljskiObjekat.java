@@ -7,8 +7,10 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
+@Getter @Setter
 public class UgostiteljskiObjekat implements Serializable {
 
     @Id
@@ -22,27 +24,8 @@ public class UgostiteljskiObjekat implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     private Ugostitelj ugostitelj;
 
-    public long getId() {
-        return id;
-    }
+    @OneToMany(mappedBy = "ugostiteljskiObjekat", fetch = FetchType.EAGER)
+    private List<CategorizationRequest> categorizationRequests;
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Ugostitelj getUgostitelj() {
-        return ugostitelj;
-    }
-
-    public void setUgostitelj(Ugostitelj ugostitelj) {
-        this.ugostitelj = ugostitelj;
-    }
+    private boolean categorized;
 }

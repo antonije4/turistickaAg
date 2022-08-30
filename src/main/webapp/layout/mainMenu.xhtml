@@ -20,12 +20,30 @@
                                 outcome="#{navigationController.goToRegistration()}"
                                 actionListener="#"
                         />
+                        <p:menuitem
+                                value=" Ugostitelj Search "
+                                icon="fa fa-play"
+                                outcome="#{navigationController.goToUgostiteljSearch()}"
+                                actionListener="#"
+                        />
+                        <p:menuitem
+                                value=" Ugostiteljski Objekat Registration "
+                                icon="fa fa-play"
+                                outcome="#{navigationController.goToUgostiteljskiObjekatRegistration()}"
+                                actionListener="#"
+                        />
+                        <p:menuitem
+                                value=" Submit Categorization Request "
+                                icon="fa fa-play"
+                                outcome="#{navigationController.goToSubmitCategorizationRequest()}"
+                                actionListener="#"
+                        />
                     </p:submenu>
                     <f:facet name="options">
                         <p:outputPanel class="logged-in-username not-selectable">
                             <p:link rendered="#{!userController.loggedIn()}"  outcome="#{navigationController.goToLogin()}" value="Login"/>
                             <i class="fa fa-fw fa-user"/>
-                            <p:link outcome="#{navigationController.goToUserOverview()}" rendered="#{userController.loggedIn()}" value="#{userController.username()}"/>
+                            <p:link outcome="#{navigationController.goToUserOverview(userController.username())}" rendered="#{userController.loggedIn()}" value="#{userController.username()}"/>
                             <p:commandLink rendered="#{userController.loggedIn()}" value="Log out" action="#{userController.logOut()}"/>
                         </p:outputPanel>
                     </f:facet>

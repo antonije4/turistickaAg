@@ -1,8 +1,7 @@
-package beans;
+package beans.general;
 
 import dto.UgostiteljDTO;
 import entities.Client;
-import entities.Ugostitelj;
 import entities.mappers.UgostiteljMapper;
 import enums.MessageType;
 import enums.UgostiteljType;
@@ -11,9 +10,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import repository.ClientRepository;
-import repository.UgostiteljRepository;
+import repository.UgostiteljDomainHelper;
 
-import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -52,7 +50,7 @@ public class RegistrationController implements Serializable {
     private ClientRepository clientRepository;
 
     @Inject
-    private UgostiteljRepository ugostiteljRepository;
+    private UgostiteljDomainHelper ugostiteljDomainHelper;
 
     @Inject
     private MessageController messageController;
@@ -74,7 +72,7 @@ public class RegistrationController implements Serializable {
         if (!checkPreconditions()) {
             return;
         }
-        ugostiteljRepository.createUgostitelj(UgostiteljMapper.INSTANCE.mapToModel(ugostitelj));
+        ugostiteljDomainHelper.createUgostitelj(UgostiteljMapper.INSTANCE.mapToModel(ugostitelj));
         navigationController.navigateToLogin();
     }
 

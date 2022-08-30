@@ -2,30 +2,22 @@ package dto;
 
 import entities.info.*;
 import enums.UgostiteljType;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.util.List;
+
+@Getter
+@Setter
 public class UgostiteljDTO extends UserDTO{
-    private String ugostiteljType;
+    private UgostiteljType ugostiteljType;
+    private String firstName;
+    private String lastName;
     private AdditionalInfo additionalInfo;
-
-    public String getUgostiteljType() {
-        return ugostiteljType;
-    }
-
-    public void setUgostiteljType(String ugostiteljType) {
-        this.ugostiteljType = ugostiteljType;
-    }
-
-    public AdditionalInfo getAdditionalInfo() {
-        return additionalInfo;
-    }
-
-    public void setAdditionalInfo(AdditionalInfo additionalInfo) {
-        this.additionalInfo = additionalInfo;
-    }
+    private List<UgostiteljskiObjekatDTO> ugostiteljskiObjekti;
 
     public UgostiteljDTO() {
-        ugostiteljType = UgostiteljType.FizickoLice.getKey();
+        ugostiteljType = UgostiteljType.FizickoLice;
     }
 }
 

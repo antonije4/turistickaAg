@@ -1,4 +1,4 @@
-package beans;
+package beans.general;
 
 
 import enums.MessageType;

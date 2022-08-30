@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+<!--   <p:column headerText="#{labels['machineJob.jobNumber']}" sortBy="#{item.jobNumber}">-->
+<!--      <ui:include src="/common/links/machineJobLink.xhtml" >-->
+<!--         <ui:param name="jobNumber" value="#{item.jobNumber}" />-->
+<!--         <ui:param name="docType" value="#{item.docType}" />-->
+<!--      </ui:include>-->
+<!--   </p:column>-->
+
+   <p:column headerText="Ugostitelj type" sortBy="#{item.ugostiteljType}">
+      <h:outputText value="#{item.ugostiteljType.name()}" />
+   </p:column>
+
+   <p:column headerText="First name" sortBy="#{item.firstName}">
+      <h:outputText value="#{item.firstName}" />
+   </p:column>
+
+   <p:column headerText="Last name" sortBy="#{item.lastName}">
+      <h:outputText value="#{item.lastName}" />
+   </p:column>
+
+</ui:composition>

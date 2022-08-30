@@ -9,9 +9,12 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
 public class Ugostitelj extends User{
 
     private String firstName;
@@ -21,49 +24,20 @@ public class Ugostitelj extends User{
     @NotNull
     private UgostiteljType ugostiteljType;
 
-    @OneToMany(mappedBy = "ugostitelj")
-    private Set<UgostiteljskiObjekat> ugostiteljskiObjekti;
+    @OneToMany(mappedBy = "ugostitelj", fetch = FetchType.EAGER)
+    private List<UgostiteljskiObjekat> ugostiteljskiObjekti;
+
+    @OneToMany(mappedBy = "ugostitelj", fetch = FetchType.EAGER)
+    private List<CategorizationRequest> categorizationRequests;
 
     @Embedded
     private AdditionalInfo additionalInfo;
 
-    public String getFirstName() {
-        return firstName;
+    public void linkUgostiteljskiObjekat(UgostiteljskiObjekat ugostiteljskiObjekat) {
+        ugostiteljskiObjekti.add(ugostiteljskiObjekat);
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public UgostiteljType getUgostiteljType() {
-        return ugostiteljType;
-    }
-
-    public void setUgostiteljType(UgostiteljType ugostiteljType) {
-        this.ugostiteljType = ugostiteljType;
-    }
-
-    public Set<UgostiteljskiObjekat> getUgostiteljskiObjekti() {
-        return ugostiteljskiObjekti;
-    }
-
-    public void setUgostiteljskiObjekti(Set<UgostiteljskiObjekat> ugostiteljskiObjekti) {
-        this.ugostiteljskiObjekti = ugostiteljskiObjekti;
-    }
-
-    public AdditionalInfo getAdditionalInfo() {
-        return additionalInfo;
-    }
-
-    public void setAdditionalInfo(AdditionalInfo additionalInfo) {
-        this.additionalInfo = additionalInfo;
+    public void unlinkUgostiteljskiObjekat(UgostiteljskiObjekat ugostiteljskiObjekat) {
+        ugostiteljskiObjekti.remove(ugostiteljskiObjekat);
     }
 }

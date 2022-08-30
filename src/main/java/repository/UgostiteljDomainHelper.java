@@ -1,9 +1,6 @@
 package repository;
 
-import com.querydsl.core.QueryResults;
 import com.querydsl.jpa.impl.JPAQuery;
-import com.querydsl.jpa.impl.JPAQueryFactory;
-import entities.Client;
 import entities.QUgostitelj;
 import entities.Ugostitelj;
 import repository.data.ResultList;
@@ -18,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
-public class UgostiteljRepository extends DomainHelper{
+public class UgostiteljDomainHelper extends DomainHelper {
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -34,6 +31,7 @@ public class UgostiteljRepository extends DomainHelper{
 
         addFilter(query, ugostiteljSearchParams.getFirstName(), qUgostitelj.firstName::eq);
         addFilter(query, ugostiteljSearchParams.getLastName(), qUgostitelj.lastName::eq);
+        addFilter(query, ugostiteljSearchParams.getUgostiteljTypes(), qUgostitelj.ugostiteljType::in);
         List<Ugostitelj> resultList = query.fetch();
         return ResultList.create(resultList, resultList.size());
     }

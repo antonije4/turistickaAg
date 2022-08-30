@@ -5,12 +5,16 @@ import entities.QUgostiteljskiObjekat;
 import entities.UgostiteljskiObjekat;
 import repository.data.ResultList;
 import repository.search.UgostiteljskiObjekatSearchParams;
+import util.JPAHelper;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
 
+@Stateless
 public class UgostiteljskiObjekatDomainHelper extends DomainHelper{
 
     @PersistenceContext
@@ -32,5 +36,19 @@ public class UgostiteljskiObjekatDomainHelper extends DomainHelper{
 
         List<UgostiteljskiObjekat> resultList = query.fetch();
         return ResultList.create(resultList, resultList.size());
+    }
+
+    public void updateUgostiteljskiObjekat(UgostiteljskiObjekat ugostiteljskiObjekat) {
+        entityManager.merge(ugostiteljskiObjekat);
+    }
+
+    public UgostiteljskiObjekat getUgostiteljskiObjekatById(long id) {
+        Query query = entityManager.createQuery("select u from UgostiteljskiObjekat u where u.id=:id");
+        query.setParameter("id", id);
+        return JPAHelper.getUniqueResult(UgostiteljskiObjekat.class, query);
+    }
+
+    public void createUgostiteljskiObjekat(UgostiteljskiObjekat ugostiteljskiObjekat) {
+        entityManager.persist(ugostiteljskiObjekat);
     }
 }

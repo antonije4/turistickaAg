@@ -1,0 +1,22 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/layout/layout.xhtml">
+
+	<ui:define name="content">
+
+		<h:panelGrid style="width: 100%;" columns="2" rendered="#{hideTopContent eq null ? true : false}"> 
+			<h:panelGrid style="float: left">
+				<ui:insert name="topLeftMainContent" />
+			</h:panelGrid>
+			<h:panelGrid style="float: right">
+				<ui:insert name="topRightMainContent" />
+			</h:panelGrid>
+		</h:panelGrid>
+		
+		<ui:insert name="mainContent" />
+
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,28 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/layout.xhtml">
+
+   <f:metadata>
+      <f:viewAction action="#{ugostiteljskiObjekatOverviewController.init()}" />
+   </f:metadata>
+
+   <ui:define name="content">
+
+      <p:panel id="panelpanel">
+         <h:panelGrid id="ugostiteljskiObjekatGrid" columns="2">
+
+            <p:outputLabel value="Name"/>
+            <p:inputText disabled="#{ugostiteljskiObjekatOverviewController.inputDisabled()}" id="name" value="#{ugostiteljskiObjekatOverviewController.ugostiteljskiObjekat.name}" label="Name"/>
+
+            <p:commandButton rendered="#{ugostiteljskiObjekatOverviewController.canEdit()}" action="#{ugostiteljskiObjekatOverviewController.enableInput()}" value="Edit" update="ugostiteljskiObjekatGrid"/>
+            <p:commandButton rendered="#{ugostiteljskiObjekatOverviewController.canEdit()}" disabled="#{!ugostiteljskiObjekatOverviewController.inputDisabled()}" action="#{ugostiteljskiObjekatOverviewController.saveChanges()}" value="Save changes" update="ugostiteljskiObjekatGrid"/>
+
+         </h:panelGrid>
+      </p:panel>
+
+
+   </ui:define>
+</ui:composition>

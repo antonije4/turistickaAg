@@ -1,4 +1,4 @@
-package beans;
+package beans.search;
 
 import repository.data.ResultList;
 import repository.search.SearchParams;
@@ -12,7 +12,7 @@ public interface SearchController {
     void reset();
     void search();
     SearchParams getSearchParams();
-    ResultList<?> getResultList();
+    ResultList<?> getResults();
     List<SelectItem> maxResults = Stream.of(new SelectItem(10, "10"),
                     new SelectItem(50, "50"),
                     new SelectItem(100, "100"),

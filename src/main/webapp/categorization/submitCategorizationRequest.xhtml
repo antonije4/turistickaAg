@@ -1,0 +1,76 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/layout.xhtml">
+
+    <f:metadata>
+        <f:viewAction action="#{submitCategorizationRequestController.init()}" />
+    </f:metadata>
+
+    <ui:define name="content">
+
+        <p:panel id="panelpanel">
+            <p:outputLabel value="Select existing ugostiteljski objekat"/>
+            <p:selectBooleanCheckbox id="ugostiteljskiObjekatType"
+                              value="#{submitCategorizationRequestController.existingUgostiteljskiObjekat}">
+                <p:ajax event="change" listener="#{submitCategorizationRequestController.changeSelectedUgostiteljskiObjekat()}" update="centralForm" process="@this"/>
+            </p:selectBooleanCheckbox>
+            <h:panelGrid id="existingUgostiteljskiObjekat" rendered="#{submitCategorizationRequestController.existingUgostiteljskiObjekat}" columns="2">
+                <p:panel toggleable="true" collapsed="false">
+
+                    <f:facet name="header">
+                        <p:outputLabel id="ugostiteljskiObjektiPanelId" value="Ugostiteljski objekti : #{submitCategorizationRequestController.categorizationRequestRowList.size()}" />
+                    </f:facet>
+
+                    <ui:decorate template="/common/tableTemplate.xhtml">
+                        <ui:param name="tableId" value="ugostiteljskiObjektiTableId" />
+                        <ui:param name="tableWV" value="ugostiteljskiObjektiTable" />
+                        <ui:param name="tableItems" value="#{submitCategorizationRequestController.categorizationRequestRowList}" />
+
+                        <ui:define name="tableContent">
+                            <f:attribute name="sortBy" value="#{item.name}" />
+                            <f:attribute name="sortOrder" value="ascending" />
+
+                            <p:column headerText="Name" filterBy="#{item.name}" filterMatchMode="contains"
+                                      sortBy="#{item.name}">
+                                <ui:include src="/link/ugostiteljskiObjekatLink.xhtml" >
+                                    <ui:param name="name" value="#{item.name}"/>
+                                    <ui:param name="id" value="#{item.id}"/>
+                                </ui:include>
+                                <p:selectBooleanCheckbox value="#{item.selected}">
+                                    <p:ajax event="change" listener="#{submitCategorizationRequestController.selectUgostiteljskiObjekat(item)}" update="centralForm" process="@this"/>
+                                </p:selectBooleanCheckbox>
+                            </p:column>
+                        </ui:define>
+
+                    </ui:decorate>
+
+                </p:panel>
+            </h:panelGrid>
+            <h:panelGrid id="newUgostiteljskiObjekatGrid" rendered="#{!submitCategorizationRequestController.existingUgostiteljskiObjekat}" columns="2">
+
+                <p:outputLabel value="Owner"/>
+                <p:inputText disabled="true" value="#{submitCategorizationRequestController.ugostitelj.firstName} #{submitCategorizationRequestController.ugostitelj.lastName}"/>
+
+                <p:outputLabel value="Name"/>
+                <p:inputText disabled="#{!submitCategorizationRequestController.inputEnabled}" id="name" required="true" requiredMessage="Name of Ugostiteljski Objekat is required!" value="#{submitCategorizationRequestController.newUgostiteljskiObjekat.name}" label="Name" />
+
+                <p:commandButton action="#{submitCategorizationRequestController.enableInput()}" value="Edit" update="newUgostiteljskiObjekatGrid"/>
+                <p:commandButton disabled="#{!submitCategorizationRequestController.inputEnabled}" action="#{submitCategorizationRequestController.saveNewUgostiteljskiObjekat()}" value="Save changes" update="centralForm"/>
+
+            </h:panelGrid>
+            <h:panelGrid rendered="#{submitCategorizationRequestController.selectedUgostiteljskiObjekat ne null}" columns="2">
+                <p:outputLabel value="Ugostiteljski objekat: "/>
+                <p:inputText disabled="true" value="#{submitCategorizationRequestController.selectedUgostiteljskiObjekat}"/>
+                <p:outputLabel value="Categorization data:"/>
+                <p:inputText value="#{submitCategorizationRequestController.categorizationRequest.categorizationInfo}"/>
+                <p:outputLabel value=""/>
+                <p:commandButton action="#{submitCategorizationRequestController.submitRequest()}" value="Submit"/>
+            </h:panelGrid>
+        </p:panel>
+
+
+    </ui:define>
+</ui:composition>

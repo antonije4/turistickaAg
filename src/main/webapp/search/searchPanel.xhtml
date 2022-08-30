@@ -19,21 +19,13 @@
         <ui:insert name="searchParams"/>
 
     </p:panel>
-
-    <p:panel id="advancedSearchPanelId" header="#{advancedPanelTitle ne null ? advancedPanelTitle : labels['advancedSearchParams']}" style="padding-top: 0.571em"
-             rendered="#{ util.hasRenderedChildren('centralForm:advancedSearchPanelId') }" toggleable="true" collapsed="true" >
-
-        <ui:insert name="advancedSearchParams"/>
-
-    </p:panel>
-
     <h:panelGrid columns="2" style="width: 100%;">
 
         <h:panelGrid columns="5">
-            <p:commandButton value="#{labels['search']}"
+            <p:commandButton value="Search"
                              update="centralForm" action="#{manager.search()}"
                              icon="fa fa-fw fa-search" />
-            <p:commandButton value="#{labels['reset']}"
+            <p:commandButton value="Reset"
                              update="centralForm"
                              action="#{manager.reset()}"
                              icon="fa fa-fw fa-refresh"
@@ -48,10 +40,10 @@
                 <f:selectItems value="#{manager.maxResults}" />
             </p:selectOneMenu>
             <p:outputLabel
-                    value="#{labels['showing']}: #{manager.results.totalResultCount > manager.searchParams.maxResults ? (manager.searchParams.maxResults eq -1 ? manager.results.totalResultCount : manager.searchParams.maxResults) : manager.results.totalResultCount} #{labels['of']} #{manager.results.totalResultCount}"
+                    value="Showing: #{manager.results.totalResultCount > manager.searchParams.maxResults ? (manager.searchParams.maxResults eq -1 ? manager.results.totalResultCount : manager.searchParams.maxResults) : manager.results.totalResultCount} of #{manager.results.totalResultCount}"
                     rendered="#{manager.results.totalResultCount gt 0 }" />
-            <p:outputLabel value="#{labels['noRecordsFound']}"
-                           rendered="#{manager.results.totalResultCount eq 0 and manager.results.resultList.size() eq 0}" />
+            <p:outputLabel value="No records found"
+                           rendered="#{manager.results.totalResultCount eq 0 and manager.results.list.size() eq 0}" />
         </h:panelGrid>
     </h:panelGrid>
 </ui:composition>

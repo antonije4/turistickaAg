@@ -1,8 +1,9 @@
 package dto;
 
-import lombok.Data;
 
-public class UserDTO {
+import java.io.Serializable;
+
+public class UserDTO implements Serializable {
     private long id;
     private String username;
     private String password;

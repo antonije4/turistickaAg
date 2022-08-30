@@ -1,7 +1,9 @@
-package beans;
+package beans.general;
 
 
+import beans.general.NavigationController;
 import dto.UserDTO;
+import entities.User;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -12,7 +14,7 @@ import java.io.Serializable;
 @SessionScoped
 public class UserController implements Serializable {
 
-    private UserDTO user;
+    private User user;
 
     @Inject
     private NavigationController navigationController;
@@ -21,7 +23,7 @@ public class UserController implements Serializable {
         return user != null;
     }
 
-    public void logIn(UserDTO user) {
+    public void logIn(User user) {
         this.user = user;
     }
 
@@ -34,7 +36,7 @@ public class UserController implements Serializable {
         return user.getUsername();
     }
 
-    public UserDTO getLoggedInUser() {
+    public User getLoggedInUser() {
         return user;
     }
 

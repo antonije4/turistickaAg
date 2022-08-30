@@ -1,4 +1,4 @@
-package beans;
+package beans.general;
 import entities.Client;
 import entities.Ugostitelj;
 import entities.mappers.ClientMapper;
@@ -8,7 +8,7 @@ import enums.UserType;
 import lombok.Getter;
 import lombok.Setter;
 import repository.ClientRepository;
-import repository.UgostiteljRepository;
+import repository.UgostiteljDomainHelper;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -39,7 +39,7 @@ public class LoginController implements Serializable {
     private ClientRepository clientRepository;
 
     @Inject
-    private UgostiteljRepository ugostiteljRepository;
+    private UgostiteljDomainHelper ugostiteljDomainHelper;
 
     @Inject
     private NavigationController navigationController;
@@ -64,9 +64,9 @@ public class LoginController implements Serializable {
     }
 
     public void logInUgostitelj() {
-        Ugostitelj ugostitelj = ugostiteljRepository.getUgostiteljByUsernamePassword(username, password);
+        Ugostitelj ugostitelj = ugostiteljDomainHelper.getUgostiteljByUsernamePassword(username, password);
         if (ugostitelj != null) {
-            userController.logIn(UgostiteljMapper.INSTANCE.mapToDTO(ugostitelj));
+            userController.logIn(ugostitelj);
             navigationController.navigateToHome();
             messageController.showErrorMessage(MessageType.ShortLiveMessage, "Jek jek");
         } else {
@@ -77,7 +77,7 @@ public class LoginController implements Serializable {
     private void logInClient() {
         Client client = clientRepository.getClientByUsernamePassword(username, password);
         if (client != null) {
-            userController.logIn(ClientMapper.INSTANCE.mapToDTO(client));
+            userController.logIn(client);
             navigationController.navigateToHome();
             messageController.showErrorMessage(MessageType.ShortLiveMessage, "Jek jek");
         } else {

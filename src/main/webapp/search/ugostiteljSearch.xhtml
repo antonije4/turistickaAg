@@ -1,0 +1,136 @@
+<!--<ui:composition xmlns="http://www.w3.org/1999/xhtml"-->
+<!--                xmlns:ui="http://java.sun.com/jsf/facelets"-->
+<!--                xmlns:h="http://java.sun.com/jsf/html"-->
+<!--                xmlns:f="http://java.sun.com/jsf/core"-->
+<!--                xmlns:p="http://primefaces.org/ui"-->
+<!--                template="/layout/searchLayout.xhtml">-->
+
+<!--   <f:metadata>-->
+<!--      <f:viewAction action="#{ugostiteljSearchController.init()}" />-->
+<!--   </f:metadata>-->
+
+<!--   <ui:param name="pageTitle" value="Ugostiteljski objekat search" />-->
+<!--   <ui:param name="hideTopContent" value="true" />-->
+
+<!--   <ui:define name="managerParam">-->
+<!--      <ui:param name="manager" value="#{ugostiteljSearchController}" />-->
+<!--   </ui:define>-->
+
+<!--   <ui:define name="searchParams">-->
+<!--      <ui:include src="/search/params/ugostiteljSearchParams.xhtml">-->
+<!--         <ui:param name="searchParams" value="#{manager.searchParams}"/>-->
+<!--      </ui:include>-->
+<!--   </ui:define>-->
+
+<!--   <ui:define name="tableContent">-->
+<!--      <ui:include src="/search/columns/ugostiteljColumns.xhtml" />-->
+<!--   </ui:define>-->
+
+<!--</ui:composition>-->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/operationalLayout.xhtml">
+
+<ui:define name="mainContent">
+   <p:panel header="Search parameters" style="padding-top: 0.571em">
+
+   <h:panelGrid columns="4" style="width: 100%" cellspacing="7" columnClasses="width20Per,width20Per,width20Per,width20Per,width20Per">
+            <ui:param name="manager" value="#{ugostiteljSearchController.searchParams}" />
+            <h:panelGrid columns="1" style="width:100%;">
+               <p:outputLabel class="wh-search-label" for="firstName"
+                              value="First name" />
+               <p:inputText class="wh-select-input wh-select-info-item"
+                            id="firstName" value="#{ugostiteljSearchController.searchParams.firstName}" />
+            </h:panelGrid>
+            <h:panelGrid columns="1" style="width:100%;">
+               <p:outputLabel class="wh-search-label" for="lastName"
+                              value="Last name" />
+               <p:inputText class="wh-select-input wh-select-info-item"
+                            id="lastName" value="#{ugostiteljSearchController.searchParams.lastName}" />
+            </h:panelGrid>
+
+            <h:panelGrid columns="1" style="width:100%;">
+               <p:outputLabel class="wh-search-label" for="ugostiteljTypes"
+                              value="Ugostitelj type" />
+               <p:selectCheckboxMenu style="max-width:100%; display:block;"
+                                     multiple="true" styleClass="selectCheckboxMenuFixHeight"
+                                     filter="true" filterMatchMode="contains"
+                                     id="ugostiteljTypes" value="#{ugostiteljSearchController.searchParams.ugostiteljTypes}">
+                  <f:selectItems value="#{enums.ugostiteljTypes}" />
+               </p:selectCheckboxMenu>
+            </h:panelGrid>
+         </h:panelGrid>
+   </p:panel>
+   <h:panelGrid columns="2" style="width: 100%;">
+
+      <h:panelGrid columns="5">
+         <p:commandButton value="Search"
+                          update="centralForm" action="#{ugostiteljSearchController.search()}"
+                          icon="fa fa-fw fa-search" />
+         <p:commandButton value="Reset"
+                          update="centralForm"
+                          action="#{ugostiteljSearchController.reset()}"
+                          icon="fa fa-fw fa-refresh"
+                          process="@this">
+            <p:resetInput target="centralForm"/>
+         </p:commandButton>
+
+         <p:outputLabel value="Max results" />
+         <p:selectOneMenu id="selectOneMaxResultId"
+                          value="#{ugostiteljSearchController.searchParams.maxResults}"
+                          style="min-width: 120px;">
+            <f:selectItems value="#{enums.maxResults}" />
+         </p:selectOneMenu>
+         <p:outputLabel
+                 value="Showing: #{ugostiteljSearchController.results.totalResultCount > ugostiteljSearchController.searchParams.maxResults ? (ugostiteljSearchController.searchParams.maxResults eq -1 ? ugostiteljSearchController.results.totalResultCount : ugostiteljSearchController.searchParams.maxResults) : ugostiteljSearchController.results.totalResultCount} of #{ugostiteljSearchController.results.totalResultCount}"
+                 rendered="#{ugostiteljSearchController.results.totalResultCount gt 0 }" />
+         <p:outputLabel value="No records found"
+                        rendered="#{ugostiteljSearchController.results.totalResultCount eq 0 and ugostiteljSearchController.results.list.size() eq 0}" />
+      </h:panelGrid>
+   </h:panelGrid>
+    <p:dataTable id="searchTable"
+                 var="item" styleClass="udls-column-toggler-table"
+                 rendered="#{not empty ugostiteljSearchController.results.list}"
+                 value="#{ugostiteljSearchController.results.list}"
+                 emptyMessage="No records found"
+                 style="width: 100%;word-wrap: break-word"
+                 rows="10"
+                 rowsPerPageTemplate="5,10,15,20"
+                 paginator="#{true}"
+                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}">
+
+        <p:column headerText="Username" sortBy="#{item.username}">
+            <ui:include src="/link/ugostiteljLink.xhtml" >
+                <ui:param name="username" value="#{item.username}" />
+            </ui:include>
+        </p:column>
+
+        <p:column headerText="Ugostitelj type" sortBy="#{item.ugostiteljType}">
+            <h:outputText value="#{item.ugostiteljType.name()}" />
+        </p:column>
+
+        <p:column headerText="First name" sortBy="#{item.firstName}">
+            <h:outputText value="#{item.firstName}" />
+        </p:column>
+
+        <p:column headerText="Last name" sortBy="#{item.lastName}">
+            <h:outputText value="#{item.lastName}" />
+        </p:column>
+
+        <f:facet name="header">
+            <div class="udls-column-toggler-container">
+                <p:commandButton id="toggler" type="button"
+                                 value="Displayed columns" style="float:right" icon="fa fa-angle-up" />
+                <p:columnToggler datasource="searchTable" trigger="toggler" />
+            </div>
+        </f:facet>
+
+    </p:dataTable>
+</ui:define>
+
+
+</ui:composition>

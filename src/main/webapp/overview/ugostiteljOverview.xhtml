@@ -33,8 +33,33 @@
 
             </h:panelGrid>
         </p:panel>
-        <p><h:link value="Login page" outcome="login" /></p>
+        <p:panel toggleable="true" collapsed="false">
 
+            <f:facet name="header">
+                <p:outputLabel id="ugostiteljskiObjektiPanelId" value="Ugostiteljski objekti : #{ugostiteljOverviewController.ugostitelj.ugostiteljskiObjekti.size()}" />
+            </f:facet>
+
+            <ui:decorate template="/common/tableTemplate.xhtml">
+                <ui:param name="tableId" value="ugostiteljskiObjektiTableId" />
+                <ui:param name="tableWV" value="ugostiteljskiObjektiTable" />
+                <ui:param name="tableItems" value="#{ugostiteljOverviewController.ugostitelj.ugostiteljskiObjekti}" />
+
+                <ui:define name="tableContent">
+                    <f:attribute name="sortBy" value="#{item.name}" />
+                    <f:attribute name="sortOrder" value="ascending" />
+
+                    <p:column headerText="Name" filterBy="#{item.name}" filterMatchMode="contains"
+                              sortBy="#{item.name}">
+                        <ui:include src="/link/ugostiteljskiObjekatLink.xhtml" >
+                            <ui:param name="name" value="#{item.name}"/>
+                            <ui:param name="id" value="#{item.id}"/>
+                        </ui:include>
+                    </p:column>
+                </ui:define>
+
+            </ui:decorate>
+
+        </p:panel>
 
     </ui:define>
 </ui:composition>

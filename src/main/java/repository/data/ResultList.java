@@ -29,7 +29,6 @@ public class ResultList<T> {
 
 	public ResultList() {
 		list = new ArrayList<>();
-	
 	}
 	
 	

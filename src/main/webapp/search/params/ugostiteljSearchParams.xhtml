@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:remove>
+        <!--
+        PARAMS:
+            - searchParams - ugostitelj search params
+         -->
+    </ui:remove>
+
+    <h:panelGrid columns="1" style="width:100%;">
+        <p:outputLabel class="wh-search-label" for="firstName"
+                       value="First name" />
+        <p:inputText class="wh-select-input wh-select-info-item"
+                     id="firstName" value="#{searchParams.firstName}" />
+    </h:panelGrid>
+    <h:panelGrid columns="1" style="width:100%;">
+        <p:outputLabel class="wh-search-label" for="lastName"
+                       value="Last name" />
+        <p:inputText class="wh-select-input wh-select-info-item"
+                     id="lastName" value="#{searchParams.lastName}" />
+    </h:panelGrid>
+
+    <h:panelGrid columns="1" style="width:100%;">
+        <p:outputLabel class="wh-search-label" for="ugostiteljType"
+                       value="Ugostitelj type" />
+        <p:selectCheckboxMenu style="max-width:100%; display:block;"
+                              multiple="true" styleClass="selectCheckboxMenuFixHeight"
+                              filter="true" filterMatchMode="contains"
+                              id="ugostiteljType" value="#{searchParams.ugostiteljType}">
+            <f:selectItems value="#{enums.ugostiteljTypes}" />
+        </p:selectCheckboxMenu>
+    </h:panelGrid>
+
+</ui:composition>
