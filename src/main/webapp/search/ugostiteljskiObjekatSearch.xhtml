@@ -3,28 +3,90 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
-                template="/common/layout/searchLayout.xhtml">
+                template="/layout/operationalLayout.xhtml">
 
-    <f:metadata>
-        <f:viewAction action="#{ugostiteljskiObjekatSearchController.init()}" />
-    </f:metadata>
+    <ui:define name="mainContent">
+        <p:panel header="Search parameters" style="padding-top: 0.571em">
 
-    <ui:param name="pageTitle" value="Ugostiteljski objekat search" />
-    <ui:param name="hideTopContent" value="true" />
+            <h:panelGrid columns="4" style="width: 100%" cellspacing="7" columnClasses="width20Per,width20Per,width20Per,width20Per,width20Per">
+                <ui:param name="manager" value="#{ugostiteljskiObjekatSearchController.searchParams}" />
+                <h:panelGrid columns="1" style="width:100%;">
+                    <p:outputLabel class="wh-search-label" for="name"
+                                   value="Name" />
+                    <p:inputText class="wh-select-input wh-select-info-item"
+                                 id="name" value="#{ugostiteljskiObjekatSearchController.searchParams.name}" />
+                </h:panelGrid>
+                <h:panelGrid columns="1" style="width:100%;">
+                    <p:outputLabel class="wh-search-label" for="ugostiteljUsername"
+                                   value="Ugostitelj username" />
+                    <p:inputText class="wh-select-input wh-select-info-item"
+                                 id="ugostiteljUsername" value="#{ugostiteljskiObjekatSearchController.searchParams.ugostiteljUsername}" />
+                </h:panelGrid>
+            </h:panelGrid>
+        </p:panel>
+        <h:panelGrid columns="2" style="width: 100%;">
 
-    <ui:define name="managerParam">
-        <ui:param name="manager" value="#{ugostiteljskiObjekatSearchController}" />
+            <h:panelGrid columns="5">
+                <p:commandButton value="Search"
+                                 update="centralForm" action="#{ugostiteljskiObjekatSearchController.search()}"
+                                 icon="fa fa-fw fa-search" />
+                <p:commandButton value="Reset"
+                                 update="centralForm"
+                                 action="#{ugostiteljskiObjekatSearchController.reset()}"
+                                 icon="fa fa-fw fa-refresh"
+                                 process="@this">
+                    <p:resetInput target="centralForm"/>
+                </p:commandButton>
+
+                <p:outputLabel value="Max results" />
+                <p:selectOneMenu id="selectOneMaxResultId"
+                                 value="#{ugostiteljskiObjekatSearchController.searchParams.maxResults}"
+                                 style="min-width: 120px;">
+                    <f:selectItems value="#{enums.maxResults}" />
+                </p:selectOneMenu>
+                <p:outputLabel
+                        value="Showing: #{ugostiteljskiObjekatSearchController.results.totalResultCount > ugostiteljskiObjekatSearchController.searchParams.maxResults ? (ugostiteljskiObjekatSearchController.searchParams.maxResults eq -1 ? ugostiteljskiObjekatSearchController.results.totalResultCount : ugostiteljskiObjekatSearchController.searchParams.maxResults) : ugostiteljskiObjekatSearchController.results.totalResultCount} of #{ugostiteljskiObjekatSearchController.results.totalResultCount}"
+                        rendered="#{ugostiteljskiObjekatSearchController.results.totalResultCount gt 0 }" />
+                <p:outputLabel value="No records found"
+                               rendered="#{ugostiteljskiObjekatSearchController.results.totalResultCount eq 0 and ugostiteljskiObjekatSearchController.results.list.size() eq 0}" />
+            </h:panelGrid>
+        </h:panelGrid>
+        <p:dataTable id="searchTable"
+                     var="item" styleClass="udls-column-toggler-table"
+                     rendered="#{not empty ugostiteljskiObjekatSearchController.results.list}"
+                     value="#{ugostiteljskiObjekatSearchController.results.list}"
+                     emptyMessage="No records found"
+                     style="width: 100%;word-wrap: break-word"
+                     rows="10"
+                     rowsPerPageTemplate="5,10,15,20"
+                     paginator="#{true}"
+                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}">
+
+            <p:column headerText="Name" sortBy="#{item.name}">
+                <ui:include src="/link/ugostiteljskiObjekatLink.xhtml" >
+                    <ui:param name="name" value="#{item.name}" />
+                    <ui:param name="id" value="#{item.id}" />
+                </ui:include>
+            </p:column>
+
+            <p:column headerText="Ugostitelj" sortBy="#{item.ugostitelj.username}">
+                <ui:include src="/link/ugostiteljLink.xhtml" >
+                    <ui:param name="username" value="#{item.ugostitelj.username}" />
+                </ui:include>
+            </p:column>
+            <p:column>
+                <p:commandButton rendered="#{userController.isTourist() or userController.isUgostitelj()}" value="Make a reservation" action="#{navigationController.goToReservation(item.id)}"/>
+            </p:column>
+
+
+            <f:facet name="header">
+                <div class="udls-column-toggler-container">
+                    <p:commandButton id="toggler" type="button"
+                                     value="Displayed columns" style="float:right" icon="fa fa-angle-up" />
+                    <p:columnToggler datasource="searchTable" trigger="toggler" />
+                </div>
+            </f:facet>
+
+        </p:dataTable>
     </ui:define>
-
-    <ui:define name="searchParams">
-        <ui:include src="/search/params/ugostiteljskiObjekatSearchParams.xhtml">
-            <ui:param name="searchParams" value="#{manager.searchParams}"/>
-        </ui:include>
-    </ui:define>
-
-    <ui:define name="tableContent">
-        <ui:include src="/common/search/columns/machineJobColumns.xhtml" />
-        <ui:include src="/common/search/columns/persoStarEntityColumns.xhtml" />
-    </ui:define>
-
 </ui:composition>

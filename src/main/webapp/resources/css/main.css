@@ -50,6 +50,10 @@ html, body {
     height: 5em;
     float: right;
 }
+.wh-inbox{
+    width: 2.4em;
+    height: 1.8em;
+}
 
 .wh-appliaction-title {
     font-size: x-large !important;

@@ -33,7 +33,7 @@
 
             </h:panelGrid>
         </p:panel>
-        <p:panel toggleable="true" collapsed="false">
+        <p:panel id="ugostiteljskiObjektiPanel" toggleable="true" collapsed="false">
 
             <f:facet name="header">
                 <p:outputLabel id="ugostiteljskiObjektiPanelId" value="Ugostiteljski objekti : #{ugostiteljOverviewController.ugostitelj.ugostiteljskiObjekti.size()}" />
@@ -54,6 +54,53 @@
                             <ui:param name="name" value="#{item.name}"/>
                             <ui:param name="id" value="#{item.id}"/>
                         </ui:include>
+                    </p:column>
+                    <p:column headerText="Categorized"
+                              sortBy="#{item.categorized}">
+                        <p:outputLabel value="#{item.categorized}"/>
+                    </p:column>
+                    <p:column headerText="Categorization expiry"
+                              sortBy="#{item.categorizationExpiryDate}">
+                        <p:outputLabel rendered="#{item.categorized}" value="#{item.categorizationExpiryDate}"/>
+                    </p:column>
+                </ui:define>
+
+            </ui:decorate>
+
+        </p:panel>
+        <p:panel id="categorizationRequestsPanel" toggleable="true" collapsed="false">
+
+            <f:facet name="header">
+                <p:outputLabel id="categorizationRequestsPanelId" value="Categorization requests : #{ugostiteljOverviewController.ugostitelj.categorizationRequests.size()}" />
+            </f:facet>
+
+            <ui:decorate template="/common/tableTemplate.xhtml">
+                <ui:param name="tableId" value="categorizationRequestsTableId" />
+                <ui:param name="tableWV" value="categorizationRequestsTable" />
+                <ui:param name="tableItems" value="#{ugostiteljOverviewController.ugostitelj.categorizationRequests}" />
+
+                <ui:define name="tableContent">
+                    <f:attribute name="sortBy" value="#{item.dateOfRequest}" />
+                    <f:attribute name="sortOrder" value="ascending" />
+
+                    <p:column headerText="Ugostiteljski objekat" filterBy="#{item.ugostiteljskiObjekat.name}" filterMatchMode="contains"
+                              sortBy="#{item.ugostiteljskiObjekat.name}">
+                        <ui:include src="/link/ugostiteljskiObjekatLink.xhtml" >
+                            <ui:param name="name" value="#{item.ugostiteljskiObjekat.name}"/>
+                            <ui:param name="id" value="#{item.ugostiteljskiObjekat.id}"/>
+                        </ui:include>
+                    </p:column>
+                    <p:column headerText="Date of request"
+                              sortBy="#{item.dateOfRequest}">
+                        <p:outputLabel value="#{item.dateOfRequest}"/>
+                    </p:column>
+                    <p:column headerText="Reviewed"
+                              sortBy="#{item.reviewed}">
+                        <p:outputLabel value="#{item.reviewed}"/>
+                    </p:column>
+                    <p:column headerText="Approved"
+                              sortBy="#{item.approved}">
+                        <p:outputLabel rendered="#{item.reviewed}" value="#{item.approved}"/>
                     </p:column>
                 </ui:define>
 

@@ -44,19 +44,19 @@
 
 
                     <p:outputLabel value="Username"/>
-                    <p:inputText id="clientUserName" value="#{registrationController.client.username}" label="UserName" />
+                    <p:inputText id="clientUserName" value="#{registrationController.tourist.username}" label="UserName" />
 
                     <p:outputLabel value="Password"/>
-                    <p:password id="clientPassword" value="#{registrationController.client.password}" label="Password"/>
+                    <p:password id="clientPassword" value="#{registrationController.tourist.password}" label="Password"/>
 
                     <p:outputLabel value="FirstName"/>
-                    <p:inputText id="clientFirstName" value="#{registrationController.client.firstName}" label="FirstName"/>
+                    <p:inputText id="clientFirstName" value="#{registrationController.tourist.firstName}" label="FirstName"/>
 
                     <p:outputLabel value="LastName"/>
-                    <p:inputText id="clientLastName" value="#{registrationController.client.lastName}"/>
+                    <p:inputText id="clientLastName" value="#{registrationController.tourist.lastName}"/>
 
                     <p:outputLabel value="Email"/>
-                    <p:inputText id="clientEmail" value="#{registrationController.client.email}"/>
+                    <p:inputText id="clientEmail" value="#{registrationController.tourist.email}"/>
 
                     <p:outputLabel value=""/>
                     <p:commandButton action="#{registrationController.registerClient()}" value="Register" update="clientGrid"/>

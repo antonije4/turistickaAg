@@ -1,7 +1,7 @@
 package entities.mappers;
 
 import dto.ClientDTO;
-import entities.Client;
+import entities.Tourist;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -9,6 +9,6 @@ import org.mapstruct.factory.Mappers;
 public interface ClientMapper {
     ClientMapper INSTANCE = Mappers.getMapper(ClientMapper.class);
 
-    Client mapToModel(ClientDTO clientDTO);
-    ClientDTO mapToDTO(Client client);
+    Tourist mapToModel(ClientDTO clientDTO);
+    ClientDTO mapToDTO(Tourist tourist);
 }

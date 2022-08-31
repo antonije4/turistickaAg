@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -24,7 +25,7 @@ public class CategorizationRequest implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     private Ugostitelj ugostitelj;
 
-    private Date dateOfRequest;
+    private LocalDate dateOfRequest;
     private boolean approved;
     private boolean reviewed;
     private String userReviewed;

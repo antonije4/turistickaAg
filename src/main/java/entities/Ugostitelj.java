@@ -30,6 +30,9 @@ public class Ugostitelj extends User{
     @OneToMany(mappedBy = "ugostitelj", fetch = FetchType.EAGER)
     private List<CategorizationRequest> categorizationRequests;
 
+    @OneToOne(fetch = FetchType.EAGER)
+    private Inbox inbox;
+
     @Embedded
     private AdditionalInfo additionalInfo;
 

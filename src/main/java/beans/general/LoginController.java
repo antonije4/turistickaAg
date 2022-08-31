@@ -1,13 +1,11 @@
 package beans.general;
-import entities.Client;
+import entities.Tourist;
 import entities.Ugostitelj;
-import entities.mappers.ClientMapper;
-import entities.mappers.UgostiteljMapper;
 import enums.MessageType;
 import enums.UserType;
 import lombok.Getter;
 import lombok.Setter;
-import repository.ClientRepository;
+import repository.TouristDomainHelper;
 import repository.UgostiteljDomainHelper;
 
 import javax.faces.view.ViewScoped;
@@ -36,7 +34,7 @@ public class LoginController implements Serializable {
     private Set<UserType> userTypeSet;
 
     @Inject
-    private ClientRepository clientRepository;
+    private TouristDomainHelper touristDomainHelper;
 
     @Inject
     private UgostiteljDomainHelper ugostiteljDomainHelper;
@@ -75,9 +73,9 @@ public class LoginController implements Serializable {
     }
 
     private void logInClient() {
-        Client client = clientRepository.getClientByUsernamePassword(username, password);
-        if (client != null) {
-            userController.logIn(client);
+        Tourist tourist = touristDomainHelper.getByUsernamePassword(username, password);
+        if (tourist != null) {
+            userController.logIn(tourist);
             navigationController.navigateToHome();
             messageController.showErrorMessage(MessageType.ShortLiveMessage, "Jek jek");
         } else {

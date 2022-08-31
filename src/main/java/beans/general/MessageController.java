@@ -23,4 +23,8 @@ public class MessageController {
     public void showErrorMessage(MessageType messageType, String message, Object...params) {
         showMessage(messageType, FacesMessage.SEVERITY_ERROR, message, params);
     }
+
+    public void showInfoMessage(MessageType messageType, String message, Object...params) {
+        showMessage(messageType, FacesMessage.SEVERITY_INFO, message, params);
+    }
 }

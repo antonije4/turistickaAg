@@ -22,6 +22,10 @@ public class CategorizationRequestDomainHelper extends DomainHelper {
         entityManager.persist(categorizationRequest);
     }
 
+    public void updateCategorizationRequest(CategorizationRequest request) {
+        entityManager.merge(request);
+    }
+
     public ResultList<CategorizationRequest> getUnReviewedRequests() {
         JPAQuery<CategorizationRequest> query = new JPAQuery<>(entityManager).select(qCategorizationRequest)
                 .from(qCategorizationRequest)

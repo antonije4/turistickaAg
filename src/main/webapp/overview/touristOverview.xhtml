@@ -1,0 +1,73 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/layout.xhtml">
+
+    <f:metadata>
+        <f:viewAction action="#{touristOverviewController.init()}" />
+    </f:metadata>
+
+    <ui:define name="content">
+
+        <p:panel id="panelpanel">
+            <h:panelGrid id="touristGrid" columns="2">
+
+                <p:outputLabel value="UserName"/>
+                <p:inputText disabled="#{touristOverviewController.inputDisabled()}" id="userName" value="#{touristOverviewController.tourist.username}" label="Username"/>
+
+                <p:outputLabel value="Password"/>
+                <p:password disabled="#{touristOverviewController.inputDisabled()}" id="password" value="#{touristOverviewController.tourist.password}" label="Password"/>
+
+                <p:outputLabel value="Email"/>
+                <p:inputText disabled="#{touristOverviewController.inputDisabled()}" id="email" value="#{touristOverviewController.tourist.email}"/>
+
+                <p:commandButton action="#{touristOverviewController.enableInput()}" value="Edit" update="touristGrid"/>
+                <p:commandButton action="#{touristOverviewController.saveChanges()}" value="Save changes" update="touristGrid"/>
+
+            </h:panelGrid>
+        </p:panel>
+        <p:panel id="reservationPanel" toggleable="true" collapsed="false">
+
+            <f:facet name="header">
+                <p:outputLabel id="reservationPanelId" value="Reservations : #{touristOverviewController.tourist.reservationList.size()}" />
+            </f:facet>
+
+            <ui:decorate template="/common/tableTemplate.xhtml">
+                <ui:param name="tableId" value="reservationsTableId" />
+                <ui:param name="tableWV" value="reservationsTable" />
+                <ui:param name="tableItems" value="#{touristOverviewController.tourist.reservationList}" />
+
+                <ui:define name="tableContent">
+                    <f:attribute name="sortBy" value="#{item.startingDate}" />
+                    <f:attribute name="sortOrder" value="ascending" />
+
+                    <p:column headerText="Ugostiteljski objekat" filterBy="#{item.ugostiteljskiObjekat.name}" filterMatchMode="contains"
+                              sortBy="#{item.ugostiteljskiObjekat.name}">
+                        <ui:include src="/link/ugostiteljskiObjekatLink.xhtml" >
+                            <ui:param name="name" value="#{item.ugostiteljskiObjekat.name}"/>
+                            <ui:param name="id" value="#{item.ugostiteljskiObjekat.id}"/>
+                        </ui:include>
+                    </p:column>
+                    <p:column headerText="Dates of stay"
+                              sortBy="#{item.startingDate}">
+                        <p:outputLabel value="#{item.startingDate} - #{item.endingDate}"/>
+                    </p:column>
+                    <p:column headerText="Boravisna taksa"
+                              sortBy="#{item.boravisnaTaksaPrice}">
+                        <p:outputLabel value="#{item.boravisnaTaksaPrice}"/>
+                    </p:column>
+                    <p:column headerText="Boravisna taksa paid"
+                              sortBy="#{item.boravisnaTaksaPaid}">
+                        <p:outputLabel value="#{item.boravisnaTaksaPaid}"/>
+                    </p:column>
+                    <p:column>
+                        <p:commandButton value="Edit Reservation" action="#{touristOverviewController.editReservation(item)}"/>
+                    </p:column>
+                </ui:define>
+
+            </ui:decorate>
+        </p:panel>
+    </ui:define>
+</ui:composition>

@@ -1,8 +1,6 @@
 package beans.general;
 
-import dto.ClientDTO;
-import dto.UserDTO;
-import entities.Client;
+import entities.Tourist;
 import entities.User;
 
 import javax.enterprise.context.RequestScoped;
@@ -22,14 +20,22 @@ public class NavigationController {
     private static final String REGISTRATION = "/registration.xhtml";
     private static final String LOGIN= "/login.xhtml";
     private static final String UGOSTITELJSKI_OBJEKAT_REGISTRATION = "/ugostiteljskiObjekatRegistration.xhtml";
+    private static final String RESERVATION = "/reservation.xhtml";
+
 
     private static final String UGOSTITELJ_OVERVIEW = "/overview/ugostiteljOverview.xhtml";
     private static final String UGOSTITELJSKI_OBJEKAT_OVERVIEW = "/overview/ugostiteljskiObjekatOverview.xhtml";
     private static final String CLIENT_OVERVIEW = "/overview/clientOverview.xhtml";
+    private static final String RESERVATION_OVERVIEW = "/overview/reservationOverview.xhtml";
+    private static final String TOURIST_OVERVIEW = "/overview/touristOverview.xhtml";
+
 
     private static final String UGOSTITELJ_SEARCH = "/search/ugostiteljSearch.xhtml";
+    private static final String UGOSTITELJSKI_OBJEKAT_SEARCH = "/search/ugostiteljskiObjekatSearch.xhtml";
 
     private static final String SUBMIT_CATEGORIZATION_REQUEST = "/categorization/submitCategorizationRequest.xhtml";
+    private static final String CATEGORIZATION_REVIEW = "/categorization/categorizationReview.xhtml";
+    private static final String INBOX = "/inbox/inbox.xhtml";
 
     @Inject
     private UserController userController;
@@ -59,7 +65,7 @@ public class NavigationController {
     public void navigateToUgostiteljOverview(String username) {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         try {
-            externalContext.redirect(externalContext.getRequestContextPath() + goToUserOverview(username));
+            externalContext.redirect(externalContext.getRequestContextPath() + goToUgostiteljOverview(username));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -68,7 +74,25 @@ public class NavigationController {
     public void navigateToUgostiteljskiObjekatOverview(long id) {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         try {
-            externalContext.redirect(externalContext.getRequestContextPath() + goToUgostiteljskiObjekatOverview(id));
+            externalContext.redirect(externalContext.getRequestContextPath() + goToUgostiteljskiObjekatOverview(""+id));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void navigateToReservationOverview(long id) {
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            externalContext.redirect(externalContext.getRequestContextPath() + goToReservationOverview(id));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void navigateToTouristOverview(String username) {
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            externalContext.redirect(externalContext.getRequestContextPath() + goToTouristOverview(username));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -81,6 +105,20 @@ public class NavigationController {
     public String goToUgostiteljSearch() {
         return createRedirectLink(UGOSTITELJ_SEARCH);
     }
+    public String goToUgostiteljskiObjekatSearch() {
+        return createRedirectLink(UGOSTITELJSKI_OBJEKAT_SEARCH);
+    }
+    public String goToReservation(long id) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("ugostiteljskiObjekatId", id);
+        return createRedirectLinkWithParams(RESERVATION, params);
+    }
+
+    public String goToReservationOverview(long id) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("reservationId", id);
+        return createRedirectLinkWithParams(RESERVATION_OVERVIEW, params);
+    }
 
     public String goToLogin() {
         return createRedirectLink(LOGIN);
@@ -89,22 +127,36 @@ public class NavigationController {
         return createRedirectLink(SUBMIT_CATEGORIZATION_REQUEST);
     }
 
-    public String goToUserOverview( ) {
+    public String goToCategorizationReview() {
+        return createRedirectLink(CATEGORIZATION_REVIEW);
+    }
+    public String goToInbox() {
+        return createRedirectLink(INBOX);
+    }
+
+
+    public String goToUserOverview(String username) {
         User user = userController.getLoggedInUser();
-        if (user instanceof Client) {
-            return createRedirectLink(CLIENT_OVERVIEW);
+        if (user instanceof Tourist) {
+            return goToTouristOverview(username);
         } else {
-            return createRedirectLink(UGOSTITELJ_OVERVIEW);
+            return goToUgostiteljOverview(username);
         }
     }
 
-    public String goToUserOverview(String username) {
+    public String goToUgostiteljOverview(String username) {
         Map<String, Object> params = new HashMap<>();
         params.put("ugostiteljUsername", username);
         return createRedirectLinkWithParams(UGOSTITELJ_OVERVIEW, params);
     }
 
-    public String goToUgostiteljskiObjekatOverview(long id) {
+    public String goToTouristOverview(String username) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("touristUsername", username);
+        return createRedirectLinkWithParams(TOURIST_OVERVIEW, params);
+    }
+
+    public String goToUgostiteljskiObjekatOverview(String id) {
         Map<String, Object> params = new HashMap<>();
         params.put("ugostiteljskiObjekatId", id);
         return createRedirectLinkWithParams(UGOSTITELJSKI_OBJEKAT_OVERVIEW, params);

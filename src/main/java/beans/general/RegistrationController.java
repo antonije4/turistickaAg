@@ -1,15 +1,16 @@
 package beans.general;
 
-import dto.UgostiteljDTO;
-import entities.Client;
-import entities.mappers.UgostiteljMapper;
+import entities.Tourist;
+import entities.Inbox;
+import entities.Ugostitelj;
 import enums.MessageType;
 import enums.UgostiteljType;
 import enums.UserType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import repository.ClientRepository;
+import repository.TouristDomainHelper;
+import repository.MessageDomainHelper;
 import repository.UgostiteljDomainHelper;
 
 import javax.faces.view.ViewScoped;
@@ -40,17 +41,20 @@ public class RegistrationController implements Serializable {
 
     @Getter
     @Setter
-    private Client client = new Client();
+    private Tourist tourist = new Tourist();
 
     @Getter
     @Setter
-    private UgostiteljDTO ugostitelj = new UgostiteljDTO();
+    private Ugostitelj ugostitelj = new Ugostitelj();
 
     @Inject
-    private ClientRepository clientRepository;
+    private TouristDomainHelper touristDomainHelper;
 
     @Inject
     private UgostiteljDomainHelper ugostiteljDomainHelper;
+
+    @Inject
+    private MessageDomainHelper messageDomainHelper;
 
     @Inject
     private MessageController messageController;
@@ -72,7 +76,12 @@ public class RegistrationController implements Serializable {
         if (!checkPreconditions()) {
             return;
         }
-        ugostiteljDomainHelper.createUgostitelj(UgostiteljMapper.INSTANCE.mapToModel(ugostitelj));
+        ugostiteljDomainHelper.createUgostitelj(ugostitelj);
+        Inbox inbox = new Inbox();
+        inbox.setUgostitelj(ugostitelj);
+        ugostitelj.setInbox(inbox);
+        messageDomainHelper.createInbox(inbox);
+        ugostiteljDomainHelper.updateUgostitelj(ugostitelj);
         navigationController.navigateToLogin();
     }
 
@@ -80,14 +89,14 @@ public class RegistrationController implements Serializable {
         if (!checkPreconditions()) {
             return;
         }
-        clientRepository.createClient(client);
+        touristDomainHelper.create(tourist);
 //        log.info("User {} successfully registered.", client.getUsername());
         navigationController.navigateToLogin();
     }
 
     private boolean checkPreconditions() {
-        if (clientRepository.getClientByEmail(client.getEmail()) != null) {
-            messageController.showErrorMessage(MessageType.ShortLiveMessage, "User with email "+client.getEmail() +" already exists.");
+        if (touristDomainHelper.getByEmail(tourist.getEmail()) != null) {
+            messageController.showErrorMessage(MessageType.ShortLiveMessage, "User with email "+ tourist.getEmail() +" already exists.");
 //            log.error("User with email {} already exists.", client.getEmail());
             return false;
         }

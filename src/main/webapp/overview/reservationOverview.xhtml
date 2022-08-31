@@ -1,0 +1,38 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/layout.xhtml">
+
+    <f:metadata>
+        <f:viewAction action="#{reservationOverviewController.init()}" />
+    </f:metadata>
+
+    <ui:define name="content">
+
+        <p:panel id="panelpanel">
+            <h:panelGrid id="reservationOverviewGrid" columns="2">
+
+                <p:outputLabel value="Ugostiteljski objekat: "/>
+                <ui:include src="/link/ugostiteljskiObjekatLink.xhtml" >
+                    <ui:param name="name" value="#{reservationOverviewController.reservation.ugostiteljskiObjekat.name}" />
+                    <ui:param name="id" value="#{reservationOverviewController.reservation.ugostiteljskiObjekat.id}" />
+                </ui:include>
+
+                <p:outputLabel value="Dates of stay: "/>
+                <p:datePicker disabled="#{!reservationOverviewController.inputEnabled}" id="dates" selectionMode="range" value="#{reservationOverviewController.dateRange}" readonlyInput="true"/>
+
+                <p:outputLabel value="Boravisna taksa: "/>
+                <p:outputLabel value="#{reservationOverviewController.reservation.boravisnaTaksaPrice}"/>
+
+                <p:outputLabel value="Boravisna taksa paid: "/>
+                <p:selectBooleanButton disabled="#{!reservationOverviewController.canEditBoravisnaTaksa()}" onLabel="Yes" offLabel="No" value="#{reservationOverviewController.reservation.boravisnaTaksaPaid}"/>
+
+                <p:commandButton rendered="#{reservationOverviewController.canEdit()}" action="#{reservationOverviewController.enableInput()}" value="Edit Reservation" update="reservationOverviewGrid"/>
+                <p:commandButton rendered="#{reservationOverviewController.canEdit()}" disabled="#{!reservationOverviewController.inputEnabled}" action="#{reservationOverviewController.saveChanges()}" value="Save changes" update="reservationOverviewGrid"/>
+
+            </h:panelGrid>
+        </p:panel>
+    </ui:define>
+</ui:composition>

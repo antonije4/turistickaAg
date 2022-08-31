@@ -1,6 +1,8 @@
 package beans.search;
 
 import entities.UgostiteljskiObjekat;
+import lombok.Getter;
+import lombok.Setter;
 import repository.UgostiteljskiObjekatDomainHelper;
 import repository.data.ResultList;
 import repository.search.SearchParams;
@@ -13,6 +15,7 @@ import java.io.Serializable;
 
 @Named
 @ViewScoped
+@Getter @Setter
 public class UgostiteljskiObjekatSearchController implements SearchController, Serializable {
 
     @Inject
@@ -35,11 +38,6 @@ public class UgostiteljskiObjekatSearchController implements SearchController, S
     @Override
     public void search() {
         results = ugostiteljskiObjekatDomainHelper.search(searchParams);
-    }
-
-    @Override
-    public SearchParams getSearchParams() {
-        return searchParams;
     }
 
     @Override

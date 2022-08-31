@@ -12,11 +12,11 @@
     <ui:define name="content">
 
         <p:panel id="panelpanel">
-            <p:outputLabel value="Select existing ugostiteljski objekat"/>
-            <p:selectBooleanCheckbox id="ugostiteljskiObjekatType"
+            <p:outputLabel value="Existing ugostiteljski objekat? "/>
+            <p:selectBooleanButton offLabel="No" onLabel="Yes" id="ugostiteljskiObjekatType"
                               value="#{submitCategorizationRequestController.existingUgostiteljskiObjekat}">
                 <p:ajax event="change" listener="#{submitCategorizationRequestController.changeSelectedUgostiteljskiObjekat()}" update="centralForm" process="@this"/>
-            </p:selectBooleanCheckbox>
+            </p:selectBooleanButton>
             <h:panelGrid id="existingUgostiteljskiObjekat" rendered="#{submitCategorizationRequestController.existingUgostiteljskiObjekat}" columns="2">
                 <p:panel toggleable="true" collapsed="false">
 

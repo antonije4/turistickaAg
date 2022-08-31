@@ -107,7 +107,7 @@ public class SubmitCategorizationRequestController implements Serializable {
 
     public void fillCategorizationRequest() {
         categorizationRequest.setUgostitelj(ugostitelj);
-        categorizationRequest.setDateOfRequest(Date.valueOf(LocalDate.now()));
+        categorizationRequest.setDateOfRequest(LocalDate.now());
         categorizationRequest.setApproved(false);
         categorizationRequest.setReviewed(false);
     }

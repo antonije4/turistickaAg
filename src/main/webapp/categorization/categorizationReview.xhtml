@@ -1,0 +1,71 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/layout.xhtml">
+
+    <f:metadata>
+        <f:viewAction action="#{categorizationReviewController.init()}" />
+    </f:metadata>
+
+    <ui:define name="content">
+
+        <p:panel id="panelpanel">
+            <h:panelGrid id="categorizationRequestsGrid">
+
+                    <f:facet name="header">
+                        <p:outputLabel id="ugostiteljskiObjektiPanelId" value="Ugostiteljski objekti : #{submitCategorizationRequestController.categorizationRequestRowList.size()}" />
+                    </f:facet>
+
+                    <p:dataTable id="categorizationRequestTable"
+                                 var="item" styleClass="udls-column-toggler-table"
+                                 rendered="#{not empty categorizationReviewController.categorizationRequests.list}"
+                                 value="#{categorizationReviewController.categorizationRequests.list}"
+                                 emptyMessage="No records found"
+                                 style="width: 100%;word-wrap: break-word"
+                                 rows="10"
+                                 rowsPerPageTemplate="5,10,15,20"
+                                 paginator="#{true}"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}">
+
+                        <p:column headerText="Ugostiteljski objekat" sortBy="#{item.ugostiteljskiObjekat.name}">
+                            <ui:include src="/link/ugostiteljskiObjekatLink.xhtml" >
+                                <ui:param name="name" value="#{item.ugostiteljskiObjekat.name}" />
+                                <ui:param name="id" value="#{item.ugostiteljskiObjekat.id}" />
+                            </ui:include>
+                        </p:column>
+
+                        <p:column headerText="Ugostitelj" sortBy="#{item.ugostitelj.username}">
+                            <ui:include src="/link/ugostiteljLink.xhtml" >
+                                <ui:param name="username" value="#{item.ugostitelj.username}" />
+                            </ui:include>
+                        </p:column>
+
+                        <p:column headerText="Date of submission" sortBy="#{item.dateOfRequest}">
+                            <p:outputLabel value="#{item.dateOfRequest}"/>
+                        </p:column>
+
+                        <p:column>
+                            <p:commandButton value="Accept" action="#{categorizationReviewController.reviewRequest(item, true)}" update="categorizationRequestTable"/>
+                        </p:column>
+                        <p:column>
+                            <p:commandButton value="Reject" action="#{categorizationReviewController.reviewRequest(item, false)}" update="categorizationRequestTable"/>
+                        </p:column>
+
+                        <f:facet name="header">
+                            <div class="udls-column-toggler-container">
+                                <p:commandButton id="toggler" type="button"
+                                                 value="Displayed columns" style="float:right" icon="fa fa-angle-up" />
+                                <p:columnToggler datasource="categorizationRequestTable" trigger="toggler" />
+                            </div>
+                        </f:facet>
+
+                    </p:dataTable>
+
+            </h:panelGrid>
+        </p:panel>
+
+
+    </ui:define>
+</ui:composition>

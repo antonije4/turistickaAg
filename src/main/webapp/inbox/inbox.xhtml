@@ -1,0 +1,48 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/layout.xhtml">
+
+    <f:metadata>
+        <f:viewAction action="#{inboxController.init()}" />
+    </f:metadata>
+
+    <ui:define name="content">
+
+        <p:panel id="panelpanel">
+            <h:panelGrid id="inboxGrid">
+
+                <f:facet name="header">
+                    <p:outputLabel id="inboxGridId" value="Messages: #{inboxController.messageList.size()}" />
+                </f:facet>
+
+                <p:dataTable id="inboxTable"
+                             var="item" styleClass="udls-column-toggler-table"
+                             rendered="#{not empty inboxController.messageList}"
+                             value="#{inboxController.messageList}"
+                             emptyMessage="No messages found"
+                             style="width: 100%;word-wrap: break-word"
+                             rows="10"
+                             rowsPerPageTemplate="5,10,15,20"
+                             paginator="#{true}"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}">
+
+                    <p:column headerText="Message" sortBy="#{item.content}">
+                        <p:commandLink actionListener="#{inboxController.readMessage(item)}" rendered="#{!item.read}" style="font-weight: bold" value="#{item.content}" update="inboxTable"/>
+                        <p:outputLabel rendered="#{item.read}" style="font-weight: normal" value="#{item.content}"/>
+                    </p:column>
+
+                    <p:column headerText="Received:" sortBy="#{item.deliveryTime}">
+                        <p:outputLabel value="#{item.deliveryTime}"/>
+                    </p:column>
+
+                </p:dataTable>
+
+            </h:panelGrid>
+        </p:panel>
+
+
+    </ui:define>
+</ui:composition>

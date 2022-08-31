@@ -7,12 +7,10 @@ import lombok.Setter;
 @Setter
 public class UgostiteljskiObjekatSearchParams extends SearchParams {
     private String name;
-    private String ugostiteljFirstName;
-    private String ugostiteljLastName;
+    private String ugostiteljUsername;
 
     public void reset() {
         name=null;
-        ugostiteljFirstName=null;
-        ugostiteljLastName=null;
+        ugostiteljUsername = null;
     }
 }

@@ -11,6 +11,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,9 +31,8 @@ public class UgostiteljskiObjekatDomainHelper extends DomainHelper{
         JPAQuery<UgostiteljskiObjekat> query = new JPAQuery<>(entityManager).select(qUgostiteljskiObjekat)
                 .from(qUgostiteljskiObjekat);
 
-        addFilter(query, ugostiteljskiObjekatSearchParams.getName(), qUgostiteljskiObjekat.name::eq);
-        addFilter(query, ugostiteljskiObjekatSearchParams.getUgostiteljFirstName(), qUgostiteljskiObjekat.ugostitelj.firstName::eq);
-        addFilter(query, ugostiteljskiObjekatSearchParams.getUgostiteljLastName(), qUgostiteljskiObjekat.ugostitelj.lastName::eq);
+        addFilter(query, ugostiteljskiObjekatSearchParams.getName(), qUgostiteljskiObjekat.name::like);
+        addFilter(query, ugostiteljskiObjekatSearchParams.getUgostiteljUsername(), qUgostiteljskiObjekat.ugostitelj.username::likeIgnoreCase);
 
         List<UgostiteljskiObjekat> resultList = query.fetch();
         return ResultList.create(resultList, resultList.size());
@@ -50,5 +50,12 @@ public class UgostiteljskiObjekatDomainHelper extends DomainHelper{
 
     public void createUgostiteljskiObjekat(UgostiteljskiObjekat ugostiteljskiObjekat) {
         entityManager.persist(ugostiteljskiObjekat);
+    }
+
+    public List<UgostiteljskiObjekat> getUgostiteljskiObjekatCategorizationExpiryDateLessThan(LocalDate date) {
+        JPAQuery<UgostiteljskiObjekat> query = new JPAQuery<>(entityManager).select(qUgostiteljskiObjekat)
+                .from(qUgostiteljskiObjekat)
+                .where(qUgostiteljskiObjekat.categorizationExpiryDate.before(date).and(qUgostiteljskiObjekat.notifiedOfCategorizationExpiry.eq(false)));
+        return query.fetch();
     }
 }

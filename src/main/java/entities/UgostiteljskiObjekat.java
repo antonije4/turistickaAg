@@ -1,12 +1,11 @@
 package entities;
-
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -27,5 +26,10 @@ public class UgostiteljskiObjekat implements Serializable {
     @OneToMany(mappedBy = "ugostiteljskiObjekat", fetch = FetchType.EAGER)
     private List<CategorizationRequest> categorizationRequests;
 
+    @OneToMany(mappedBy = "ugostiteljskiObjekat")
+    private List<Reservation> reservations;
+
     private boolean categorized;
+    private LocalDate categorizationExpiryDate;
+    private boolean notifiedOfCategorizationExpiry;
 }

@@ -2,6 +2,7 @@ package beans.overview;
 
 import beans.general.UserController;
 import dto.UgostiteljDTO;
+import entities.Ugostitelj;
 import entities.mappers.UgostiteljMapper;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +19,7 @@ public class UgostiteljOverviewController extends BaseOverview{
 
     private static final String UGOSTITELJ_USERNAME_PARAM = "ugostiteljUsername";
     @Getter @Setter
-    private UgostiteljDTO ugostitelj;
+    private Ugostitelj ugostitelj;
     private boolean inputDisabled;
     private String ugostiteljUsername;
 
@@ -50,7 +51,7 @@ public class UgostiteljOverviewController extends BaseOverview{
     @Override
     protected boolean processDomain() {
         try {
-            ugostitelj = UgostiteljMapper.INSTANCE.mapToDTO(ugostiteljDomainHelper.getUgostiteljByUsername(ugostiteljUsername));
+            ugostitelj = ugostiteljDomainHelper.getUgostiteljByUsername(ugostiteljUsername);
             return true;
         } catch (Exception e) {
             //log exception
@@ -60,7 +61,7 @@ public class UgostiteljOverviewController extends BaseOverview{
 
 
     public void saveChanges() {
-        ugostiteljDomainHelper.updateUgostitelj(UgostiteljMapper.INSTANCE.mapToModel(ugostitelj));
+        ugostiteljDomainHelper.updateUgostitelj(ugostitelj);
         inputDisabled=true;
     }
 
