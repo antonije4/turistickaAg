@@ -24,10 +24,10 @@ public class Ugostitelj extends User{
     @NotNull
     private UgostiteljType ugostiteljType;
 
-    @OneToMany(mappedBy = "ugostitelj", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "ugostitelj", cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     private List<UgostiteljskiObjekat> ugostiteljskiObjekti;
 
-    @OneToMany(mappedBy = "ugostitelj", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "ugostitelj",cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     private List<CategorizationRequest> categorizationRequests;
 
     @OneToOne(fetch = FetchType.EAGER)
@@ -42,5 +42,9 @@ public class Ugostitelj extends User{
 
     public void unlinkUgostiteljskiObjekat(UgostiteljskiObjekat ugostiteljskiObjekat) {
         ugostiteljskiObjekti.remove(ugostiteljskiObjekat);
+    }
+
+    public void unlinkCategorizationRequest(CategorizationRequest categorizationRequest) {
+        categorizationRequests.remove(categorizationRequest);
     }
 }

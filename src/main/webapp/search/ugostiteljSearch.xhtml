@@ -63,8 +63,7 @@
       </h:panelGrid>
    </h:panelGrid>
     <p:dataTable id="searchTable"
-                 var="item" styleClass="udls-column-toggler-table"
-                 rendered="#{not empty ugostiteljSearchController.results.list}"
+                 var="item"
                  value="#{ugostiteljSearchController.results.list}"
                  emptyMessage="No records found"
                  style="width: 100%;word-wrap: break-word"
@@ -90,14 +89,6 @@
         <p:column headerText="Last name" sortBy="#{item.lastName}">
             <h:outputText value="#{item.lastName}" />
         </p:column>
-
-        <f:facet name="header">
-            <div class="udls-column-toggler-container">
-                <p:commandButton id="toggler" type="button"
-                                 value="Displayed columns" style="float:right" icon="fa fa-angle-up" />
-                <p:columnToggler datasource="searchTable" trigger="toggler" />
-            </div>
-        </f:facet>
 
     </p:dataTable>
 </ui:define>

@@ -61,5 +61,6 @@ public class UgostiteljDomainHelper extends DomainHelper {
 
     public void createUgostitelj(Ugostitelj ugostitelj) {
         entityManager.persist(ugostitelj);
+        entityManager.flush();
     }
 }

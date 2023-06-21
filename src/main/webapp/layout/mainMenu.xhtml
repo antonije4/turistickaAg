@@ -11,24 +11,23 @@
             <div class="ui-g-12" style="padding: 0 .5em;">
                 <p:menubar styleClass="persoStarMenu">
 
-                    <p:submenu label="Control"
+                    <p:submenu style="padding-right: 10px" rendered="#{userController.ugostiteljLoggedIn() or userController.privilegedUserLoggedIn()}" label="Control"
                                icon="fa fa-gears"
                     >
                         <p:menuitem
                                 value=" Ugostiteljski Objekat Registration "
                                 icon="fa fa-play"
-                                rendered="#{userController.isUgostitelj() or userController.isPrivileged()}"
                                 outcome="#{navigationController.goToUgostiteljskiObjekatRegistration()}"
                                 actionListener="#"
                         />
 
 
                     </p:submenu>
-                    <p:submenu label="Search">
+                    <p:submenu style="padding-right: 10px" rendered="#{userController.loggedIn()}" label="Search">
                         <p:menuitem
                                 value=" Ugostitelj Search "
                                 icon="fa fa-play"
-                                rendered="#{userController.isUgostitelj() or userController.isPrivileged()}"
+                                rendered="#{userController.ugostiteljLoggedIn() or userController.privilegedUserLoggedIn()}"
                                 outcome="#{navigationController.goToUgostiteljSearch()}"
                                 actionListener="#"
                         />
@@ -39,25 +38,25 @@
                                 actionListener="#"
                         />
                     </p:submenu>
-                    <p:submenu label="Categorization">
+                    <p:submenu style="padding-right: 10px" rendered="#{userController.ugostiteljLoggedIn() or userController.privilegedUserLoggedIn()}" label="Categorization">
                         <p:menuitem
                                 value=" Submit Categorization Request "
                                 icon="fa fa-play"
-                                rendered="#{userController.isUgostitelj()}"
+                                rendered="#{userController.ugostiteljLoggedIn()}"
                                 outcome="#{navigationController.goToSubmitCategorizationRequest()}"
                                 actionListener="#"
                         />
                         <p:menuitem
                                 value=" Categorization Review "
                                 icon="fa fa-play"
-                                rendered="#{userController.isPrivileged()}"
+                                rendered="#{userController.privilegedUserLoggedIn() or userController.ugostiteljLoggedIn()}"
                                 outcome="#{navigationController.goToCategorizationReview()}"
                                 actionListener="#"
                         />
                     </p:submenu>
                     <f:facet name="options">
                         <p:outputPanel class="logged-in-username not-selectable">
-                            <p:commandLink style="padding-right: 5px" rendered="#{userController.isUgostitelj()}" action="#{navigationController.goToInbox()}">
+                            <p:commandLink style="padding-right: 5px" rendered="#{userController.ugostiteljLoggedIn()}" action="#{navigationController.goToInbox()}">
                                 <h:graphicImage rendered="#{!userController.hasUnreadMessages()}" value="/resources/img/inbox.png"
                                                 id="inbox" width="32" height="24" />
                                 <h:graphicImage rendered="#{userController.hasUnreadMessages()}" value="/resources/img/inboxUnread.png"

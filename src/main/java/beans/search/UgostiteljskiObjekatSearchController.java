@@ -26,7 +26,8 @@ public class UgostiteljskiObjekatSearchController implements SearchController, S
     private ResultList<UgostiteljskiObjekat> results = new ResultList<>();
 
     public void init() {
-
+        searchParams.reset();
+        results.clear();
     }
 
     @Override

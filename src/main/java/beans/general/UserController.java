@@ -1,8 +1,6 @@
 package beans.general;
 
 
-import beans.general.NavigationController;
-import dto.UserDTO;
 import entities.PrivilegedUser;
 import entities.Tourist;
 import entities.Ugostitelj;
@@ -29,17 +27,17 @@ public class UserController implements Serializable {
         return user != null;
     }
 
-    public boolean isUgostitelj() {
+    public boolean ugostiteljLoggedIn() {
         return user instanceof Ugostitelj;
     }
 
-    public boolean isPrivileged() {
+    public boolean privilegedUserLoggedIn() {
         return user instanceof PrivilegedUser;
     }
-    public boolean isTourist() {return user instanceof Tourist;}
+    public boolean touristLoggedIn() {return user instanceof Tourist;}
 
     public boolean hasUnreadMessages() {
-        if (isUgostitelj()) {
+        if (ugostiteljLoggedIn()) {
             Ugostitelj ugostitelj = (Ugostitelj) user;
             return messageDomainHelper.inboxHasUnreadMessages(ugostitelj.getInbox().getId());
         } else

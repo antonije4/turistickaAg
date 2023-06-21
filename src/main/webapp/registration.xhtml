@@ -17,7 +17,7 @@
                     <p:ajax event="change" update="centralForm" process="@this"/>
                     <f:selectItems value="#{registrationController.allUserTypes}"/>
                 </p:selectOneRadio>
-                <h:panelGrid id="ugostiteljGrid" rendered="#{registrationController.renderUgostiteljData()}" columns="2">
+                <h:panelGrid id="ugostiteljGrid" rendered="#{registrationController.renderUgostiteljData()}" columns="3">
 
                     <p:outputLabel value="Tip korisnika"/>
                     <p:selectOneMenu id="ugostiteljType"
@@ -26,45 +26,90 @@
                         <p:ajax event="change" update="centralForm" process="@this"/>
                         <f:selectItems value="#{registrationController.allUgostiteljTypes}"/>
                     </p:selectOneMenu>
+                    <p:outputLabel value=""/>
+
 
                     <p:outputLabel value="UserName"/>
-                    <p:inputText id="userName" value="#{registrationController.ugostitelj.username}" label="UserName" />
+                    <p:inputText required="true" requiredMessage="Username can't be emtpy!" id="username" value="#{registrationController.ugostitelj.username}" label="UserName" />
+                    <p:message for="username"/>
 
                     <p:outputLabel value="Password"/>
-                    <p:password id="password" value="#{registrationController.ugostitelj.password}" label="Password"/>
+                    <p:password required="true" requiredMessage="Password can't be emtpy!" id="password" value="#{registrationController.ugostitelj.password}" label="Password"/>
+                    <p:message for="password"/>
 
                     <p:outputLabel value="Email"/>
-                    <p:inputText id="email" value="#{registrationController.ugostitelj.email}"/>
+                    <p:inputText id="email" requiredMessage="Email can't be empty!" validatorMessage="Email not in the correct format!" value="#{registrationController.ugostitelj.email}">
+                        <f:validateRegex pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"/>
+                    </p:inputText>
+                    <p:message for="email"/>
 
                     <p:outputLabel value=""/>
-                    <p:commandButton action="#{registrationController.registerUgostitelj()}" value="Register"/>
+                    <p:commandButton action="#{registrationController.registerUgostitelj()}" value="Register" update="centralForm"/>
 
                 </h:panelGrid>
-                <h:panelGrid rendered="#{!registrationController.renderUgostiteljData()}" id="clientGrid" columns="2">
+                <h:panelGrid rendered="#{registrationController.renderTouristData()}" id="touristGrid" columns="3">
 
 
                     <p:outputLabel value="Username"/>
-                    <p:inputText id="clientUserName" value="#{registrationController.tourist.username}" label="UserName" />
+                    <p:inputText required="true" requiredMessage="Username can't be emtpy!" id="touristUsername" value="#{registrationController.tourist.username}" label="UserName" />
+                    <p:message for="touristUsername"/>
+
 
                     <p:outputLabel value="Password"/>
-                    <p:password id="clientPassword" value="#{registrationController.tourist.password}" label="Password"/>
+                    <p:password required="true" requiredMessage="Password can't be emtpy!" id="touristPassword" value="#{registrationController.tourist.password}" label="Password"/>
+                    <p:message for="touristPassword"/>
+
 
                     <p:outputLabel value="FirstName"/>
-                    <p:inputText id="clientFirstName" value="#{registrationController.tourist.firstName}" label="FirstName"/>
+                    <p:inputText required="true" id="touristFirstName" value="#{registrationController.tourist.firstName}" label="FirstName"/>
+                    <p:message for="touristFirstName"/>
 
                     <p:outputLabel value="LastName"/>
-                    <p:inputText id="clientLastName" value="#{registrationController.tourist.lastName}"/>
+                    <p:inputText required="true" requiredMessage="Last name can't be emtpy!" id="touristLastName" value="#{registrationController.tourist.lastName}"/>
+                    <p:message for="touristLastName"/>
 
                     <p:outputLabel value="Email"/>
-                    <p:inputText id="clientEmail" value="#{registrationController.tourist.email}"/>
+                    <p:inputText required="true" requiredMessage="Email can't be emtpy!" id="touristEmail" value="#{registrationController.tourist.email}">
+                        <f:validateRegex pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"/>
+                    </p:inputText>
+                    <p:message for="touristEmail"/>
 
                     <p:outputLabel value=""/>
-                    <p:commandButton action="#{registrationController.registerClient()}" value="Register" update="clientGrid"/>
+                    <p:commandButton action="#{registrationController.registerTourist()}" value="Register" update="centralForm"/>
+
+                </h:panelGrid>
+                <h:panelGrid rendered="#{registrationController.renderPrivilegedUserData()}" id="privilegedGrid" columns="3">
+
+
+                    <p:outputLabel value="Username"/>
+                    <p:inputText required="true" requiredMessage="Username can't be emtpy!" id="privilegedUsername" value="#{registrationController.privilegedUser.username}" label="UserName" />
+                    <p:message for="privilegedUsername"/>
+
+
+                    <p:outputLabel value="Password"/>
+                    <p:password required="true" requiredMessage="Password can't be emtpy!" id="privilegedPassword" value="#{registrationController.privilegedUser.password}" label="Password"/>
+                    <p:message for="privilegedPassword"/>
+
+
+                    <p:outputLabel value="FirstName"/>
+                    <p:inputText required="true" id="privilegedFirstName" value="#{registrationController.privilegedUser.firstName}" label="FirstName"/>
+                    <p:message for="privilegedFirstName"/>
+
+                    <p:outputLabel value="LastName"/>
+                    <p:inputText required="true" requiredMessage="Last name can't be emtpy!" id="privilegedLastName" value="#{registrationController.privilegedUser.lastName}"/>
+                    <p:message for="privilegedLastName"/>
+
+                    <p:outputLabel value="Email"/>
+                    <p:inputText required="true" requiredMessage="Email can't be emtpy!" id="privilegedEmail" value="#{registrationController.privilegedUser.email}">
+                        <f:validateRegex pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"/>
+                    </p:inputText>
+                    <p:message for="privilegedEmail"/>
+
+                    <p:outputLabel value=""/>
+                    <p:commandButton action="#{registrationController.registerPrivileged()}" value="Register" update="centralForm"/>
 
                 </h:panelGrid>
             </p:panel>
-            <p><h:link value="Login page" outcome="login" /></p>
-
 
     </ui:define>
 </ui:composition>

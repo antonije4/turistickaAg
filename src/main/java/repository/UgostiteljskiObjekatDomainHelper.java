@@ -33,6 +33,7 @@ public class UgostiteljskiObjekatDomainHelper extends DomainHelper{
 
         addFilter(query, ugostiteljskiObjekatSearchParams.getName(), qUgostiteljskiObjekat.name::like);
         addFilter(query, ugostiteljskiObjekatSearchParams.getUgostiteljUsername(), qUgostiteljskiObjekat.ugostitelj.username::likeIgnoreCase);
+        addFilter(query, ugostiteljskiObjekatSearchParams.getCategorized(), qUgostiteljskiObjekat.categorized::eq);
 
         List<UgostiteljskiObjekat> resultList = query.fetch();
         return ResultList.create(resultList, resultList.size());

@@ -22,6 +22,11 @@
                     <p:inputText class="wh-select-input wh-select-info-item"
                                  id="ugostiteljUsername" value="#{ugostiteljskiObjekatSearchController.searchParams.ugostiteljUsername}" />
                 </h:panelGrid>
+                <h:panelGrid columns="1" style="width:100%;">
+                    <p:outputLabel class="wh-search-label" for="categorized"
+                                   value="Categorized" />
+                    <p:selectBooleanButton id="categorized" onLabel="Yes" offLabel="No" value="#{ugostiteljskiObjekatSearchController.searchParams.categorized}"/>
+                </h:panelGrid>
             </h:panelGrid>
         </p:panel>
         <h:panelGrid columns="2" style="width: 100%;">
@@ -52,7 +57,7 @@
             </h:panelGrid>
         </h:panelGrid>
         <p:dataTable id="searchTable"
-                     var="item" styleClass="udls-column-toggler-table"
+                     var="item"
                      rendered="#{not empty ugostiteljskiObjekatSearchController.results.list}"
                      value="#{ugostiteljskiObjekatSearchController.results.list}"
                      emptyMessage="No records found"
@@ -75,17 +80,8 @@
                 </ui:include>
             </p:column>
             <p:column>
-                <p:commandButton rendered="#{userController.isTourist() or userController.isUgostitelj()}" value="Make a reservation" action="#{navigationController.goToReservation(item.id)}"/>
+                <p:commandButton rendered="#{userController.touristLoggedIn() or userController.ugostiteljLoggedIn()}" value="Make a reservation" action="#{navigationController.goToReservation(item.id)}"/>
             </p:column>
-
-
-            <f:facet name="header">
-                <div class="udls-column-toggler-container">
-                    <p:commandButton id="toggler" type="button"
-                                     value="Displayed columns" style="float:right" icon="fa fa-angle-up" />
-                    <p:columnToggler datasource="searchTable" trigger="toggler" />
-                </div>
-            </f:facet>
 
         </p:dataTable>
     </ui:define>

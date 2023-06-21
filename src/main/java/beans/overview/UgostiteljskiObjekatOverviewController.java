@@ -1,6 +1,9 @@
 package beans.overview;
 
+import beans.general.NavigationController;
 import beans.general.UserController;
+import entities.CategorizationRequest;
+import entities.Reservation;
 import entities.Ugostitelj;
 import entities.UgostiteljskiObjekat;
 import lombok.Getter;
@@ -26,13 +29,18 @@ public class UgostiteljskiObjekatOverviewController extends BaseOverview {
     private UserController userController;
     @Inject
     private Util util;
-    private boolean inputDisabled;
+
+    @Inject
+    private NavigationController navigationController;
+
+    private boolean inputEnabled;
     private long ugostiteljskiObjekatId;
 
 
     public void init() {
         super.init();
         owner = ugostiteljskiObjekat.getUgostitelj();
+        inputEnabled = false;
     }
 
     @Override
@@ -59,21 +67,31 @@ public class UgostiteljskiObjekatOverviewController extends BaseOverview {
 
     public void saveChanges() {
         ugostiteljskiObjekatDomainHelper.updateUgostiteljskiObjekat(ugostiteljskiObjekat);
-        inputDisabled = true;
+        inputEnabled = false;
     }
 
-    public boolean inputDisabled() {
-       return inputDisabled;
+    public boolean inputEnabled() {
+       return inputEnabled && canEdit();
     }
 
     public boolean canEdit() {
-        if (ugostiteljskiObjekat == null) {
+        if (userController.loggedIn()) {
+            return userController.getLoggedInUser().getId() == ugostiteljskiObjekat.getUgostitelj().getId();
+        }
+        else {
             return false;
         }
-        return userController.getLoggedInUser().getId() == ugostiteljskiObjekat.getUgostitelj().getId();
     }
 
     public void enableInput() {
-        inputDisabled = false;
+        inputEnabled = true;
+    }
+
+    public void editReservation(Reservation reservation) {
+        navigationController.navigateToReservationOverview(reservation.getId());
+    }
+
+    public void editCategorizationRequest(CategorizationRequest categorizationRequest) {
+        navigationController.navigateTo(reservation.getId());
     }
 }

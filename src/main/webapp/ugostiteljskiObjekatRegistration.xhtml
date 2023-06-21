@@ -15,7 +15,7 @@
             <h:panelGrid id="ugostiteljGrid" columns="2">
 
                 <p:outputLabel value="Owner"/>
-                <p:inputText disabled="true" value="#{ugostiteljskiObjekatRegistrationController.owner.firstName} #{ugostiteljskiObjekatOverviewController.owner.lastName}"/>
+                <p:inputText disabled="true" value="#{ugostiteljskiObjekatRegistrationController.owner.firstName} #{ugostiteljskiObjekatRegistrationController.owner.lastName}"/>
 
                 <p:outputLabel value="Name"/>
                 <p:inputText id="name" required="true" requiredMessage="Name of Ugostiteljski Objekat is required!" value="#{ugostiteljskiObjekatRegistrationController.ugostiteljskiObjekat.name}" label="Name" />
@@ -25,7 +25,6 @@
 
             </h:panelGrid>
         </p:panel>
-        <p><h:link value="Login page" outcome="login" /></p>
 
 
     </ui:define>

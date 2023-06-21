@@ -1,0 +1,124 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/overviewLayout.xhtml">
+
+   <f:metadata>
+      <f:viewAction action="#{ugostiteljOverviewController.init()}" />
+   </f:metadata>
+
+   <ui:define name="actions">
+      <h:panelGrid style="width: 100%;text-align: center;">
+
+         <p:commandButton rendered="#{ugostiteljOverviewController.currentUgostiteljLoggedIn()}" style="width: 100%" action="#{ugostiteljOverviewController.enableInput()}" value="Edit" update="ugostiteljGrid"/>
+         <p:commandButton rendered="#{ugostiteljOverviewController.currentUgostiteljLoggedIn()}" style="width: 100%" action="#{ugostiteljOverviewController.saveChanges()}" value="Save changes" update="ugostiteljGrid"/>
+      </h:panelGrid>
+   </ui:define>
+
+   <ui:define name="navigations">
+      <p:menuitem
+              value=" Submit categorization request "
+              icon="fa fa-play"
+              outcome="#{navigationController.goToSubmitCategorizationRequest()}"
+              actionListener="#"
+              rendered="#{ugostiteljOverviewController.currentUgostiteljLoggedIn()}" />
+   </ui:define>
+
+   <ui:define name="mainContent">
+
+      <p:panel header="Ugostitelj overview">
+
+         <h:panelGrid  columns="4" id="ugostiteljGrid" cellspacing="10" columnClasses=",,insideDetailsColumn70,">
+            <p:outputLabel value="UserName"/>
+            <p:inputText disabled="#{ugostiteljOverviewController.inputDisabled()}" id="userName" value="#{ugostiteljOverviewController.ugostitelj.username}" label="Username"/>
+
+            <p:outputLabel value="Email"/>
+            <p:inputText disabled="#{ugostiteljOverviewController.inputDisabled()}" id="email" value="#{ugostiteljOverviewController.ugostitelj.email}"/>
+
+
+         </h:panelGrid>
+
+      </p:panel>
+
+      <p:panel id="ugostiteljskiObjektiPanel" toggleable="true" collapsed="true">
+
+         <f:facet name="header">
+            <p:outputLabel id="ugostiteljskiObjektiPanelId" value="Ugostiteljski objekti : #{ugostiteljOverviewController.ugostitelj.ugostiteljskiObjekti.size()}" />
+         </f:facet>
+
+         <ui:decorate template="/common/tableTemplate.xhtml">
+            <ui:param name="tableId" value="ugostiteljskiObjektiTableId" />
+            <ui:param name="tableWV" value="ugostiteljskiObjektiTable" />
+            <ui:param name="tableItems" value="#{ugostiteljOverviewController.ugostitelj.ugostiteljskiObjekti}" />
+
+            <ui:define name="tableContent">
+               <f:attribute name="sortBy" value="#{item.name}" />
+               <f:attribute name="sortOrder" value="ascending" />
+
+               <p:column headerText="Name" filterBy="#{item.name}" filterMatchMode="contains"
+                         sortBy="#{item.name}">
+                  <ui:include src="/link/ugostiteljskiObjekatLink.xhtml" >
+                     <ui:param name="name" value="#{item.name}"/>
+                     <ui:param name="id" value="#{item.id}"/>
+                  </ui:include>
+               </p:column>
+               <p:column headerText="Categorized"
+                         sortBy="#{item.categorized}">
+                  <p:outputLabel value="#{item.categorized}"/>
+               </p:column>
+               <p:column headerText="Categorization expiry"
+                         sortBy="#{item.categorizationExpiryDate}">
+                  <p:outputLabel rendered="#{item.categorized}" value="#{item.categorizationExpiryDate}"/>
+               </p:column>
+               <p:column>
+                  <p:commandButton value="Make a reservation" action="#{navigationController.navigateToReservation(item.id)}"/>
+               </p:column>
+            </ui:define>
+
+         </ui:decorate>
+
+      </p:panel>
+      <p:panel id="categorizationRequestsPanel" toggleable="true" collapsed="true">
+
+         <f:facet name="header">
+            <p:outputLabel id="categorizationRequestsPanelId" value="Categorization requests : #{ugostiteljOverviewController.ugostitelj.categorizationRequests.size()}" />
+         </f:facet>
+
+         <ui:decorate template="/common/tableTemplate.xhtml">
+            <ui:param name="tableId" value="categorizationRequestsTableId" />
+            <ui:param name="tableWV" value="categorizationRequestsTable" />
+            <ui:param name="tableItems" value="#{ugostiteljOverviewController.ugostitelj.categorizationRequests}" />
+
+            <ui:define name="tableContent">
+               <f:attribute name="sortBy" value="#{item.dateOfRequest}" />
+               <f:attribute name="sortOrder" value="ascending" />
+
+               <p:column headerText="Ugostiteljski objekat" filterBy="#{item.ugostiteljskiObjekat.name}" filterMatchMode="contains"
+                         sortBy="#{item.ugostiteljskiObjekat.name}">
+                  <ui:include src="/link/ugostiteljskiObjekatLink.xhtml" >
+                     <ui:param name="name" value="#{item.ugostiteljskiObjekat.name}"/>
+                     <ui:param name="id" value="#{item.ugostiteljskiObjekat.id}"/>
+                  </ui:include>
+               </p:column>
+               <p:column headerText="Date of request"
+                         sortBy="#{item.dateOfRequest}">
+                  <p:outputLabel value="#{item.dateOfRequest}"/>
+               </p:column>
+               <p:column headerText="Reviewed"
+                         sortBy="#{item.reviewed}">
+                  <p:outputLabel value="#{item.reviewed}"/>
+               </p:column>
+               <p:column headerText="Approved"
+                         sortBy="#{item.approved}">
+                  <p:outputLabel rendered="#{item.reviewed}" value="#{item.approved}"/>
+               </p:column>
+            </ui:define>
+
+         </ui:decorate>
+
+      </p:panel>
+
+   </ui:define>
+</ui:composition>

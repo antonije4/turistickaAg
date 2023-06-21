@@ -2,18 +2,23 @@ package beans.overview;
 
 
 import beans.general.MessageController;
+import beans.general.NavigationController;
 import beans.general.UserController;
 import entities.Reservation;
+import entities.Tourist;
+import entities.UgostiteljskiObjekat;
+import entities.User;
 import enums.MessageType;
 import lombok.Getter;
 import lombok.Setter;
 import repository.ReservationDomainHelper;
+import repository.TouristDomainHelper;
+import repository.UgostiteljskiObjekatDomainHelper;
 import util.Util;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -30,6 +35,12 @@ public class ReservationOverviewController extends BaseOverview {
     private boolean inputEnabled;
     @Inject
     private ReservationDomainHelper reservationDomainHelper;
+    @Inject
+    private TouristDomainHelper touristDomainHelper;
+    @Inject
+    private UgostiteljskiObjekatDomainHelper ugostiteljskiObjekatDomainHelper;
+    @Inject
+    private NavigationController navigationController;
     @Inject
     private MessageController messageController;
     @Inject
@@ -53,7 +64,23 @@ public class ReservationOverviewController extends BaseOverview {
     }
 
     public boolean canEdit() {
-        return reservation.getStartingDate().isAfter(LocalDate.now());
+        return reservation.getStartingDate().isAfter(LocalDate.now()) && (isUgostiteljskiObjekatOwnerLoggedIn() || isTouristOwnerLoggedIn());
+    }
+
+    public boolean isUgostiteljskiObjekatOwnerLoggedIn() {
+        if (!userController.loggedIn()) {
+            return false;
+        }
+        User user = userController.getLoggedInUser();
+        return user.getId() == reservation.getUgostiteljskiObjekat().getUgostitelj().getId() && userController.ugostiteljLoggedIn();
+    }
+
+    public boolean isTouristOwnerLoggedIn() {
+        if (!userController.loggedIn()) {
+            return false;
+        }
+        User user = userController.getLoggedInUser();
+        return user.getId() == reservation.getTourist().getId() && userController.touristLoggedIn();
     }
 
     public void enableInput() {
@@ -68,8 +95,27 @@ public class ReservationOverviewController extends BaseOverview {
         messageController.showInfoMessage(MessageType.MediumLiveMessage, "Successfully updated reservation!");
     }
 
+    public void delete() {
+        unlinkFromTourist();
+        unlinkFromUgostiteljskiObjekat();
+        reservationDomainHelper.deleteReservation(reservation);
+        navigationController.navigateToUgostiteljskiObjekatOverview(reservation.getUgostiteljskiObjekat().getId());
+    }
+
+    private void unlinkFromTourist() {
+        Tourist tourist = reservation.getTourist();
+        tourist.unlinkReservation(reservation);
+        touristDomainHelper.update(tourist);
+    }
+
+    private void unlinkFromUgostiteljskiObjekat() {
+        UgostiteljskiObjekat ugostiteljskiObjekat = reservation.getUgostiteljskiObjekat();
+        ugostiteljskiObjekat.unlinkReservation(reservation);
+        ugostiteljskiObjekatDomainHelper.updateUgostiteljskiObjekat(ugostiteljskiObjekat);
+    }
+
     public boolean canEditBoravisnaTaksa() {
-        return inputEnabled && userController.isUgostitelj();
+        return inputEnabled && userController.ugostiteljLoggedIn();
     }
 
     protected boolean processParams() {

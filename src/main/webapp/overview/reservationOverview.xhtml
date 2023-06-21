@@ -3,16 +3,26 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
-                template="/layout/layout.xhtml">
+                template="/layout/overviewLayout.xhtml">
 
     <f:metadata>
         <f:viewAction action="#{reservationOverviewController.init()}" />
     </f:metadata>
 
-    <ui:define name="content">
+    <ui:define name="actions">
+        <h:panelGrid style="width: 100%;text-align: center;">
 
-        <p:panel id="panelpanel">
-            <h:panelGrid id="reservationOverviewGrid" columns="2">
+            <p:commandButton rendered="#{reservationOverviewController.canEdit()}" style="width: 100%" action="#{reservationOverviewController.enableInput()}" value="Edit" update="reservationGrid"/>
+            <p:commandButton rendered="#{reservationOverviewController.canEdit()}" style="width: 100%" action="#{reservationOverviewController.saveChanges()}" value="Save changes" update="reservationGrid"/>
+            <p:commandButton rendered="#{reservationOverviewController.canEdit() and userController.ugostiteljLoggedIn()}" style="width: 100%" action="#{reservationOverviewController.delete()}" value="Delete reservation" update="reservationGrid"/>
+        </h:panelGrid>
+    </ui:define>
+
+    <ui:define name="mainContent">
+
+        <p:panel header="Reservation overview">
+
+            <h:panelGrid  columns="4" id="reservationGrid" cellspacing="10" columnClasses=",,insideDetailsColumn70,">
 
                 <p:outputLabel value="Ugostiteljski objekat: "/>
                 <ui:include src="/link/ugostiteljskiObjekatLink.xhtml" >
@@ -29,10 +39,8 @@
                 <p:outputLabel value="Boravisna taksa paid: "/>
                 <p:selectBooleanButton disabled="#{!reservationOverviewController.canEditBoravisnaTaksa()}" onLabel="Yes" offLabel="No" value="#{reservationOverviewController.reservation.boravisnaTaksaPaid}"/>
 
-                <p:commandButton rendered="#{reservationOverviewController.canEdit()}" action="#{reservationOverviewController.enableInput()}" value="Edit Reservation" update="reservationOverviewGrid"/>
-                <p:commandButton rendered="#{reservationOverviewController.canEdit()}" disabled="#{!reservationOverviewController.inputEnabled}" action="#{reservationOverviewController.saveChanges()}" value="Save changes" update="reservationOverviewGrid"/>
-
             </h:panelGrid>
+
         </p:panel>
     </ui:define>
 </ui:composition>

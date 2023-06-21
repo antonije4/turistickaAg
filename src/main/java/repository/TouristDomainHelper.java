@@ -39,7 +39,7 @@ public class TouristDomainHelper extends DomainHelper {
     }
 
     public void update(Tourist tourist) {
-        entityManager.persist(tourist);
+        entityManager.merge(tourist);
     }
 
     public void create(Tourist tourist) {

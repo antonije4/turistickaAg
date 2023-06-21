@@ -1,5 +1,6 @@
 package beans.general;
 
+import entities.PrivilegedUser;
 import entities.Tourist;
 import entities.Inbox;
 import entities.Ugostitelj;
@@ -9,6 +10,7 @@ import enums.UserType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import repository.PrivilegedUserDomainHelper;
 import repository.TouristDomainHelper;
 import repository.MessageDomainHelper;
 import repository.UgostiteljDomainHelper;
@@ -29,15 +31,15 @@ public class RegistrationController implements Serializable {
 
     @Getter
     @Setter
-    private Set<UserType> allUserTypes;
+    private Set<UserType> allUserTypes = new HashSet<>(EnumSet.allOf(UserType.class));;
 
     @Getter
     @Setter
-    private Set<UgostiteljType> allUgostiteljTypes;
+    private Set<UgostiteljType> allUgostiteljTypes = new HashSet<>(Arrays.asList(UgostiteljType.values()));
 
     @Getter
     @Setter
-    private UserType userType;
+    private UserType userType = UserType.Ugostitelj;
 
     @Getter
     @Setter
@@ -47,11 +49,18 @@ public class RegistrationController implements Serializable {
     @Setter
     private Ugostitelj ugostitelj = new Ugostitelj();
 
+    @Getter
+    @Setter
+    private PrivilegedUser privilegedUser = new PrivilegedUser();
+
     @Inject
     private TouristDomainHelper touristDomainHelper;
 
     @Inject
     private UgostiteljDomainHelper ugostiteljDomainHelper;
+
+    @Inject
+    private PrivilegedUserDomainHelper privilegedUserDomainHelper;
 
     @Inject
     private MessageDomainHelper messageDomainHelper;
@@ -63,43 +72,81 @@ public class RegistrationController implements Serializable {
     private NavigationController navigationController;
 
     public void init() {
-        userType = UserType.Ugostitelj;
-        allUserTypes = new HashSet<>(EnumSet.allOf(UserType.class));
-        allUgostiteljTypes = new HashSet<>(Arrays.asList(UgostiteljType.values()));
+
     }
 
     public boolean renderUgostiteljData() {
         return userType.equals(UserType.Ugostitelj);
     }
 
+    public boolean renderTouristData() {
+        return userType.equals(UserType.Turista);
+    }
+
+    public boolean renderPrivilegedUserData() {
+        return userType.equals(UserType.PrivilegedUser);
+    }
+
     public void registerUgostitelj() {
-        if (!checkPreconditions()) {
-            return;
+        if (checkPreconditionsUgostitelj()) {
+            ugostiteljDomainHelper.createUgostitelj(ugostitelj);
+            Inbox inbox = new Inbox();
+            inbox.setUgostitelj(ugostitelj);
+            ugostitelj.setInbox(inbox);
+            messageDomainHelper.createInbox(inbox);
+            ugostiteljDomainHelper.updateUgostitelj(ugostitelj);
+            navigationController.navigateToLogin();
         }
-        ugostiteljDomainHelper.createUgostitelj(ugostitelj);
-        Inbox inbox = new Inbox();
-        inbox.setUgostitelj(ugostitelj);
-        ugostitelj.setInbox(inbox);
-        messageDomainHelper.createInbox(inbox);
-        ugostiteljDomainHelper.updateUgostitelj(ugostitelj);
-        navigationController.navigateToLogin();
     }
 
-    public void registerClient() {
-        if (!checkPreconditions()) {
-            return;
+    public void registerTourist() {
+        if (checkPreconditionsTourist()) {
+            touristDomainHelper.create(tourist);
+            navigationController.navigateToLogin();
         }
-        touristDomainHelper.create(tourist);
-//        log.info("User {} successfully registered.", client.getUsername());
-        navigationController.navigateToLogin();
     }
 
-    private boolean checkPreconditions() {
+    public void registerPrivileged() {
+        if (checkPreconditionsPrivileged()) {
+            privilegedUserDomainHelper.create(privilegedUser);
+            navigationController.navigateToLogin();
+        }
+    }
+
+    private boolean checkPreconditionsTourist() {
         if (touristDomainHelper.getByEmail(tourist.getEmail()) != null) {
-            messageController.showErrorMessage(MessageType.ShortLiveMessage, "User with email "+ tourist.getEmail() +" already exists.");
-//            log.error("User with email {} already exists.", client.getEmail());
+            messageController.showErrorMessage(MessageType.ShortLiveMessage, "Tourist with email "+ privilegedUser.getEmail() +" already exists.");
+            return false;
+        }
+        if (touristDomainHelper.getByUsername(tourist.getUsername()) != null) {
+            messageController.showErrorMessage(MessageType.ShortLiveMessage, "Tourist with username "+ privilegedUser.getUsername() +" already exists.");
             return false;
         }
         return true;
     }
+
+    private boolean checkPreconditionsUgostitelj() {
+        if (ugostiteljDomainHelper.getUgostiteljByEmail(ugostitelj.getEmail()) != null) {
+            messageController.showErrorMessage(MessageType.ShortLiveMessage, "Ugostitelj with email "+ ugostitelj.getEmail() +" already exists.");
+            return false;
+        }
+        if (ugostiteljDomainHelper.getUgostiteljByUsername(ugostitelj.getUsername()) != null) {
+            messageController.showErrorMessage(MessageType.ShortLiveMessage, "Ugostitelj with username "+ ugostitelj.getUsername() +" already exists.");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkPreconditionsPrivileged() {
+        if (privilegedUserDomainHelper.getByEmail(privilegedUser.getEmail()) != null) {
+            messageController.showErrorMessage(MessageType.ShortLiveMessage, "Privileged user with email "+ privilegedUser.getEmail() +" already exists.");
+            return false;
+        }
+        if (privilegedUserDomainHelper.getByUsername(privilegedUser.getUsername()) != null) {
+            messageController.showErrorMessage(MessageType.ShortLiveMessage, "Privileged user with username "+ privilegedUser.getUsername() +" already exists.");
+            return false;
+        }
+        return true;
+    }
+
 }

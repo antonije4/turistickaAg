@@ -1,6 +1,7 @@
 package beans.reservation;
 
 import beans.general.MessageController;
+import beans.general.NavigationController;
 import beans.general.UserController;
 import entities.Reservation;
 import entities.Tourist;
@@ -30,6 +31,7 @@ public class ReservationController implements Serializable {
     private List<Date> dateRange;
     private Tourist tourist;
     private String touristUsername;
+    private int numberOfPeople;
     private UgostiteljskiObjekat ugostiteljskiObjekat;
     private String boravisnaTaksa;
     @Inject
@@ -45,14 +47,19 @@ public class ReservationController implements Serializable {
     @Inject
     private MessageController messageController;
 
+    @Inject
+    private NavigationController navigationController;
+
+
     public void init() {
         if (processParams()) {
             //throw ex
         }
-        if (userController.isTourist()) {
+        if (userController.touristLoggedIn()) {
             tourist = (Tourist) userController.getLoggedInUser();
             touristUsername = tourist.getUsername();
         }
+        numberOfPeople = 1;
     }
 
     public boolean touristLoggedIn() {
@@ -68,18 +75,25 @@ public class ReservationController implements Serializable {
         //checkPreconditions
         if (!touristLoggedIn()) {
             tourist = touristDomainHelper.getByUsername(touristUsername);
+            if (tourist == null) {
+                messageController.showErrorMessage(MessageType.MediumLiveMessage, "Tourist with username "+touristUsername+" doesn't exist!");
+                return;
+            }
         }
-        Reservation reservation = Reservation.builder()
+        Reservation reservation = new Reservation.Builder()
                 .boravisnaTaksaPaid(false)
                 .boravisnaTaksaPrice(boravisnaTaksa)
+                .numberOfPeople(numberOfPeople)
                 .tourist(tourist)
                 .ugostiteljskiObjekat(ugostiteljskiObjekat)
                 .startingDate(dateToLocalDate(dateRange.get(0)))
                 .endingDate(dateToLocalDate(dateRange.get(1)))
                 .build();
+
         reservationDomainHelper.createReservation(reservation);
         tourist.getReservationList().add(reservation);
         touristDomainHelper.update(tourist);
+        navigationController.navigateToReservationOverview(reservation.getId());
         messageController.showInfoMessage(MessageType.MediumLiveMessage, "Successfully created reservation.");
     }
 

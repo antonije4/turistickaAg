@@ -23,7 +23,7 @@ public class NavigationController {
     private static final String RESERVATION = "/reservation.xhtml";
 
 
-    private static final String UGOSTITELJ_OVERVIEW = "/overview/ugostiteljOverview.xhtml";
+    private static final String UGOSTITELJ_OVERVIEW = "/overview/testOverview.xhtml";
     private static final String UGOSTITELJSKI_OBJEKAT_OVERVIEW = "/overview/ugostiteljskiObjekatOverview.xhtml";
     private static final String CLIENT_OVERVIEW = "/overview/clientOverview.xhtml";
     private static final String RESERVATION_OVERVIEW = "/overview/reservationOverview.xhtml";
@@ -84,6 +84,15 @@ public class NavigationController {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         try {
             externalContext.redirect(externalContext.getRequestContextPath() + goToReservationOverview(id));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void navigateToReservation(long id) {
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            externalContext.redirect(externalContext.getRequestContextPath() + goToReservation(id));
         } catch (IOException e) {
             e.printStackTrace();
         }

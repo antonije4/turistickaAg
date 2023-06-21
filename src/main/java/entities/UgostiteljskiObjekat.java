@@ -23,13 +23,21 @@ public class UgostiteljskiObjekat implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     private Ugostitelj ugostitelj;
 
-    @OneToMany(mappedBy = "ugostiteljskiObjekat", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "ugostiteljskiObjekat",cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     private List<CategorizationRequest> categorizationRequests;
 
-    @OneToMany(mappedBy = "ugostiteljskiObjekat")
+    @OneToMany(mappedBy = "ugostiteljskiObjekat", fetch = FetchType.EAGER)
     private List<Reservation> reservations;
 
     private boolean categorized;
     private LocalDate categorizationExpiryDate;
     private boolean notifiedOfCategorizationExpiry;
+
+    public void unlinkReservation(Reservation reservation) {
+        reservations.removeIf(reservation1 -> reservation1.getId() == reservation.getId());
+    }
+
+    public void unlinkCategorizationRequest(CategorizationRequest categorizationRequest) {
+        categorizationRequests.removeIf(categorizationRequest1 -> categorizationRequest1.getId() == categorizationRequest.getId());
+    }
 }

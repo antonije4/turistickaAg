@@ -30,4 +30,8 @@ public class ReservationDomainHelper extends DomainHelper {
                 .where(qReservation.id.eq(reservationId));
         return query.fetchOne();
     }
+
+    public void deleteReservation(Reservation reservation) {
+        entityManager.remove(reservation);
+    }
 }

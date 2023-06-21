@@ -10,6 +10,7 @@ import entities.mappers.UgostiteljskiObjekatMapper;
 import lombok.Getter;
 import lombok.Setter;
 import repository.CategorizationRequestDomainHelper;
+import repository.UgostiteljDomainHelper;
 import repository.UgostiteljskiObjekatDomainHelper;
 
 import javax.faces.view.ViewScoped;
@@ -41,10 +42,13 @@ public class SubmitCategorizationRequestController implements Serializable {
     private UgostiteljskiObjekatDomainHelper ugostiteljskiObjekatDomainHelper;
     @Inject
     private CategorizationRequestDomainHelper categorizationRequestDomainHelper;
+    @Inject
+    private UgostiteljDomainHelper ugostiteljDomainHelper;
 
     public void init() {
         categorizationRequest = new CategorizationRequest();
-        ugostitelj = (Ugostitelj) userController.getLoggedInUser();
+        String ugostiteljUsername = userController.getLoggedInUser().getUsername();
+        ugostitelj = ugostiteljDomainHelper.getUgostiteljByUsername(ugostiteljUsername);
         categorizationRequestRowList = UgostiteljskiObjekatMapper.INSTANCE.ugostiteljskiObjekatListToCategorizationRow(ugostitelj.getUgostiteljskiObjekti());
         selectedUgostiteljskiObjekatIndex = -1;
         inputEnabled = true;
@@ -56,6 +60,7 @@ public class SubmitCategorizationRequestController implements Serializable {
         if (!row.isSelected()) {
             selectedCategorizationRow = null;
             selectedUgostiteljskiObjekat = null;
+            selectedUgostiteljskiObjekatIndex = -1;
         } else {
             if (selectedUgostiteljskiObjekatIndex >= 0) {
                 categorizationRequestRowList.get(selectedUgostiteljskiObjekatIndex).setSelected(false);

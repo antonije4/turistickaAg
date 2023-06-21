@@ -1,6 +1,7 @@
 package beans.overview;
 
 import beans.general.NavigationController;
+import beans.general.UserController;
 import entities.Reservation;
 import entities.Tourist;
 import lombok.Getter;
@@ -28,9 +29,12 @@ public class TouristOverviewController extends BaseOverview {
     private TouristDomainHelper touristDomainHelper;
     @Inject
     private NavigationController navigationController;
+    @Inject
+    private UserController userController;
 
     public void init() {
         super.init();
+        inputDisabled = true;
     }
 
     public boolean inputDisabled() {
@@ -63,6 +67,14 @@ public class TouristOverviewController extends BaseOverview {
             return true;
         } catch (Exception e) {
             //log exception
+            return false;
+        }
+    }
+
+    public boolean currentTouristLoggedIn() {
+        if (userController.loggedIn()) {
+            return tourist.getId() == userController.getLoggedInUser().getId();
+        } else {
             return false;
         }
     }

@@ -3,6 +3,7 @@ package repository;
 import com.querydsl.jpa.impl.JPAQuery;
 import entities.CategorizationRequest;
 import entities.QCategorizationRequest;
+import entities.Reservation;
 import repository.data.ResultList;
 
 import javax.ejb.Stateless;
@@ -33,5 +34,16 @@ public class CategorizationRequestDomainHelper extends DomainHelper {
 
         List<CategorizationRequest> resultList = query.fetch();
         return ResultList.create(resultList, resultList.size());
+    }
+
+    public CategorizationRequest getCategorizationRequestById(long id) {
+        JPAQuery<CategorizationRequest> query = new JPAQuery<>(entityManager).select(qCategorizationRequest)
+                .from(qCategorizationRequest)
+                .where(qCategorizationRequest.id.eq(id));
+        return query.fetchOne();
+    }
+
+    public void deleteCategorizationRequest(CategorizationRequest categorizationRequest) {
+        entityManager.remove(categorizationRequest);
     }
 }

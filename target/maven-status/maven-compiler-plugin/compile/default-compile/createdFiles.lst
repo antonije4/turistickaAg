@@ -1,4 +1,5 @@
 beans\overview\ReservationOverviewController.class
+entities\Reservation$Builder.class
 entities\info\AdditionalInfo.class
 entities\mappers\UgostiteljMapperImpl.class
 entities\QUgostitelj.class
@@ -24,6 +25,7 @@ beans\overview\UgostiteljOverviewController.class
 entities\QTourist.class
 repository\MessageDomainHelper.class
 entities\CategorizationRequest.class
+entities\Reservation$1.class
 repository\TouristDomainHelper.class
 entities\Ugostitelj.class
 enums\MessageType.class
@@ -37,10 +39,10 @@ beans\overview\UgostiteljskiObjekatOverviewController.class
 enums\UgostiteljType.class
 beans\inbox\InboxController.class
 repository\ReservationDomainHelper.class
+repository\PrivilegedUserDomainHelper.class
 dto\CategorizationRequestRow.class
 entities\info\QAdditionalInfo.class
 entities\info\FizickoLiceAdditionalInfo.class
-entities\Reservation$ReservationBuilder.class
 beans\general\UserController.class
 beans\reservation\ReservationController.class
 beans\overview\TouristOverviewController.class

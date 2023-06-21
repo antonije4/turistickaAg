@@ -12,22 +12,30 @@
     <ui:define name="content">
 
         <p:panel id="panelpanel">
-            <h:panelGrid id="reservationGrid" columns="2">
+            <h:panelGrid id="reservationGrid" columns="3">
 
                 <p:outputLabel value="Ugostiteljski objekat: "/>
                 <ui:include src="/link/ugostiteljskiObjekatLink.xhtml" >
                     <ui:param name="name" value="#{reservationController.ugostiteljskiObjekat.name}" />
                     <ui:param name="id" value="#{reservationController.ugostiteljskiObjekat.id}" />
                 </ui:include>
+                <p:outputLabel/>
 
                 <p:outputLabel value="Tourist username: "/>
-                <p:inputText disabled="#{reservationController.touristLoggedIn()}" value="#{reservationController.touristUsername}"/>
+                <p:inputText id="touristUsername" required="true" requiredMessage="Tourist username can't be empty!" disabled="#{reservationController.touristLoggedIn()}" value="#{reservationController.touristUsername}"/>
+                <p:message for="touristUsername"/>
+
+                <p:outputLabel value="Number of people: "/>
+                <p:inputNumber id="numberOfPeople" requiredMessage="Number of people can't be empty!" required="true" decimalPlaces="0" value="#{reservationController.numberOfPeople}"/>
+                <p:message for="numberOfPeople"/>
 
                 <p:outputLabel value="Dates of stay: "/>
-                <p:datePicker id="dates" selectionMode="range" value="#{reservationController.dateRange}" readonlyInput="true"/>
+                <p:datePicker id="dates" required="true" requiredMessage="Dates of stay can't be empty!" selectionMode="range" value="#{reservationController.dateRange}" readonlyInput="true"/>
+                <p:message for="dates"/>
 
                 <p:outputLabel value="Boravisna taksa: "/>
                 <p:outputLabel value="#{reservationController.boravisnaTaksa}"/>
+                <p:outputLabel/>
 
                 <p:commandButton action="#{reservationController.calculateBoravisnaTaksa()}" value="Calculate" update="reservationGrid"/>
                 <p:commandButton action="#{reservationController.reserve()}" value="Reserve"/>

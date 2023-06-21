@@ -1,10 +1,12 @@
 package beans.general;
+import entities.PrivilegedUser;
 import entities.Tourist;
 import entities.Ugostitelj;
 import enums.MessageType;
 import enums.UserType;
 import lombok.Getter;
 import lombok.Setter;
+import repository.PrivilegedUserDomainHelper;
 import repository.TouristDomainHelper;
 import repository.UgostiteljDomainHelper;
 
@@ -40,6 +42,9 @@ public class LoginController implements Serializable {
     private UgostiteljDomainHelper ugostiteljDomainHelper;
 
     @Inject
+    private PrivilegedUserDomainHelper privilegedUserDomainHelper;
+
+    @Inject
     private NavigationController navigationController;
 
     @Inject
@@ -55,10 +60,13 @@ public class LoginController implements Serializable {
 
     public void login(){
         if (userType.equals(UserType.Turista)) {
-            logInClient();
-        } else {
+            logInTourist();
+        } else
+            if (userType.equals(UserType.Ugostitelj)){
             logInUgostitelj();
-        }
+        } else {
+                logInPrivileged();
+            }
     }
 
     public void logInUgostitelj() {
@@ -72,10 +80,21 @@ public class LoginController implements Serializable {
         }
     }
 
-    private void logInClient() {
+    private void logInTourist() {
         Tourist tourist = touristDomainHelper.getByUsernamePassword(username, password);
         if (tourist != null) {
             userController.logIn(tourist);
+            navigationController.navigateToHome();
+            messageController.showErrorMessage(MessageType.ShortLiveMessage, "Jek jek");
+        } else {
+            messageController.showErrorMessage(MessageType.ShortLiveMessage, "Username password combination doesn't exist");
+        }
+    }
+
+    private void logInPrivileged() {
+        PrivilegedUser privilegedUser = privilegedUserDomainHelper.getByUsernamePassword(username, password);
+        if (privilegedUser != null) {
+            userController.logIn(privilegedUser);
             navigationController.navigateToHome();
             messageController.showErrorMessage(MessageType.ShortLiveMessage, "Jek jek");
         } else {

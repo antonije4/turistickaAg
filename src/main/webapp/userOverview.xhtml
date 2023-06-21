@@ -40,26 +40,48 @@
                 <p:commandButton action="#{registrationController.registerUgostitelj()}" value="Register"/>
 
             </h:panelGrid>
-            <h:panelGrid rendered="#{!registrationController.renderUgostiteljData()}" id="clientGrid" columns="2">
+            <h:panelGrid id="privilegedGrid" rendered="#{registrationController.renderPrivilegedUserData()}" columns="2">
 
 
                 <p:outputLabel value="Username"/>
-                <p:inputText id="clientUserName" value="#{registrationController.tourist.username}" label="UserName" />
+                <p:inputText id="privilegedUserName" value="#{registrationController.privilegedUser.username}" label="UserName" />
 
                 <p:outputLabel value="Password"/>
-                <p:password id="clientPassword" value="#{registrationController.tourist.password}" label="Password"/>
+                <p:password id="privilegedPassword" value="#{registrationController.privilegedUser.password}" label="Password"/>
 
                 <p:outputLabel value="FirstName"/>
-                <p:inputText id="clientFirstName" value="#{registrationController.tourist.firstName}" label="FirstName"/>
+                <p:inputText id="privilegedFirstName" value="#{registrationController.privilegedUser.firstName}" label="FirstName"/>
 
                 <p:outputLabel value="LastName"/>
-                <p:inputText id="clientLastName" value="#{registrationController.tourist.lastName}"/>
+                <p:inputText id="privilegedLastName" value="#{registrationController.privilegedUser.lastName}"/>
 
                 <p:outputLabel value="Email"/>
-                <p:inputText id="clientEmail" value="#{registrationController.tourist.email}"/>
+                <p:inputText id="privilegedEmail" value="#{registrationController.privilegedUser.email}"/>
 
                 <p:outputLabel value=""/>
-                <p:commandButton action="#{registrationController.registerClient()}" value="Register" update="regGrid"/>
+                <p:commandButton action="#{registrationController.registerPrivileged()}" value="Register" update="regGrid"/>
+
+            </h:panelGrid>
+            <h:panelGrid id="touristGrid" rendered="#{registrationController.renderTouristData()}" columns="2">
+
+
+                <p:outputLabel value="Username"/>
+                <p:inputText id="touristUserName" value="#{registrationController.tourist.username}" label="UserName" />
+
+                <p:outputLabel value="Password"/>
+                <p:password id="touristPassword" value="#{registrationController.tourist.password}" label="Password"/>
+
+                <p:outputLabel value="FirstName"/>
+                <p:inputText id="touristFirstName" value="#{registrationController.tourist.firstName}" label="FirstName"/>
+
+                <p:outputLabel value="LastName"/>
+                <p:inputText id="touristLastName" value="#{registrationController.tourist.lastName}"/>
+
+                <p:outputLabel value="Email"/>
+                <p:inputText id="touristEmail" value="#{registrationController.tourist.email}"/>
+
+                <p:outputLabel value=""/>
+                <p:commandButton action="#{registrationController.registerTourist()}" value="Register" update="regGrid"/>
 
             </h:panelGrid>
         </p:panel>

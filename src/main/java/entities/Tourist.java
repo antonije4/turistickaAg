@@ -22,9 +22,10 @@ public class Tourist extends User{
 
     private Date dateOfBirth;
 
-    @Column(unique = true)
-    private String jmbg;
-
     @OneToMany(mappedBy = "tourist", fetch = FetchType.EAGER)
     private List<Reservation> reservationList;
+
+    public void unlinkReservation(Reservation reservation) {
+        reservationList.removeIf(reservation1 -> reservation1.getId() == reservation.getId());
+    }
 }

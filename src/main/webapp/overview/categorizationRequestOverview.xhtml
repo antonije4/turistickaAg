@@ -1,0 +1,48 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/overviewLayout.xhtml">
+
+    <f:metadata>
+        <f:viewAction action="#{categorizationRequestOverviewController.init()}" />
+    </f:metadata>
+
+    <ui:define name="actions">
+        <h:panelGrid style="width: 100%;text-align: center;">
+
+            <p:commandButton rendered="#{categorizationRequestOverviewController.canEdit()}" style="width: 100%" action="#{categorizationRequestOverviewController.enableInput()}" value="Edit" update="categorizationRequestGrid"/>
+            <p:commandButton rendered="#{categorizationRequestOverviewController.canEdit()}" style="width: 100%" action="#{categorizationRequestOverviewController.saveChanges()}" value="Save changes" update="categorizationRequestGrid"/>
+            <p:commandButton rendered="#{categorizationRequestOverviewController.canEdit() and userController.ugostiteljLoggedIn()}" style="width: 100%" action="#{categorizationRequestOverviewController.delete()}" value="Delete categorization request" update="categorizationRequestGrid"/>
+        </h:panelGrid>
+    </ui:define>
+
+    <ui:define name="mainContent">
+
+        <p:panel header="Categorization Request Overview">
+
+            <h:panelGrid  columns="4" id="categorizationRequestGrid" cellspacing="10" columnClasses=",,insideDetailsColumn70,">
+
+                <p:outputLabel value="Ugostiteljski objekat: "/>
+                <ui:include src="/link/ugostiteljskiObjekatLink.xhtml" >
+                    <ui:param name="name" value="#{categorizationRequestOverviewController.categorizationRequest.ugostiteljskiObjekat.name}" />
+                    <ui:param name="id" value="#{categorizationRequestOverviewController.categorizationRequest.ugostiteljskiObjekat.id}" />
+                </ui:include>
+
+                <p:outputLabel value="Dates of request: "/>
+                <p:outputLabel value="#{categorizationRequestOverviewController.categorizationRequest.dateOfRequest}"/>
+
+                <p:outputLabel value="Categorization info:"/>
+                <p:inputText disabled="#{!categorizationRequestOverviewController.canEdit()}" value="#{categorizationRequestOverviewController.categorizationRequest.categorizationInfo}"/>
+
+                <p:outputLabel value="Reviewed: "/>
+                <p:selectBooleanButton disabled="true" onLabel="Yes" offLabel="No" value="#{categorizationRequestOverviewController.categorizationRequest.reviewed}"/>
+
+                <p:outputLabel value="Approved: "/>
+                <p:selectBooleanButton disabled="true" onLabel="Yes" offLabel="No" value="#{categorizationRequestOverviewController.categorizationRequest.approved}"/>
+            </h:panelGrid>
+
+        </p:panel>
+    </ui:define>
+</ui:composition>

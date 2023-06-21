@@ -19,10 +19,10 @@ public class CategorizationRequest implements Serializable {
     @NotNull
     private long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     private UgostiteljskiObjekat ugostiteljskiObjekat;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     private Ugostitelj ugostitelj;
 
     private LocalDate dateOfRequest;

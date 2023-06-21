@@ -19,8 +19,7 @@
                     </f:facet>
 
                     <p:dataTable id="categorizationRequestTable"
-                                 var="item" styleClass="udls-column-toggler-table"
-                                 rendered="#{not empty categorizationReviewController.categorizationRequests.list}"
+                                 var="item"
                                  value="#{categorizationReviewController.categorizationRequests.list}"
                                  emptyMessage="No records found"
                                  style="width: 100%;word-wrap: break-word"
@@ -52,15 +51,6 @@
                         <p:column>
                             <p:commandButton value="Reject" action="#{categorizationReviewController.reviewRequest(item, false)}" update="categorizationRequestTable"/>
                         </p:column>
-
-                        <f:facet name="header">
-                            <div class="udls-column-toggler-container">
-                                <p:commandButton id="toggler" type="button"
-                                                 value="Displayed columns" style="float:right" icon="fa fa-angle-up" />
-                                <p:columnToggler datasource="categorizationRequestTable" trigger="toggler" />
-                            </div>
-                        </f:facet>
-
                     </p:dataTable>
 
             </h:panelGrid>

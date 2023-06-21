@@ -1,9 +1,7 @@
 package beans.overview;
 
 import beans.general.UserController;
-import dto.UgostiteljDTO;
 import entities.Ugostitelj;
-import entities.mappers.UgostiteljMapper;
 import lombok.Getter;
 import lombok.Setter;
 import repository.UgostiteljDomainHelper;
@@ -66,11 +64,19 @@ public class UgostiteljOverviewController extends BaseOverview{
     }
 
     public boolean inputDisabled() {
-        return inputDisabled;
+        return inputDisabled || !currentUgostiteljLoggedIn();
     }
 
     public void enableInput() {
         inputDisabled = false;
+    }
+
+    public boolean currentUgostiteljLoggedIn() {
+        if (userController.loggedIn()) {
+            return userController.getLoggedInUser().getId() == ugostitelj.getId();
+        } else {
+            return false;
+        }
     }
 
 }
