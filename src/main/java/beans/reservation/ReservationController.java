@@ -3,8 +3,8 @@ package beans.reservation;
 import beans.general.MessageController;
 import beans.general.NavigationController;
 import beans.general.UserController;
-import entities.Reservation;
-import entities.Tourist;
+import entities.Rezervacija;
+import entities.Turista;
 import entities.UgostiteljskiObjekat;
 import enums.MessageType;
 import lombok.Getter;
@@ -29,7 +29,7 @@ import java.util.List;
 public class ReservationController implements Serializable {
 
     private List<Date> dateRange;
-    private Tourist tourist;
+    private Turista turista;
     private String touristUsername;
     private int numberOfPeople;
     private UgostiteljskiObjekat ugostiteljskiObjekat;
@@ -56,14 +56,14 @@ public class ReservationController implements Serializable {
             //throw ex
         }
         if (userController.touristLoggedIn()) {
-            tourist = (Tourist) userController.getLoggedInUser();
-            touristUsername = tourist.getUsername();
+            turista = (Turista) userController.getLoggedInUser();
+            touristUsername = turista.getUsername();
         }
         numberOfPeople = 1;
     }
 
     public boolean touristLoggedIn() {
-        return userController.getLoggedInUser() instanceof Tourist;
+        return userController.getLoggedInUser() instanceof Turista;
     }
 
     public void calculateBoravisnaTaksa() {
@@ -74,26 +74,26 @@ public class ReservationController implements Serializable {
     public void reserve() {
         //checkPreconditions
         if (!touristLoggedIn()) {
-            tourist = touristDomainHelper.getByUsername(touristUsername);
-            if (tourist == null) {
+            turista = touristDomainHelper.getByUsername(touristUsername);
+            if (turista == null) {
                 messageController.showErrorMessage(MessageType.MediumLiveMessage, "Tourist with username "+touristUsername+" doesn't exist!");
                 return;
             }
         }
-        Reservation reservation = new Reservation.Builder()
+        Rezervacija rezervacija = new Rezervacija.Builder()
                 .boravisnaTaksaPaid(false)
                 .boravisnaTaksaPrice(boravisnaTaksa)
                 .numberOfPeople(numberOfPeople)
-                .tourist(tourist)
+                .tourist(turista)
                 .ugostiteljskiObjekat(ugostiteljskiObjekat)
                 .startingDate(dateToLocalDate(dateRange.get(0)))
                 .endingDate(dateToLocalDate(dateRange.get(1)))
                 .build();
 
-        reservationDomainHelper.createReservation(reservation);
-        tourist.getReservationList().add(reservation);
-        touristDomainHelper.update(tourist);
-        navigationController.navigateToReservationOverview(reservation.getId());
+        reservationDomainHelper.createReservation(rezervacija);
+        turista.getRezervacijaList().add(rezervacija);
+        touristDomainHelper.update(turista);
+        navigationController.navigateToReservationOverview(rezervacija.getId());
         messageController.showInfoMessage(MessageType.MediumLiveMessage, "Successfully created reservation.");
     }
 

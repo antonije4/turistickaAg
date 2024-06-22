@@ -1,7 +1,9 @@
 package beans.overview;
 
 import beans.general.UserController;
-import entities.Ugostitelj;
+import entities.*;
+import entities.mappers.UgostiteljMapper;
+import enums.UgostiteljType;
 import lombok.Getter;
 import lombok.Setter;
 import repository.UgostiteljDomainHelper;
@@ -18,6 +20,14 @@ public class UgostiteljOverviewController extends BaseOverview{
     private static final String UGOSTITELJ_USERNAME_PARAM = "ugostiteljUsername";
     @Getter @Setter
     private Ugostitelj ugostitelj;
+    @Getter @Setter
+    private FizickoLice fizickoLice;
+    @Getter @Setter
+    private PravnoLice pravnoLice;
+    @Getter @Setter
+    private Preduzetnik preduzetnik;
+    @Getter @Setter
+    private Ustanova ustanova;
     private boolean inputDisabled;
     private String ugostiteljUsername;
 
@@ -33,6 +43,20 @@ public class UgostiteljOverviewController extends BaseOverview{
     public void init() {
         super.init();
         inputDisabled = true;
+        switch (ugostitelj.getTipUgostitelja()) {
+            case PravnoLice:
+                pravnoLice = (PravnoLice) ugostiteljDomainHelper.getUgostiteljByUsername(ugostitelj.getUsername());
+                break;
+            case Ustanova:
+                ustanova = (Ustanova) ugostiteljDomainHelper.getUgostiteljByUsername(ugostitelj.getUsername());
+                break;
+            case FizickoLice:
+                fizickoLice = (FizickoLice) ugostiteljDomainHelper.getUgostiteljByUsername(ugostitelj.getUsername());
+                break;
+            case Preduzetnik:
+                preduzetnik = (Preduzetnik) ugostiteljDomainHelper.getUgostiteljByUsername(ugostitelj.getUsername());
+                break;
+        }
     }
 
     @Override
@@ -59,6 +83,7 @@ public class UgostiteljOverviewController extends BaseOverview{
 
 
     public void saveChanges() {
+        setUgostiteljType();
         ugostiteljDomainHelper.updateUgostitelj(ugostitelj);
         inputDisabled=true;
     }
@@ -79,4 +104,36 @@ public class UgostiteljOverviewController extends BaseOverview{
         }
     }
 
+    public boolean renderPreduzetnikData() {
+        return UgostiteljType.Preduzetnik.equals(ugostitelj.getTipUgostitelja());
+    }
+
+    public boolean renderUstanovaData() {
+        return UgostiteljType.Ustanova.equals(ugostitelj.getTipUgostitelja());
+    }
+
+    public boolean renderFizickoLiceData() {
+        return UgostiteljType.FizickoLice.equals(ugostitelj.getTipUgostitelja());
+    }
+
+    public boolean renderPravnoLiceData() {
+        return UgostiteljType.PravnoLice.equals(ugostitelj.getTipUgostitelja());
+    }
+
+    private void setUgostiteljType() {
+        switch (ugostitelj.getTipUgostitelja()) {
+            case Ustanova:
+                ugostitelj = UgostiteljMapper.INSTANCE.mergeUstanova(ustanova, ugostitelj);
+                break;
+            case PravnoLice:
+                ugostitelj = UgostiteljMapper.INSTANCE.mergePravnoLice(pravnoLice, ugostitelj);
+                break;
+            case FizickoLice:
+                ugostitelj = UgostiteljMapper.INSTANCE.mergeFizicikoLice(fizickoLice, ugostitelj);
+                break;
+            case Preduzetnik:
+                ugostitelj = UgostiteljMapper.INSTANCE.mergePreduzetnik(preduzetnik, ugostitelj);
+                break;
+        }
+    }
 }

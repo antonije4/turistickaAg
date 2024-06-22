@@ -1,7 +1,7 @@
 package beans.general;
 
-import entities.Tourist;
-import entities.User;
+import entities.Turista;
+import entities.Korisnik;
 
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.ExternalContext;
@@ -145,8 +145,8 @@ public class NavigationController {
 
 
     public String goToUserOverview(String username) {
-        User user = userController.getLoggedInUser();
-        if (user instanceof Tourist) {
+        Korisnik korisnik = userController.getLoggedInUser();
+        if (korisnik instanceof Turista) {
             return goToTouristOverview(username);
         } else {
             return goToUgostiteljOverview(username);

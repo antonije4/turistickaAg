@@ -1,9 +1,8 @@
 package repository;
 
 import com.querydsl.jpa.impl.JPAQuery;
-import entities.CategorizationRequest;
-import entities.QCategorizationRequest;
-import entities.Reservation;
+import entities.QZahtevZaKategorizaciju;
+import entities.ZahtevZaKategorizaciju;
 import repository.data.ResultList;
 
 import javax.ejb.Stateless;
@@ -17,33 +16,33 @@ public class CategorizationRequestDomainHelper extends DomainHelper {
     @PersistenceContext
     private EntityManager entityManager;
 
-    private static final QCategorizationRequest qCategorizationRequest = QCategorizationRequest.categorizationRequest;
+    private static final QZahtevZaKategorizaciju qZahtevZaKategorizaciju = QZahtevZaKategorizaciju.zahtevZaKategorizaciju;
 
-    public void saveCategorizationRequest(CategorizationRequest categorizationRequest) {
-        entityManager.persist(categorizationRequest);
+    public void saveCategorizationRequest(ZahtevZaKategorizaciju zahtevZaKategorizaciju) {
+        entityManager.persist(zahtevZaKategorizaciju);
     }
 
-    public void updateCategorizationRequest(CategorizationRequest request) {
+    public void updateCategorizationRequest(ZahtevZaKategorizaciju request) {
         entityManager.merge(request);
     }
 
-    public ResultList<CategorizationRequest> getUnReviewedRequests() {
-        JPAQuery<CategorizationRequest> query = new JPAQuery<>(entityManager).select(qCategorizationRequest)
-                .from(qCategorizationRequest)
-                .where(qCategorizationRequest.reviewed.eq(false));
+    public ResultList<ZahtevZaKategorizaciju> getUnReviewedRequests() {
+        JPAQuery<ZahtevZaKategorizaciju> query = new JPAQuery<>(entityManager).select(qZahtevZaKategorizaciju)
+                .from(qZahtevZaKategorizaciju)
+                .where(qZahtevZaKategorizaciju.pregledan.eq(false));
 
-        List<CategorizationRequest> resultList = query.fetch();
+        List<ZahtevZaKategorizaciju> resultList = query.fetch();
         return ResultList.create(resultList, resultList.size());
     }
 
-    public CategorizationRequest getCategorizationRequestById(long id) {
-        JPAQuery<CategorizationRequest> query = new JPAQuery<>(entityManager).select(qCategorizationRequest)
-                .from(qCategorizationRequest)
-                .where(qCategorizationRequest.id.eq(id));
+    public ZahtevZaKategorizaciju getCategorizationRequestById(long id) {
+        JPAQuery<ZahtevZaKategorizaciju> query = new JPAQuery<>(entityManager).select(qZahtevZaKategorizaciju)
+                .from(qZahtevZaKategorizaciju)
+                .where(qZahtevZaKategorizaciju.id.eq(id));
         return query.fetchOne();
     }
 
-    public void deleteCategorizationRequest(CategorizationRequest categorizationRequest) {
-        entityManager.remove(categorizationRequest);
+    public void deleteCategorizationRequest(ZahtevZaKategorizaciju zahtevZaKategorizaciju) {
+        entityManager.remove(zahtevZaKategorizaciju);
     }
 }

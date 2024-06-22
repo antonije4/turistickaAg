@@ -3,7 +3,7 @@ package beans.categorization;
 
 import beans.general.UserController;
 import dto.CategorizationRequestRow;
-import entities.CategorizationRequest;
+import entities.ZahtevZaKategorizaciju;
 import entities.Ugostitelj;
 import entities.UgostiteljskiObjekat;
 import entities.mappers.UgostiteljskiObjekatMapper;
@@ -17,7 +17,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -26,7 +25,7 @@ import java.util.List;
 @Getter @Setter
 public class SubmitCategorizationRequestController implements Serializable {
 
-    private CategorizationRequest categorizationRequest;
+    private ZahtevZaKategorizaciju zahtevZaKategorizaciju;
     private UgostiteljskiObjekat newUgostiteljskiObjekat;
     private Ugostitelj ugostitelj;
     private boolean existingUgostiteljskiObjekat;
@@ -46,7 +45,7 @@ public class SubmitCategorizationRequestController implements Serializable {
     private UgostiteljDomainHelper ugostiteljDomainHelper;
 
     public void init() {
-        categorizationRequest = new CategorizationRequest();
+        zahtevZaKategorizaciju = new ZahtevZaKategorizaciju();
         String ugostiteljUsername = userController.getLoggedInUser().getUsername();
         ugostitelj = ugostiteljDomainHelper.getUgostiteljByUsername(ugostiteljUsername);
         categorizationRequestRowList = UgostiteljskiObjekatMapper.INSTANCE.ugostiteljskiObjekatListToCategorizationRow(ugostitelj.getUgostiteljskiObjekti());
@@ -100,20 +99,20 @@ public class SubmitCategorizationRequestController implements Serializable {
         //checkPreconditions
         if (existingUgostiteljskiObjekat) {
             UgostiteljskiObjekat ugostiteljskiObjekat = ugostiteljskiObjekatDomainHelper.getUgostiteljskiObjekatById(categorizationRequestRowList.get(selectedUgostiteljskiObjekatIndex).getId());
-            categorizationRequest.setUgostiteljskiObjekat(ugostiteljskiObjekat);
+            zahtevZaKategorizaciju.setUgostiteljskiObjekat(ugostiteljskiObjekat);
         } else {
             newUgostiteljskiObjekat.setUgostitelj(ugostitelj);
             ugostiteljskiObjekatDomainHelper.createUgostiteljskiObjekat(newUgostiteljskiObjekat);
-            categorizationRequest.setUgostiteljskiObjekat(newUgostiteljskiObjekat);
+            zahtevZaKategorizaciju.setUgostiteljskiObjekat(newUgostiteljskiObjekat);
         }
         fillCategorizationRequest();
-        categorizationRequestDomainHelper.saveCategorizationRequest(categorizationRequest);
+        categorizationRequestDomainHelper.saveCategorizationRequest(zahtevZaKategorizaciju);
     }
 
     public void fillCategorizationRequest() {
-        categorizationRequest.setUgostitelj(ugostitelj);
-        categorizationRequest.setDateOfRequest(LocalDate.now());
-        categorizationRequest.setApproved(false);
-        categorizationRequest.setReviewed(false);
+        zahtevZaKategorizaciju.setUgostitelj(ugostitelj);
+        zahtevZaKategorizaciju.setDatumZahteva(LocalDate.now());
+        zahtevZaKategorizaciju.setOdobren(false);
+        zahtevZaKategorizaciju.setPregledan(false);
     }
 }

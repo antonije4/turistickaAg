@@ -1,7 +1,7 @@
 package beans.timer;
 
-import entities.Inbox;
-import entities.Message;
+import entities.Sanduce;
+import entities.Poruka;
 import entities.UgostiteljskiObjekat;
 import repository.MessageDomainHelper;
 import repository.UgostiteljskiObjekatDomainHelper;
@@ -46,16 +46,16 @@ public class CategorizationExpiryTimerService implements Serializable {
     }
 
     private void addMessageToUgostiteljInbox(UgostiteljskiObjekat ugostiteljskiObjekat) {
-        Inbox inbox = ugostiteljskiObjekat.getUgostitelj().getInbox();
-        Message message = Message.builder()
-                .content(EXPIRY_MESSAGE + ugostiteljskiObjekat.getName())
-                .deliveryTime(LocalDateTime.now())
-                .inbox(inbox)
-                .read(false)
+        Sanduce sanduce = ugostiteljskiObjekat.getUgostitelj().getSanduce();
+        Poruka poruka = Poruka.builder()
+                .sadrzaj(EXPIRY_MESSAGE + ugostiteljskiObjekat.getName())
+                .datumPrispeca(LocalDateTime.now())
+                .sanduce(sanduce)
+                .procitana(false)
                 .build();
-        messageDomainHelper.createMessage(message);
-        inbox.getMessages().add(message);
-        messageDomainHelper.updateInbox(inbox);
+        messageDomainHelper.createMessage(poruka);
+        sanduce.getPoruke().add(poruka);
+        messageDomainHelper.updateInbox(sanduce);
         ugostiteljskiObjekat.setNotifiedOfCategorizationExpiry(true);
         ugostiteljskiObjekatDomainHelper.updateUgostiteljskiObjekat(ugostiteljskiObjekat);
     }

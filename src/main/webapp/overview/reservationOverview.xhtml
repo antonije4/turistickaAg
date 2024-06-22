@@ -14,7 +14,7 @@
 
             <p:commandButton rendered="#{reservationOverviewController.canEdit()}" style="width: 100%" action="#{reservationOverviewController.enableInput()}" value="Edit" update="reservationGrid"/>
             <p:commandButton rendered="#{reservationOverviewController.canEdit()}" style="width: 100%" action="#{reservationOverviewController.saveChanges()}" value="Save changes" update="reservationGrid"/>
-            <p:commandButton rendered="#{reservationOverviewController.canEdit() and userController.ugostiteljLoggedIn()}" style="width: 100%" action="#{reservationOverviewController.delete()}" value="Delete reservation" update="reservationGrid"/>
+            <p:commandButton rendered="#{reservationOverviewController.canEdit() and userController.ugostiteljLoggedIn()}" style="width: 100%" action="#{reservationOverviewController.delete()}" value="Delete rezervacija" update="reservationGrid"/>
         </h:panelGrid>
     </ui:define>
 
@@ -26,18 +26,18 @@
 
                 <p:outputLabel value="Ugostiteljski objekat: "/>
                 <ui:include src="/link/ugostiteljskiObjekatLink.xhtml" >
-                    <ui:param name="name" value="#{reservationOverviewController.reservation.ugostiteljskiObjekat.name}" />
-                    <ui:param name="id" value="#{reservationOverviewController.reservation.ugostiteljskiObjekat.id}" />
+                    <ui:param name="name" value="#{reservationOverviewController.rezervacija.ugostiteljskiObjekat.name}" />
+                    <ui:param name="id" value="#{reservationOverviewController.rezervacija.ugostiteljskiObjekat.id}" />
                 </ui:include>
 
                 <p:outputLabel value="Dates of stay: "/>
                 <p:datePicker disabled="#{!reservationOverviewController.inputEnabled}" id="dates" selectionMode="range" value="#{reservationOverviewController.dateRange}" readonlyInput="true"/>
 
                 <p:outputLabel value="Boravisna taksa: "/>
-                <p:outputLabel value="#{reservationOverviewController.reservation.boravisnaTaksaPrice}"/>
+                <p:outputLabel value="#{reservationOverviewController.rezervacija.boravisnaTaksaPrice}"/>
 
                 <p:outputLabel value="Boravisna taksa paid: "/>
-                <p:selectBooleanButton disabled="#{!reservationOverviewController.canEditBoravisnaTaksa()}" onLabel="Yes" offLabel="No" value="#{reservationOverviewController.reservation.boravisnaTaksaPaid}"/>
+                <p:selectBooleanButton disabled="#{!reservationOverviewController.canEditBoravisnaTaksa()}" onLabel="Yes" offLabel="No" value="#{reservationOverviewController.rezervacija.boravisnaTaksaPaid}"/>
 
             </h:panelGrid>
 

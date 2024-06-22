@@ -2,8 +2,8 @@ package beans.overview;
 
 import beans.general.NavigationController;
 import beans.general.UserController;
-import entities.CategorizationRequest;
-import entities.Reservation;
+import entities.Rezervacija;
+import entities.ZahtevZaKategorizaciju;
 import entities.Ugostitelj;
 import entities.UgostiteljskiObjekat;
 import lombok.Getter;
@@ -87,11 +87,11 @@ public class UgostiteljskiObjekatOverviewController extends BaseOverview {
         inputEnabled = true;
     }
 
-    public void editReservation(Reservation reservation) {
-        navigationController.navigateToReservationOverview(reservation.getId());
+    public void editReservation(Rezervacija rezervacija) {
+        navigationController.navigateToReservationOverview(rezervacija.getId());
     }
 
-    public void editCategorizationRequest(CategorizationRequest categorizationRequest) {
-        navigationController.navigateTo(reservation.getId());
+    public void editCategorizationRequest(ZahtevZaKategorizaciju zahtevZaKategorizaciju) {
+//        navigationController.navigateTo(reservation.getId());
     }
 }

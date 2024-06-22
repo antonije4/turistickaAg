@@ -2,7 +2,7 @@ package beans.categorization;
 
 import beans.general.MessageController;
 import beans.general.UserController;
-import entities.CategorizationRequest;
+import entities.ZahtevZaKategorizaciju;
 import entities.UgostiteljskiObjekat;
 import enums.MessageType;
 import lombok.Getter;
@@ -23,7 +23,7 @@ import java.util.List;
 @Getter @Setter
 public class CategorizationReviewController implements Serializable {
 
-    private ResultList<CategorizationRequest> categorizationRequests;
+    private ResultList<ZahtevZaKategorizaciju> categorizationRequests;
 
     @Inject
     private CategorizationRequestDomainHelper categorizationRequestDomainHelper;
@@ -38,22 +38,22 @@ public class CategorizationReviewController implements Serializable {
         categorizationRequests = categorizationRequestDomainHelper.getUnReviewedRequests();
     }
 
-    public void reviewRequest(CategorizationRequest categorizationRequest, boolean approved) {
-        processReviewedRequest(approved, categorizationRequest);
-        processUgostiteljskiObjekat(approved, categorizationRequest);
+    public void reviewRequest(ZahtevZaKategorizaciju zahtevZaKategorizaciju, boolean approved) {
+        processReviewedRequest(approved, zahtevZaKategorizaciju);
+        processUgostiteljskiObjekat(approved, zahtevZaKategorizaciju);
     }
 
-    private void processReviewedRequest(boolean approved, CategorizationRequest categorizationRequest) {
-        categorizationRequest.setReviewed(true);
-        categorizationRequest.setApproved(approved);
-        categorizationRequest.setUserReviewed(userController.getLoggedInUser().getUsername());
-        List<CategorizationRequest> categorizationRequestList = categorizationRequests.getList();
-        categorizationRequestList.remove(categorizationRequest);
-        categorizationRequestDomainHelper.updateCategorizationRequest(categorizationRequest);
+    private void processReviewedRequest(boolean approved, ZahtevZaKategorizaciju zahtevZaKategorizaciju) {
+        zahtevZaKategorizaciju.setPregledan(true);
+        zahtevZaKategorizaciju.setOdobren(approved);
+        zahtevZaKategorizaciju.setKorisnikPregleda(userController.getLoggedInUser().getUsername());
+        List<ZahtevZaKategorizaciju> zahtevZaKategorizacijuList = categorizationRequests.getList();
+        zahtevZaKategorizacijuList.remove(zahtevZaKategorizaciju);
+        categorizationRequestDomainHelper.updateCategorizationRequest(zahtevZaKategorizaciju);
     }
 
-    private void processUgostiteljskiObjekat(boolean approved, CategorizationRequest categorizationRequest) {
-        UgostiteljskiObjekat ugostiteljskiObjekat = categorizationRequest.getUgostiteljskiObjekat();
+    private void processUgostiteljskiObjekat(boolean approved, ZahtevZaKategorizaciju zahtevZaKategorizaciju) {
+        UgostiteljskiObjekat ugostiteljskiObjekat = zahtevZaKategorizaciju.getUgostiteljskiObjekat();
         ugostiteljskiObjekat.setCategorized(approved);
         ugostiteljskiObjekat.setNotifiedOfCategorizationExpiry(false);
         if (approved) {

@@ -9,12 +9,12 @@ import java.util.Date;
 
 @Entity
 @Getter @Setter
-public class PrivilegedUser extends User {
+public class PrivilegovaniKorisnik extends Korisnik {
     @NotNull
-    private String firstName;
+    private String ime;
 
     @NotNull
-    private String lastName;
+    private String prezime;
 
-    private Date dateOfBirth;
+    private Date datumRodjenja;
 }

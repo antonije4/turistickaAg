@@ -31,18 +31,74 @@
 
                     <p:outputLabel value="UserName"/>
                     <p:inputText required="true" requiredMessage="Username can't be emtpy!" id="username" value="#{registrationController.ugostitelj.username}" label="UserName" />
-                    <p:message for="username"/>
+                    <p:poruka for="username"/>
 
                     <p:outputLabel value="Password"/>
                     <p:password required="true" requiredMessage="Password can't be emtpy!" id="password" value="#{registrationController.ugostitelj.password}" label="Password"/>
-                    <p:message for="password"/>
+                    <p:poruka for="password"/>
 
                     <p:outputLabel value="Email"/>
                     <p:inputText id="email" requiredMessage="Email can't be empty!" validatorMessage="Email not in the correct format!" value="#{registrationController.ugostitelj.email}">
                         <f:validateRegex pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"/>
                     </p:inputText>
-                    <p:message for="email"/>
+                    <p:poruka for="email"/>
 
+                    <p:outputLabel rendered="#{registrationController.renderPreduzetnikData()}" value="Ime"/>
+                    <p:inputText rendered="#{registrationController.renderPreduzetnikData()}" required="true" requiredMessage="Polje ime ne sme biti prazno!" id="preduzetnikIme" value="#{registrationController.preduzetnik.ime}" label="Ime"/>
+                    <p:poruka rendered="#{registrationController.renderPreduzetnikData()}" for="preduzetnikIme"/>
+
+                    <p:outputLabel rendered="#{registrationController.renderPreduzetnikData()}" value="Prezime"/>
+                    <p:inputText rendered="#{registrationController.renderPreduzetnikData()}" required="true" requiredMessage="Polje prezime ne sme biti prazno!" id="preduzetnikPrezime" value="#{registrationController.preduzetnik.prezime}" label="Prezime"/>
+                    <p:poruka rendered="#{registrationController.renderPreduzetnikData()}" for="preduzetnikPrezime"/>
+
+                    <p:outputLabel rendered="#{registrationController.renderPreduzetnikData()}" value="Adresa"/>
+                    <p:inputText rendered="#{registrationController.renderPreduzetnikData()}" required="true" requiredMessage="Polje adresa ne sme biti prazno!" id="preduzetnikAdresa" value="#{registrationController.preduzetnik.adresa}" label="Adresa"/>
+                    <p:poruka rendered="#{registrationController.renderPreduzetnikData()}" for="preduzetnikAdresa"/>
+
+                    <p:outputLabel rendered="#{registrationController.renderPreduzetnikData()}" value="Delatnost"/>
+                    <p:inputText rendered="#{registrationController.renderPreduzetnikData()}" required="true" requiredMessage="Polje delatnost ne sme biti prazno!" id="preduzetnikDelatnost" value="#{registrationController.preduzetnik.delatnost}" label="Delatnost"/>
+                    <p:poruka rendered="#{registrationController.renderPreduzetnikData()}" for="preduzetnikDelatnost"/>
+
+                    <p:outputLabel rendered="#{registrationController.renderPravnoLiceData()}" value="Pib"/>
+                    <p:inputText rendered="#{registrationController.renderPravnoLiceData()}" required="true" requiredMessage="Polje pib ne sme biti prazno!" id="pravnoLicePib" value="#{registrationController.pravnoLice.pib}" label="Pib"/>
+                    <p:poruka rendered="#{registrationController.renderPravnoLiceData()}" for="pravnoLicePib"/>
+
+                    <p:outputLabel rendered="#{registrationController.renderPravnoLiceData()}" value="Naziv Firme"/>
+                    <p:inputText rendered="#{registrationController.renderPravnoLiceData()}" required="true" requiredMessage="Polje naziv firme ne sme biti prazno!" id="pravnoLiceNazivFirme" value="#{registrationController.pravnoLice.nazivFirme}" label="Naziv Firme"/>
+                    <p:poruka rendered="#{registrationController.renderPravnoLiceData()}" for="pravnoLiceNazivFirme"/>
+
+                    <p:outputLabel rendered="#{registrationController.renderPravnoLiceData()}" value="Adresa Firme"/>
+                    <p:inputText rendered="#{registrationController.renderPravnoLiceData()}" required="true" requiredMessage="Polje adresa firme ne sme biti prazno!" id="pravnoLiceAdresaFirme" value="#{registrationController.pravnoLice.adresaFirme}" label="Adresa Firme"/>
+                    <p:poruka rendered="#{registrationController.renderPravnoLiceData()}" for="pravnoLiceAdresaFirme"/>
+
+                    <p:outputLabel rendered="#{registrationController.renderFizickoLiceData()}" value="Ime"/>
+                    <p:inputText rendered="#{registrationController.renderFizickoLiceData()}" required="true" requiredMessage="Polje ime ne sme biti prazno!" id="fizickoLiceIme" value="#{registrationController.fizickoLice.ime}" label="Ime"/>
+                    <p:poruka rendered="#{registrationController.renderFizickoLiceData()}" for="fizickoLiceIme"/>
+
+                    <p:outputLabel rendered="#{registrationController.renderFizickoLiceData()}" value="Prezime"/>
+                    <p:inputText rendered="#{registrationController.renderFizickoLiceData()}" required="true" requiredMessage="Polje prezime ne sme biti prazno!" id="fizickoLicePrezime" value="#{registrationController.fizickoLice.prezime}" label="Prezime"/>
+                    <p:poruka rendered="#{registrationController.renderFizickoLiceData()}" for="fizickoLicePrezime"/>
+
+                    <p:outputLabel rendered="#{registrationController.renderFizickoLiceData()}" value="Adresa"/>
+                    <p:inputText rendered="#{registrationController.renderFizickoLiceData()}" required="true" requiredMessage="Polje adresa ne sme biti prazno!" id="fizickoLiceAdresa" value="#{registrationController.fizickoLice.adresa}" label="Adresa"/>
+                    <p:poruka rendered="#{registrationController.renderFizickoLiceData()}" for="fizickoLiceAdresa"/>
+
+                    <p:outputLabel rendered="#{registrationController.renderFizickoLiceData()}" value="Jmbg"/>
+                    <p:inputText rendered="#{registrationController.renderFizickoLiceData()}" required="true" requiredMessage="Polje Jmbg ne sme biti prazno!" id="fizickoLiceJmbg" value="#{registrationController.fizickoLice.jmbg}" label="Jmbg"/>
+                    <p:poruka rendered="#{registrationController.renderFizickoLiceData()}" for="fizickoLiceJmbg"/>
+
+                    <p:outputLabel rendered="#{registrationController.renderUstanovaData()}" value="Adresa"/>
+                    <p:inputText rendered="#{registrationController.renderUstanovaData()}" required="true" requiredMessage="Polje adresa ne sme biti prazno!" id="ustanovaAdresa" value="#{registrationController.ustanova.adresa}" label="Adresa"/>
+                    <p:poruka rendered="#{registrationController.renderUstanovaData()}" for="ustanovaAdresa"/>
+
+                    <p:outputLabel rendered="#{registrationController.renderUstanovaData()}" value="Vrsta Ustanove"/>
+                    <p:inputText rendered="#{registrationController.renderUstanovaData()}" required="true" requiredMessage="Polje vrsta ustanove ne sme biti prazno!" id="ustanovaVrstaUstanove" value="#{registrationController.ustanova.vrstaUstanove}" label="Vrsta Ustanove"/>
+                    <p:poruka rendered="#{registrationController.renderUstanovaData()}" for="ustanovaVrstaUstanove"/>
+
+                    <p:outputLabel rendered="#{registrationController.renderUstanovaData()}" value="Naziv"/>
+                    <p:inputText rendered="#{registrationController.renderUstanovaData()}" required="true" requiredMessage="Polje naziv ne sme biti prazno!" id="ustanovaNaziv" value="#{registrationController.ustanova.naziv}" label="Naziv"/>
+                    <p:poruka rendered="#{registrationController.renderUstanovaData()}" for="ustanovaNaziv"/>
+                    
                     <p:outputLabel value=""/>
                     <p:commandButton action="#{registrationController.registerUgostitelj()}" value="Register" update="centralForm"/>
 
@@ -51,28 +107,28 @@
 
 
                     <p:outputLabel value="Username"/>
-                    <p:inputText required="true" requiredMessage="Username can't be emtpy!" id="touristUsername" value="#{registrationController.tourist.username}" label="UserName" />
-                    <p:message for="touristUsername"/>
+                    <p:inputText required="true" requiredMessage="Username can't be emtpy!" id="touristUsername" value="#{registrationController.turista.username}" label="UserName" />
+                    <p:poruka for="touristUsername"/>
 
 
                     <p:outputLabel value="Password"/>
-                    <p:password required="true" requiredMessage="Password can't be emtpy!" id="touristPassword" value="#{registrationController.tourist.password}" label="Password"/>
-                    <p:message for="touristPassword"/>
+                    <p:password required="true" requiredMessage="Password can't be emtpy!" id="touristPassword" value="#{registrationController.turista.password}" label="Password"/>
+                    <p:poruka for="touristPassword"/>
 
 
                     <p:outputLabel value="FirstName"/>
-                    <p:inputText required="true" id="touristFirstName" value="#{registrationController.tourist.firstName}" label="FirstName"/>
-                    <p:message for="touristFirstName"/>
+                    <p:inputText required="true" id="touristFirstName" value="#{registrationController.turista.firstName}" label="FirstName"/>
+                    <p:poruka for="touristFirstName"/>
 
                     <p:outputLabel value="LastName"/>
-                    <p:inputText required="true" requiredMessage="Last name can't be emtpy!" id="touristLastName" value="#{registrationController.tourist.lastName}"/>
-                    <p:message for="touristLastName"/>
+                    <p:inputText required="true" requiredMessage="Last name can't be emtpy!" id="touristLastName" value="#{registrationController.turista.lastName}"/>
+                    <p:poruka for="touristLastName"/>
 
                     <p:outputLabel value="Email"/>
-                    <p:inputText required="true" requiredMessage="Email can't be emtpy!" id="touristEmail" value="#{registrationController.tourist.email}">
+                    <p:inputText required="true" requiredMessage="Email can't be emtpy!" id="touristEmail" value="#{registrationController.turista.email}">
                         <f:validateRegex pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"/>
                     </p:inputText>
-                    <p:message for="touristEmail"/>
+                    <p:poruka for="touristEmail"/>
 
                     <p:outputLabel value=""/>
                     <p:commandButton action="#{registrationController.registerTourist()}" value="Register" update="centralForm"/>
@@ -82,28 +138,28 @@
 
 
                     <p:outputLabel value="Username"/>
-                    <p:inputText required="true" requiredMessage="Username can't be emtpy!" id="privilegedUsername" value="#{registrationController.privilegedUser.username}" label="UserName" />
-                    <p:message for="privilegedUsername"/>
+                    <p:inputText required="true" requiredMessage="Username can't be emtpy!" id="privilegedUsername" value="#{registrationController.privilegovaniKorisnik.username}" label="UserName" />
+                    <p:poruka for="privilegedUsername"/>
 
 
                     <p:outputLabel value="Password"/>
-                    <p:password required="true" requiredMessage="Password can't be emtpy!" id="privilegedPassword" value="#{registrationController.privilegedUser.password}" label="Password"/>
-                    <p:message for="privilegedPassword"/>
+                    <p:password required="true" requiredMessage="Password can't be emtpy!" id="privilegedPassword" value="#{registrationController.privilegovaniKorisnik.password}" label="Password"/>
+                    <p:poruka for="privilegedPassword"/>
 
 
                     <p:outputLabel value="FirstName"/>
-                    <p:inputText required="true" id="privilegedFirstName" value="#{registrationController.privilegedUser.firstName}" label="FirstName"/>
-                    <p:message for="privilegedFirstName"/>
+                    <p:inputText required="true" id="privilegedFirstName" value="#{registrationController.privilegovaniKorisnik.firstName}" label="FirstName"/>
+                    <p:poruka for="privilegedFirstName"/>
 
                     <p:outputLabel value="LastName"/>
-                    <p:inputText required="true" requiredMessage="Last name can't be emtpy!" id="privilegedLastName" value="#{registrationController.privilegedUser.lastName}"/>
-                    <p:message for="privilegedLastName"/>
+                    <p:inputText required="true" requiredMessage="Last name can't be emtpy!" id="privilegedLastName" value="#{registrationController.privilegovaniKorisnik.lastName}"/>
+                    <p:poruka for="privilegedLastName"/>
 
                     <p:outputLabel value="Email"/>
-                    <p:inputText required="true" requiredMessage="Email can't be emtpy!" id="privilegedEmail" value="#{registrationController.privilegedUser.email}">
+                    <p:inputText required="true" requiredMessage="Email can't be emtpy!" id="privilegedEmail" value="#{registrationController.privilegovaniKorisnik.email}">
                         <f:validateRegex pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"/>
                     </p:inputText>
-                    <p:message for="privilegedEmail"/>
+                    <p:poruka for="privilegedEmail"/>
 
                     <p:outputLabel value=""/>
                     <p:commandButton action="#{registrationController.registerPrivileged()}" value="Register" update="centralForm"/>

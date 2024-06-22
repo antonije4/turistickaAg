@@ -29,9 +29,7 @@ public class UgostiteljDomainHelper extends DomainHelper {
         JPAQuery<Ugostitelj> query = new JPAQuery<>(entityManager).select(qUgostitelj)
                 .from(qUgostitelj);
 
-        addFilter(query, ugostiteljSearchParams.getFirstName(), qUgostitelj.firstName::eq);
-        addFilter(query, ugostiteljSearchParams.getLastName(), qUgostitelj.lastName::eq);
-        addFilter(query, ugostiteljSearchParams.getUgostiteljTypes(), qUgostitelj.ugostiteljType::in);
+        addFilter(query, ugostiteljSearchParams.getUgostiteljTypes(), qUgostitelj.tipUgostitelja::in);
         List<Ugostitelj> resultList = query.fetch();
         return ResultList.create(resultList, resultList.size());
     }

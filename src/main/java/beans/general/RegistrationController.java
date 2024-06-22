@@ -1,9 +1,7 @@
 package beans.general;
 
-import entities.PrivilegedUser;
-import entities.Tourist;
-import entities.Inbox;
-import entities.Ugostitelj;
+import entities.*;
+import entities.mappers.UgostiteljMapper;
 import enums.MessageType;
 import enums.UgostiteljType;
 import enums.UserType;
@@ -43,7 +41,7 @@ public class RegistrationController implements Serializable {
 
     @Getter
     @Setter
-    private Tourist tourist = new Tourist();
+    private Turista turista = new Turista();
 
     @Getter
     @Setter
@@ -51,7 +49,23 @@ public class RegistrationController implements Serializable {
 
     @Getter
     @Setter
-    private PrivilegedUser privilegedUser = new PrivilegedUser();
+    private FizickoLice fizickoLice = new FizickoLice();
+
+    @Getter
+    @Setter
+    private PravnoLice pravnoLice = new PravnoLice();
+
+    @Getter
+    @Setter
+    private Preduzetnik preduzetnik = new Preduzetnik();
+
+    @Getter
+    @Setter
+    private Ustanova ustanova = new Ustanova();
+
+    @Getter
+    @Setter
+    private PrivilegovaniKorisnik privilegovaniKorisnik = new PrivilegovaniKorisnik();
 
     @Inject
     private TouristDomainHelper touristDomainHelper;
@@ -87,13 +101,30 @@ public class RegistrationController implements Serializable {
         return userType.equals(UserType.PrivilegedUser);
     }
 
+    public boolean renderPreduzetnikData() {
+        return renderUgostiteljData() && UgostiteljType.Preduzetnik.equals(ugostitelj.getTipUgostitelja());
+    }
+
+    public boolean renderUstanovaData() {
+        return renderUgostiteljData() && UgostiteljType.Ustanova.equals(ugostitelj.getTipUgostitelja());
+    }
+
+    public boolean renderFizickoLiceData() {
+        return renderUgostiteljData() && UgostiteljType.FizickoLice.equals(ugostitelj.getTipUgostitelja());
+    }
+
+    public boolean renderPravnoLiceData() {
+        return renderUgostiteljData() && UgostiteljType.PravnoLice.equals(ugostitelj.getTipUgostitelja());
+    }
+
     public void registerUgostitelj() {
         if (checkPreconditionsUgostitelj()) {
+            setUgostiteljType();
             ugostiteljDomainHelper.createUgostitelj(ugostitelj);
-            Inbox inbox = new Inbox();
-            inbox.setUgostitelj(ugostitelj);
-            ugostitelj.setInbox(inbox);
-            messageDomainHelper.createInbox(inbox);
+            Sanduce sanduce = new Sanduce();
+            sanduce.setUgostitelj(ugostitelj);
+            ugostitelj.setSanduce(sanduce);
+            messageDomainHelper.createInbox(sanduce);
             ugostiteljDomainHelper.updateUgostitelj(ugostitelj);
             navigationController.navigateToLogin();
         }
@@ -101,25 +132,25 @@ public class RegistrationController implements Serializable {
 
     public void registerTourist() {
         if (checkPreconditionsTourist()) {
-            touristDomainHelper.create(tourist);
+            touristDomainHelper.create(turista);
             navigationController.navigateToLogin();
         }
     }
 
     public void registerPrivileged() {
         if (checkPreconditionsPrivileged()) {
-            privilegedUserDomainHelper.create(privilegedUser);
+            privilegedUserDomainHelper.create(privilegovaniKorisnik);
             navigationController.navigateToLogin();
         }
     }
 
     private boolean checkPreconditionsTourist() {
-        if (touristDomainHelper.getByEmail(tourist.getEmail()) != null) {
-            messageController.showErrorMessage(MessageType.ShortLiveMessage, "Tourist with email "+ privilegedUser.getEmail() +" already exists.");
+        if (touristDomainHelper.getByEmail(turista.getEmail()) != null) {
+            messageController.showErrorMessage(MessageType.ShortLiveMessage, "Tourist with email "+ privilegovaniKorisnik.getEmail() +" already exists.");
             return false;
         }
-        if (touristDomainHelper.getByUsername(tourist.getUsername()) != null) {
-            messageController.showErrorMessage(MessageType.ShortLiveMessage, "Tourist with username "+ privilegedUser.getUsername() +" already exists.");
+        if (touristDomainHelper.getByUsername(turista.getUsername()) != null) {
+            messageController.showErrorMessage(MessageType.ShortLiveMessage, "Tourist with username "+ privilegovaniKorisnik.getUsername() +" already exists.");
             return false;
         }
         return true;
@@ -138,15 +169,31 @@ public class RegistrationController implements Serializable {
     }
 
     private boolean checkPreconditionsPrivileged() {
-        if (privilegedUserDomainHelper.getByEmail(privilegedUser.getEmail()) != null) {
-            messageController.showErrorMessage(MessageType.ShortLiveMessage, "Privileged user with email "+ privilegedUser.getEmail() +" already exists.");
+        if (privilegedUserDomainHelper.getByEmail(privilegovaniKorisnik.getEmail()) != null) {
+            messageController.showErrorMessage(MessageType.ShortLiveMessage, "Privileged user with email "+ privilegovaniKorisnik.getEmail() +" already exists.");
             return false;
         }
-        if (privilegedUserDomainHelper.getByUsername(privilegedUser.getUsername()) != null) {
-            messageController.showErrorMessage(MessageType.ShortLiveMessage, "Privileged user with username "+ privilegedUser.getUsername() +" already exists.");
+        if (privilegedUserDomainHelper.getByUsername(privilegovaniKorisnik.getUsername()) != null) {
+            messageController.showErrorMessage(MessageType.ShortLiveMessage, "Privileged user with username "+ privilegovaniKorisnik.getUsername() +" already exists.");
             return false;
         }
         return true;
     }
 
+    private void setUgostiteljType() {
+        switch (ugostitelj.getTipUgostitelja()) {
+            case Ustanova:
+                ugostitelj = UgostiteljMapper.INSTANCE.mergeUstanova(ustanova, ugostitelj);
+                break;
+            case PravnoLice:
+                ugostitelj = UgostiteljMapper.INSTANCE.mergePravnoLice(pravnoLice, ugostitelj);
+                break;
+            case FizickoLice:
+                ugostitelj = UgostiteljMapper.INSTANCE.mergeFizicikoLice(fizickoLice, ugostitelj);
+                break;
+            case Preduzetnik:
+                ugostitelj = UgostiteljMapper.INSTANCE.mergePreduzetnik(preduzetnik, ugostitelj);
+                break;
+        }
+    }
 }

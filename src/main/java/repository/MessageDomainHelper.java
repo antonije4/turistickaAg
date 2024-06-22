@@ -1,7 +1,10 @@
 package repository;
 
 import com.querydsl.jpa.impl.JPAQuery;
-import entities.*;
+import entities.Poruka;
+import entities.QPoruka;
+import entities.QSanduce;
+import entities.Sanduce;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -15,36 +18,36 @@ public class MessageDomainHelper implements Serializable {
     @PersistenceContext
     private EntityManager entityManager;
 
-    private static final QMessage qMessage = QMessage.message;
-    private static final QInbox qInbox = QInbox.inbox;
+    private static final QPoruka qMessage = QPoruka.poruka;
+    private static final QSanduce qInbox = QSanduce.sanduce;
 
-    public void createMessage(Message message) {
-        entityManager.persist(message);
+    public void createMessage(Poruka poruka) {
+        entityManager.persist(poruka);
     }
 
-    public void updateMessage(Message message) {
-        entityManager.merge(message);
+    public void updateMessage(Poruka poruka) {
+        entityManager.merge(poruka);
     }
 
-    public void createInbox(Inbox inbox) {
-        entityManager.persist(inbox);
+    public void createInbox(Sanduce sanduce) {
+        entityManager.persist(sanduce);
     }
 
-    public void updateInbox(Inbox inbox) {
-        entityManager.merge(inbox);
+    public void updateInbox(Sanduce sanduce) {
+        entityManager.merge(sanduce);
     }
 
     public boolean inboxHasUnreadMessages(long inboxId) {
-        JPAQuery<Message> query = new JPAQuery<>(entityManager).select(qMessage)
+        JPAQuery<Poruka> query = new JPAQuery<>(entityManager).select(qMessage)
                 .from(qMessage)
-                .where(qMessage.inbox.id.eq(inboxId).and(qMessage.read.eq(false)));
+                .where(qMessage.sanduce.id.eq(inboxId).and(qMessage.procitana.eq(false)));
         return !query.fetch().isEmpty();
     }
 
-    public List<Message> fetchMessagesFromInbox(long inboxId) {
-        JPAQuery<Message> query = new JPAQuery<>(entityManager).select(qMessage)
+    public List<Poruka> fetchMessagesFromInbox(long inboxId) {
+        JPAQuery<Poruka> query = new JPAQuery<>(entityManager).select(qMessage)
                 .from(qMessage)
-                .where(qMessage.inbox.id.eq(inboxId));
+                .where(qMessage.sanduce.id.eq(inboxId));
         return query.fetch();
     }
 }

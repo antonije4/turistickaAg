@@ -2,8 +2,8 @@ package beans.overview;
 
 import beans.general.NavigationController;
 import beans.general.UserController;
-import entities.Reservation;
-import entities.Tourist;
+import entities.Rezervacija;
+import entities.Turista;
 import lombok.Getter;
 import lombok.Setter;
 import repository.TouristDomainHelper;
@@ -12,7 +12,6 @@ import util.Util;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.Serializable;
 
 @Named
 @ViewScoped
@@ -20,7 +19,7 @@ import java.io.Serializable;
 public class TouristOverviewController extends BaseOverview {
 
     private String touristUsername;
-    private Tourist tourist;
+    private Turista turista;
     private boolean inputDisabled;
 
     @Inject
@@ -45,8 +44,8 @@ public class TouristOverviewController extends BaseOverview {
         inputDisabled = false;
     }
 
-    public void editReservation(Reservation reservation) {
-        navigationController.navigateToReservationOverview(reservation.getId());
+    public void editReservation(Rezervacija rezervacija) {
+        navigationController.navigateToReservationOverview(rezervacija.getId());
     }
 
     @Override
@@ -63,7 +62,7 @@ public class TouristOverviewController extends BaseOverview {
     @Override
     protected boolean processDomain() {
         try {
-            tourist = touristDomainHelper.getByUsername(touristUsername);
+            turista = touristDomainHelper.getByUsername(touristUsername);
             return true;
         } catch (Exception e) {
             //log exception
@@ -73,7 +72,7 @@ public class TouristOverviewController extends BaseOverview {
 
     public boolean currentTouristLoggedIn() {
         if (userController.loggedIn()) {
-            return tourist.getId() == userController.getLoggedInUser().getId();
+            return turista.getId() == userController.getLoggedInUser().getId();
         } else {
             return false;
         }

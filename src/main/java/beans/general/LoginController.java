@@ -1,6 +1,6 @@
 package beans.general;
-import entities.PrivilegedUser;
-import entities.Tourist;
+import entities.PrivilegovaniKorisnik;
+import entities.Turista;
 import entities.Ugostitelj;
 import enums.MessageType;
 import enums.UserType;
@@ -81,9 +81,9 @@ public class LoginController implements Serializable {
     }
 
     private void logInTourist() {
-        Tourist tourist = touristDomainHelper.getByUsernamePassword(username, password);
-        if (tourist != null) {
-            userController.logIn(tourist);
+        Turista turista = touristDomainHelper.getByUsernamePassword(username, password);
+        if (turista != null) {
+            userController.logIn(turista);
             navigationController.navigateToHome();
             messageController.showErrorMessage(MessageType.ShortLiveMessage, "Jek jek");
         } else {
@@ -92,9 +92,9 @@ public class LoginController implements Serializable {
     }
 
     private void logInPrivileged() {
-        PrivilegedUser privilegedUser = privilegedUserDomainHelper.getByUsernamePassword(username, password);
-        if (privilegedUser != null) {
-            userController.logIn(privilegedUser);
+        PrivilegovaniKorisnik privilegovaniKorisnik = privilegedUserDomainHelper.getByUsernamePassword(username, password);
+        if (privilegovaniKorisnik != null) {
+            userController.logIn(privilegovaniKorisnik);
             navigationController.navigateToHome();
             messageController.showErrorMessage(MessageType.ShortLiveMessage, "Jek jek");
         } else {

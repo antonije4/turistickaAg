@@ -7,6 +7,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
+import java.util.Set;
 
 @Mapper
 public interface UgostiteljskiObjekatMapper {
@@ -14,5 +15,5 @@ public interface UgostiteljskiObjekatMapper {
 
     UgostiteljskiObjekatDTO mapToDTO(UgostiteljskiObjekat objekat);
     UgostiteljskiObjekat mapToEntity(UgostiteljskiObjekatDTO objekatDTO);
-    List<CategorizationRequestRow> ugostiteljskiObjekatListToCategorizationRow(List<UgostiteljskiObjekat> ugostiteljskiObjekatList);
+    List<CategorizationRequestRow> ugostiteljskiObjekatListToCategorizationRow(Set<UgostiteljskiObjekat> ugostiteljskiObjekatList);
 }

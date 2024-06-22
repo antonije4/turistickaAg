@@ -1,8 +1,8 @@
 package beans.inbox;
 
 import beans.general.UserController;
-import entities.Inbox;
-import entities.Message;
+import entities.Poruka;
+import entities.Sanduce;
 import entities.Ugostitelj;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,9 +18,9 @@ import java.util.List;
 @ViewScoped
 @Getter @Setter
 public class InboxController implements Serializable {
-    private List<Message> messageList;
+    private List<Poruka> porukaList;
     private Ugostitelj ugostitelj;
-    private Inbox inbox;
+    private Sanduce sanduce;
     @Inject
     private UserController userController;
     @Inject
@@ -28,14 +28,14 @@ public class InboxController implements Serializable {
 
     public void init() {
         ugostitelj = (Ugostitelj) userController.getLoggedInUser();
-        inbox = ugostitelj.getInbox();
-        messageList = messageDomainHelper.fetchMessagesFromInbox(inbox.getId());
+        sanduce = ugostitelj.getSanduce();
+        porukaList = messageDomainHelper.fetchMessagesFromInbox(sanduce.getId());
     }
 
-    public void readMessage(Message message) {
-        int index = messageList.indexOf(message);
-        messageList.get(index).setRead(true);
-        messageDomainHelper.updateMessage(messageList.get(index));
+    public void readMessage(Poruka poruka) {
+        int index = porukaList.indexOf(poruka);
+        porukaList.get(index).setProcitana(true);
+        messageDomainHelper.updateMessage(porukaList.get(index));
     }
 
 

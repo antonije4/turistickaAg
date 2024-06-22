@@ -4,10 +4,10 @@ package beans.overview;
 import beans.general.MessageController;
 import beans.general.NavigationController;
 import beans.general.UserController;
-import entities.Reservation;
-import entities.Tourist;
+import entities.Rezervacija;
+import entities.Turista;
 import entities.UgostiteljskiObjekat;
-import entities.User;
+import entities.Korisnik;
 import enums.MessageType;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,7 +30,7 @@ import java.util.List;
 @Getter @Setter
 public class ReservationOverviewController extends BaseOverview {
 
-    private Reservation reservation;
+    private Rezervacija rezervacija;
     private List<Date> dateRange = new ArrayList<>();
     private boolean inputEnabled;
     @Inject
@@ -52,8 +52,8 @@ public class ReservationOverviewController extends BaseOverview {
 
     public void init() {
         super.init();
-        dateRange.add(localDateToDate(reservation.getStartingDate()));
-        dateRange.add(localDateToDate(reservation.getEndingDate()));
+        dateRange.add(localDateToDate(rezervacija.getPocetniDatum()));
+        dateRange.add(localDateToDate(rezervacija.getKrajnjiDatum()));
     }
 
     private Date localDateToDate(LocalDate localDate) {
@@ -64,23 +64,23 @@ public class ReservationOverviewController extends BaseOverview {
     }
 
     public boolean canEdit() {
-        return reservation.getStartingDate().isAfter(LocalDate.now()) && (isUgostiteljskiObjekatOwnerLoggedIn() || isTouristOwnerLoggedIn());
+        return rezervacija.getPocetniDatum().isAfter(LocalDate.now()) && (isUgostiteljskiObjekatOwnerLoggedIn() || isTouristOwnerLoggedIn());
     }
 
     public boolean isUgostiteljskiObjekatOwnerLoggedIn() {
         if (!userController.loggedIn()) {
             return false;
         }
-        User user = userController.getLoggedInUser();
-        return user.getId() == reservation.getUgostiteljskiObjekat().getUgostitelj().getId() && userController.ugostiteljLoggedIn();
+        Korisnik korisnik = userController.getLoggedInUser();
+        return korisnik.getId() == rezervacija.getUgostiteljskiObjekat().getUgostitelj().getId() && userController.ugostiteljLoggedIn();
     }
 
     public boolean isTouristOwnerLoggedIn() {
         if (!userController.loggedIn()) {
             return false;
         }
-        User user = userController.getLoggedInUser();
-        return user.getId() == reservation.getTourist().getId() && userController.touristLoggedIn();
+        Korisnik korisnik = userController.getLoggedInUser();
+        return korisnik.getId() == rezervacija.getTurista().getId() && userController.touristLoggedIn();
     }
 
     public void enableInput() {
@@ -88,9 +88,9 @@ public class ReservationOverviewController extends BaseOverview {
     }
 
     public void saveChanges() {
-        reservation.setStartingDate(dateToLocalDate(dateRange.get(0)));
-        reservation.setEndingDate(dateToLocalDate(dateRange.get(1)));
-        reservationDomainHelper.updateReservation(reservation);
+        rezervacija.setPocetniDatum(dateToLocalDate(dateRange.get(0)));
+        rezervacija.setKrajnjiDatum(dateToLocalDate(dateRange.get(1)));
+        reservationDomainHelper.updateReservation(rezervacija);
         inputEnabled = false;
         messageController.showInfoMessage(MessageType.MediumLiveMessage, "Successfully updated reservation!");
     }
@@ -98,19 +98,19 @@ public class ReservationOverviewController extends BaseOverview {
     public void delete() {
         unlinkFromTourist();
         unlinkFromUgostiteljskiObjekat();
-        reservationDomainHelper.deleteReservation(reservation);
-        navigationController.navigateToUgostiteljskiObjekatOverview(reservation.getUgostiteljskiObjekat().getId());
+        reservationDomainHelper.deleteReservation(rezervacija);
+        navigationController.navigateToUgostiteljskiObjekatOverview(rezervacija.getUgostiteljskiObjekat().getId());
     }
 
     private void unlinkFromTourist() {
-        Tourist tourist = reservation.getTourist();
-        tourist.unlinkReservation(reservation);
-        touristDomainHelper.update(tourist);
+        Turista turista = rezervacija.getTurista();
+        turista.unlinkReservation(rezervacija);
+        touristDomainHelper.update(turista);
     }
 
     private void unlinkFromUgostiteljskiObjekat() {
-        UgostiteljskiObjekat ugostiteljskiObjekat = reservation.getUgostiteljskiObjekat();
-        ugostiteljskiObjekat.unlinkReservation(reservation);
+        UgostiteljskiObjekat ugostiteljskiObjekat = rezervacija.getUgostiteljskiObjekat();
+        ugostiteljskiObjekat.unlinkReservation(rezervacija);
         ugostiteljskiObjekatDomainHelper.updateUgostiteljskiObjekat(ugostiteljskiObjekat);
     }
 
@@ -130,7 +130,7 @@ public class ReservationOverviewController extends BaseOverview {
 
     protected boolean processDomain() {
         try {
-            reservation = reservationDomainHelper.getReservationById(reservationId);
+            rezervacija = reservationDomainHelper.getReservationById(reservationId);
             return true;
         } catch (Exception e) {
             //log exception

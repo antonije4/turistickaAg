@@ -19,7 +19,7 @@
 
    <ui:define name="navigations">
       <p:menuitem
-              value=" Make a reservation "
+              value=" Make a rezervacija "
               icon="fa fa-play"
               outcome="#{navigationController.goToReservation(ugostiteljskiObjekatOverviewController.ugostiteljskiObjekat.id)}"
               actionListener="#"
@@ -33,7 +33,7 @@
          <h:panelGrid  columns="5" id="ugostiteljskiObjekatGrid" cellspacing="10" columnClasses=",,insideDetailsColumn70,">
             <p:outputLabel value="Name: "/>
             <p:inputText required="true" requiredMessage="Name can't be empty!" disabled="#{!ugostiteljskiObjekatOverviewController.inputEnabled()}" id="name" value="#{ugostiteljskiObjekatOverviewController.ugostiteljskiObjekat.name}" label="Name"/>
-            <p:message for="name"/>
+            <p:poruka for="name"/>
 
             <p:outputLabel value="Ugostitelj: "/>
             <ui:include src="/link/ugostiteljLink.xhtml" >
@@ -107,8 +107,8 @@
                   <p:outputLabel value="#{item.endingDate}"/>
                </p:column>
                <p:column headerText="Tourist"
-                         sortBy="#{item.tourist.username}">
-                  <p:outputLabel value="#{item.tourist.username}"/>
+                         sortBy="#{item.turista.username}">
+                  <p:outputLabel value="#{item.turista.username}"/>
                </p:column>
                <p:column headerText="Number Of People"
                          sortBy="#{item.numberOfPeople}">

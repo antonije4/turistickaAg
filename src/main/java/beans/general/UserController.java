@@ -1,10 +1,10 @@
 package beans.general;
 
 
-import entities.PrivilegedUser;
-import entities.Tourist;
+import entities.Korisnik;
+import entities.PrivilegovaniKorisnik;
+import entities.Turista;
 import entities.Ugostitelj;
-import entities.User;
 import repository.MessageDomainHelper;
 
 import javax.enterprise.context.SessionScoped;
@@ -16,7 +16,7 @@ import java.io.Serializable;
 @SessionScoped
 public class UserController implements Serializable {
 
-    private User user;
+    private Korisnik korisnik;
 
     @Inject
     private NavigationController navigationController;
@@ -24,41 +24,41 @@ public class UserController implements Serializable {
     private MessageDomainHelper messageDomainHelper;
 
     public boolean loggedIn() {
-        return user != null;
+        return korisnik != null;
     }
 
     public boolean ugostiteljLoggedIn() {
-        return user instanceof Ugostitelj;
+        return korisnik instanceof Ugostitelj;
     }
 
     public boolean privilegedUserLoggedIn() {
-        return user instanceof PrivilegedUser;
+        return korisnik instanceof PrivilegovaniKorisnik;
     }
-    public boolean touristLoggedIn() {return user instanceof Tourist;}
+    public boolean touristLoggedIn() {return korisnik instanceof Turista;}
 
     public boolean hasUnreadMessages() {
         if (ugostiteljLoggedIn()) {
-            Ugostitelj ugostitelj = (Ugostitelj) user;
-            return messageDomainHelper.inboxHasUnreadMessages(ugostitelj.getInbox().getId());
+            Ugostitelj ugostitelj = (Ugostitelj) korisnik;
+            return messageDomainHelper.inboxHasUnreadMessages(ugostitelj.getSanduce().getId());
         } else
             return false;
     }
 
-    public void logIn(User user) {
-        this.user = user;
+    public void logIn(Korisnik korisnik) {
+        this.korisnik = korisnik;
     }
 
     public void logOut() {
-        user = null;
+        korisnik = null;
         navigationController.navigateToHome();
     }
 
     public String username() {
-        return user.getUsername();
+        return korisnik.getUsername();
     }
 
-    public User getLoggedInUser() {
-        return user;
+    public Korisnik getLoggedInUser() {
+        return korisnik;
     }
 
 }

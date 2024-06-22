@@ -37,6 +37,47 @@
             <p:outputLabel value="Email"/>
             <p:inputText disabled="#{ugostiteljOverviewController.inputDisabled()}" id="email" value="#{ugostiteljOverviewController.ugostitelj.email}"/>
 
+            <p:outputLabel rendered="#{ugostiteljOverviewController.renderPreduzetnikData()}" value="Ime"/>
+            <p:inputText rendered="#{ugostiteljOverviewController.renderPreduzetnikData()}" disabled="#{ugostiteljOverviewController.inputDisabled()}" required="true" id="preduzetnikIme" value="#{ugostiteljOverviewController.preduzetnik.ime}" label="Ime"/>
+
+            <p:outputLabel rendered="#{ugostiteljOverviewController.renderPreduzetnikData()}" value="Prezime"/>
+            <p:inputText rendered="#{ugostiteljOverviewController.renderPreduzetnikData()}" disabled="#{ugostiteljOverviewController.inputDisabled()}" required="true" id="preduzetnikPrezime" value="#{ugostiteljOverviewController.preduzetnik.prezime}" label="Prezime"/>
+
+            <p:outputLabel rendered="#{ugostiteljOverviewController.renderPreduzetnikData()}" value="Adresa"/>
+            <p:inputText rendered="#{ugostiteljOverviewController.renderPreduzetnikData()}" disabled="#{ugostiteljOverviewController.inputDisabled()}" required="true" id="preduzetnikAdresa" value="#{ugostiteljOverviewController.preduzetnik.adresa}" label="Adresa"/>
+
+            <p:outputLabel rendered="#{ugostiteljOverviewController.renderPreduzetnikData()}" value="Delatnost"/>
+            <p:inputText rendered="#{ugostiteljOverviewController.renderPreduzetnikData()}" disabled="#{ugostiteljOverviewController.inputDisabled()}" required="true" id="preduzetnikDelatnost" value="#{ugostiteljOverviewController.preduzetnik.delatnost}" label="Delatnost"/>
+
+            <p:outputLabel rendered="#{ugostiteljOverviewController.renderPravnoLiceData()}" value="Pib"/>
+            <p:inputText rendered="#{ugostiteljOverviewController.renderPravnoLiceData()}" disabled="#{ugostiteljOverviewController.inputDisabled()}" required="true" id="pravnoLicePib" value="#{ugostiteljOverviewController.pravnoLice.pib}" label="Pib"/>
+
+            <p:outputLabel rendered="#{ugostiteljOverviewController.renderPravnoLiceData()}" value="Naziv Firme"/>
+            <p:inputText rendered="#{ugostiteljOverviewController.renderPravnoLiceData()}" disabled="#{ugostiteljOverviewController.inputDisabled()}" required="true" id="pravnoLiceNazivFirme" value="#{ugostiteljOverviewController.pravnoLice.nazivFirme}" label="Naziv Firme"/>
+
+            <p:outputLabel rendered="#{ugostiteljOverviewController.renderPravnoLiceData()}" value="Adresa Firme"/>
+            <p:inputText rendered="#{ugostiteljOverviewController.renderPravnoLiceData()}" disabled="#{ugostiteljOverviewController.inputDisabled()}" required="true" id="pravnoLiceAdresaFirme" value="#{ugostiteljOverviewController.pravnoLice.adresaFirme}" label="Adresa Firme"/>
+
+            <p:outputLabel rendered="#{ugostiteljOverviewController.renderFizickoLiceData()}" value="Ime"/>
+            <p:inputText rendered="#{ugostiteljOverviewController.renderFizickoLiceData()}" disabled="#{ugostiteljOverviewController.inputDisabled()}" required="true" id="fizickoLiceIme" value="#{ugostiteljOverviewController.fizickoLice.ime}" label="Ime"/>
+
+            <p:outputLabel rendered="#{ugostiteljOverviewController.renderFizickoLiceData()}" value="Prezime"/>
+            <p:inputText rendered="#{ugostiteljOverviewController.renderFizickoLiceData()}" disabled="#{ugostiteljOverviewController.inputDisabled()}" required="true" id="fizickoLicePrezime" value="#{ugostiteljOverviewController.fizickoLice.prezime}" label="Prezime"/>
+
+            <p:outputLabel rendered="#{ugostiteljOverviewController.renderFizickoLiceData()}" value="Adresa"/>
+            <p:inputText rendered="#{ugostiteljOverviewController.renderFizickoLiceData()}" disabled="#{ugostiteljOverviewController.inputDisabled()}" required="true" id="fizickoLiceAdresa" value="#{ugostiteljOverviewController.fizickoLice.adresa}" label="Adresa"/>
+
+            <p:outputLabel rendered="#{ugostiteljOverviewController.renderFizickoLiceData()}" value="Jmbg"/>
+            <p:inputText rendered="#{ugostiteljOverviewController.renderFizickoLiceData()}" disabled="#{ugostiteljOverviewController.inputDisabled()}" required="true" id="fizickoLiceJmbg" value="#{ugostiteljOverviewController.fizickoLice.jmbg}" label="Jmbg"/>
+
+            <p:outputLabel rendered="#{ugostiteljOverviewController.renderUstanovaData()}" value="Adresa"/>
+            <p:inputText rendered="#{ugostiteljOverviewController.renderUstanovaData()}" disabled="#{ugostiteljOverviewController.inputDisabled()}" required="true" id="ustanovaAdresa" value="#{ugostiteljOverviewController.ustanova.adresa}" label="Adresa"/>
+
+            <p:outputLabel rendered="#{ugostiteljOverviewController.renderUstanovaData()}" value="Vrsta Ustanove"/>
+            <p:inputText rendered="#{ugostiteljOverviewController.renderUstanovaData()}" disabled="#{ugostiteljOverviewController.inputDisabled()}" required="true" id="ustanovaVrstaUstanove" value="#{ugostiteljOverviewController.ustanova.vrstaUstanove}" label="Vrsta Ustanove"/>
+
+            <p:outputLabel rendered="#{ugostiteljOverviewController.renderUstanovaData()}" value="Naziv"/>
+            <p:inputText rendered="#{ugostiteljOverviewController.renderUstanovaData()}" disabled="#{ugostiteljOverviewController.inputDisabled()}" required="true" id="ustanovaNaziv" value="#{ugostiteljOverviewController.ustanova.naziv}" label="Naziv"/>
 
          </h:panelGrid>
 
@@ -73,7 +114,7 @@
                   <p:outputLabel rendered="#{item.categorized}" value="#{item.categorizationExpiryDate}"/>
                </p:column>
                <p:column>
-                  <p:commandButton value="Make a reservation" action="#{navigationController.navigateToReservation(item.id)}"/>
+                  <p:commandButton value="Make a rezervacija" action="#{navigationController.navigateToReservation(item.id)}"/>
                </p:column>
             </ui:define>
 

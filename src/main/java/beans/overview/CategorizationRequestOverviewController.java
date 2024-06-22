@@ -15,15 +15,13 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 
 @Named
 @ViewScoped
 @Getter @Setter
 public class CategorizationRequestOverviewController extends BaseOverview {
 
-    private CategorizationRequest categorizationRequest;
+    private ZahtevZaKategorizaciju zahtevZaKategorizaciju;
     private boolean inputEnabled;
     @Inject
     private CategorizationRequestDomainHelper categorizationRequestDomainHelper;
@@ -48,15 +46,15 @@ public class CategorizationRequestOverviewController extends BaseOverview {
     }
 
     public boolean canEdit() {
-        return categorizationRequest.getDateOfRequest().isAfter(LocalDate.now()) && isUgostiteljskiObjekatOwnerLoggedIn() && !categorizationRequest.isReviewed();
+        return zahtevZaKategorizaciju.getDatumZahteva().isAfter(LocalDate.now()) && isUgostiteljskiObjekatOwnerLoggedIn() && !zahtevZaKategorizaciju.isPregledan();
     }
 
     public boolean isUgostiteljskiObjekatOwnerLoggedIn() {
         if (!userController.loggedIn()) {
             return false;
         }
-        User user = userController.getLoggedInUser();
-        return user.getId() == categorizationRequest.getUgostiteljskiObjekat().getUgostitelj().getId() && userController.ugostiteljLoggedIn();
+        Korisnik korisnik = userController.getLoggedInUser();
+        return korisnik.getId() == zahtevZaKategorizaciju.getUgostiteljskiObjekat().getUgostitelj().getId() && userController.ugostiteljLoggedIn();
     }
 
     public void enableInput() {
@@ -64,8 +62,8 @@ public class CategorizationRequestOverviewController extends BaseOverview {
     }
 
     public void saveChanges() {
-        categorizationRequest.setCategorizationInfo(categorizationRequest.getCategorizationInfo());
-        categorizationRequestDomainHelper.updateCategorizationRequest(categorizationRequest);
+        zahtevZaKategorizaciju.setPodaciKategorizacije(zahtevZaKategorizaciju.getPodaciKategorizacije());
+        categorizationRequestDomainHelper.updateCategorizationRequest(zahtevZaKategorizaciju);
         inputEnabled = false;
         messageController.showInfoMessage(MessageType.MediumLiveMessage, "Successfully updated categorization request!");
     }
@@ -73,19 +71,19 @@ public class CategorizationRequestOverviewController extends BaseOverview {
     public void delete() {
         unlinkFromUgostitelj();
         unlinkFromUgostiteljskiObjekat();
-        categorizationRequestDomainHelper.deleteCategorizationRequest(categorizationRequest);
-        navigationController.navigateToUgostiteljskiObjekatOverview(categorizationRequest.getUgostiteljskiObjekat().getId());
+        categorizationRequestDomainHelper.deleteCategorizationRequest(zahtevZaKategorizaciju);
+        navigationController.navigateToUgostiteljskiObjekatOverview(zahtevZaKategorizaciju.getUgostiteljskiObjekat().getId());
     }
 
     private void unlinkFromUgostitelj() {
-        Ugostitelj ugostitelj = categorizationRequest.getUgostitelj();
-        ugostitelj.unlinkCategorizationRequest(categorizationRequest);
+        Ugostitelj ugostitelj = zahtevZaKategorizaciju.getUgostitelj();
+        ugostitelj.unlinkCategorizationRequest(zahtevZaKategorizaciju);
         ugostiteljDomainHelper.updateUgostitelj(ugostitelj);
     }
 
     private void unlinkFromUgostiteljskiObjekat() {
-        UgostiteljskiObjekat ugostiteljskiObjekat = categorizationRequest.getUgostiteljskiObjekat();
-        ugostiteljskiObjekat.unlinkCategorizationRequest(categorizationRequest);
+        UgostiteljskiObjekat ugostiteljskiObjekat = zahtevZaKategorizaciju.getUgostiteljskiObjekat();
+        ugostiteljskiObjekat.unlinkCategorizationRequest(zahtevZaKategorizaciju);
         ugostiteljskiObjekatDomainHelper.updateUgostiteljskiObjekat(ugostiteljskiObjekat);
     }
 
@@ -105,7 +103,7 @@ public class CategorizationRequestOverviewController extends BaseOverview {
 
     protected boolean processDomain() {
         try {
-            categorizationRequest = categorizationRequestDomainHelper.getCategorizationRequestById(categorizationRequestId);
+            zahtevZaKategorizaciju = categorizationRequestDomainHelper.getCategorizationRequestById(categorizationRequestId);
             return true;
         } catch (Exception e) {
             //log exception

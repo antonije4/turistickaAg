@@ -1,7 +1,6 @@
 package entities;
 
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,39 +11,39 @@ import java.time.LocalDate;
 
 @Entity
 @Getter @Setter
-public class Reservation implements Serializable {
+public class Rezervacija implements Serializable {
 
     @Id
     @GeneratedValue
     @NotNull
     private long id;
     @ManyToOne
-    private Tourist tourist;
+    private Turista turista;
     @ManyToOne(fetch = FetchType.EAGER)
     private UgostiteljskiObjekat ugostiteljskiObjekat;
-    private String boravisnaTaksaPrice;
-    private boolean boravisnaTaksaPaid;
-    private LocalDate startingDate;
-    private LocalDate endingDate;
-    private int numberOfPeople;
+    private String cenaBoravisneTakse;
+    private boolean boravisnaTaksaPlacena;
+    private LocalDate pocetniDatum;
+    private LocalDate krajnjiDatum;
+    private int brojLjudi;
 
-    public Reservation() {
+    public Rezervacija() {
     }
 
-    private Reservation(Builder builder) {
+    private Rezervacija(Builder builder) {
         this.id = builder.id;
-        this.tourist = builder.tourist;
+        this.turista = builder.turista;
         this.ugostiteljskiObjekat = builder.ugostiteljskiObjekat;
-        this.boravisnaTaksaPrice = builder.boravisnaTaksaPrice;
-        this.boravisnaTaksaPaid = builder.boravisnaTaksaPaid;
-        this.startingDate = builder.startingDate;
-        this.endingDate = builder.endingDate;
-        this.numberOfPeople = builder.numberOfPeople;
+        this.cenaBoravisneTakse = builder.boravisnaTaksaPrice;
+        this.boravisnaTaksaPlacena = builder.boravisnaTaksaPaid;
+        this.pocetniDatum = builder.startingDate;
+        this.krajnjiDatum = builder.endingDate;
+        this.brojLjudi = builder.numberOfPeople;
     }
 
     public static class Builder {
         private long id;
-        private Tourist tourist;
+        private Turista turista;
         private UgostiteljskiObjekat ugostiteljskiObjekat;
         private String boravisnaTaksaPrice;
         private boolean boravisnaTaksaPaid;
@@ -57,8 +56,8 @@ public class Reservation implements Serializable {
             return this;
         }
 
-        public Builder tourist(Tourist tourist) {
-            this.tourist = tourist;
+        public Builder tourist(Turista turista) {
+            this.turista = turista;
             return this;
         }
 
@@ -92,8 +91,8 @@ public class Reservation implements Serializable {
             return this;
         }
 
-        public Reservation build() {
-            return new Reservation(this);
+        public Rezervacija build() {
+            return new Rezervacija(this);
         }
     }
 }

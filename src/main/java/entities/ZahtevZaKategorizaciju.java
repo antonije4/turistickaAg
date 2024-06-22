@@ -7,11 +7,10 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Getter @Setter
-public class CategorizationRequest implements Serializable {
+public class ZahtevZaKategorizaciju implements Serializable {
 
 
     @Id
@@ -25,9 +24,9 @@ public class CategorizationRequest implements Serializable {
     @ManyToOne(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     private Ugostitelj ugostitelj;
 
-    private LocalDate dateOfRequest;
-    private boolean approved;
-    private boolean reviewed;
-    private String userReviewed;
-    private String categorizationInfo;
+    private LocalDate datumZahteva;
+    private boolean odobren;
+    private boolean pregledan;
+    private String korisnikPregleda;
+    private String podaciKategorizacije;
 }

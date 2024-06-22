@@ -1,8 +1,8 @@
 package repository;
 
 import com.querydsl.jpa.impl.JPAQuery;
-import entities.QReservation;
-import entities.Reservation;
+import entities.QRezervacija;
+import entities.Rezervacija;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -14,24 +14,24 @@ public class ReservationDomainHelper extends DomainHelper {
     @PersistenceContext
     private EntityManager entityManager;
 
-    private static final QReservation qReservation = QReservation.reservation;
+    private static final QRezervacija qRezervacija = QRezervacija.rezervacija;
 
-    public void createReservation(Reservation reservation) {
-        entityManager.persist(reservation);
+    public void createReservation(Rezervacija rezervacija) {
+        entityManager.persist(rezervacija);
     }
 
-    public void updateReservation(Reservation reservation) {
-        entityManager.merge(reservation);
+    public void updateReservation(Rezervacija rezervacija) {
+        entityManager.merge(rezervacija);
     }
 
-    public Reservation getReservationById(long reservationId) {
-        JPAQuery<Reservation> query = new JPAQuery<>(entityManager).select(qReservation)
-                .from(qReservation)
-                .where(qReservation.id.eq(reservationId));
+    public Rezervacija getReservationById(long reservationId) {
+        JPAQuery<Rezervacija> query = new JPAQuery<>(entityManager).select(qRezervacija)
+                .from(qRezervacija)
+                .where(qRezervacija.id.eq(reservationId));
         return query.fetchOne();
     }
 
-    public void deleteReservation(Reservation reservation) {
-        entityManager.remove(reservation);
+    public void deleteReservation(Rezervacija rezervacija) {
+        entityManager.remove(rezervacija);
     }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Getter @Setter
-public class Inbox implements Serializable {
+public class Sanduce implements Serializable {
 
     @Id
     @GeneratedValue
@@ -20,7 +20,7 @@ public class Inbox implements Serializable {
     @OneToOne
     private Ugostitelj ugostitelj;
 
-    @OneToMany(mappedBy = "inbox")
-    private List<Message> messages;
+    @OneToMany(mappedBy = "sanduce")
+    private List<Poruka> poruke;
 
 }

@@ -32,13 +32,13 @@
 
             <h:panelGrid  columns="4" id="touristGrid" cellspacing="10" columnClasses=",,insideDetailsColumn70,">
                 <p:outputLabel value="UserName"/>
-                <p:inputText disabled="#{touristOverviewController.inputDisabled()}" id="userName" value="#{touristOverviewController.tourist.username}" label="Username"/>
+                <p:inputText disabled="#{touristOverviewController.inputDisabled()}" id="userName" value="#{touristOverviewController.turista.username}" label="Username"/>
 
                 <p:outputLabel value="Password"/>
-                <p:password disabled="#{touristOverviewController.inputDisabled()}" id="password" value="#{touristOverviewController.tourist.password}" label="Password"/>
+                <p:password disabled="#{touristOverviewController.inputDisabled()}" id="password" value="#{touristOverviewController.turista.password}" label="Password"/>
 
                 <p:outputLabel value="Email"/>
-                <p:inputText disabled="#{touristOverviewController.inputDisabled()}" id="email" value="#{touristOverviewController.tourist.email}"/>
+                <p:inputText disabled="#{touristOverviewController.inputDisabled()}" id="email" value="#{touristOverviewController.turista.email}"/>
 
 
             </h:panelGrid>
@@ -48,13 +48,13 @@
         <p:panel id="reservationPanel" toggleable="true" collapsed="true">
 
             <f:facet name="header">
-                <p:outputLabel id="reservationPanelId" value="Reservations : #{touristOverviewController.tourist.reservationList.size()}" />
+                <p:outputLabel id="reservationPanelId" value="Reservations : #{touristOverviewController.turista.reservationList.size()}" />
             </f:facet>
 
             <ui:decorate template="/common/tableTemplate.xhtml">
                 <ui:param name="tableId" value="reservationsTableId" />
                 <ui:param name="tableWV" value="reservationsTable" />
-                <ui:param name="tableItems" value="#{touristOverviewController.tourist.reservationList}" />
+                <ui:param name="tableItems" value="#{touristOverviewController.turista.reservationList}" />
 
                 <ui:define name="tableContent">
                     <f:attribute name="sortBy" value="#{item.startingDate}" />

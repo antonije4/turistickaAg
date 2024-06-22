@@ -2,12 +2,8 @@ package beans.ugostiteljskiObjekat;
 
 import beans.general.NavigationController;
 import beans.general.UserController;
-import dto.UgostiteljDTO;
-import dto.UgostiteljskiObjekatDTO;
 import entities.Ugostitelj;
 import entities.UgostiteljskiObjekat;
-import entities.mappers.UgostiteljMapper;
-import entities.mappers.UgostiteljskiObjekatMapper;
 import lombok.Getter;
 import lombok.Setter;
 import repository.UgostiteljDomainHelper;

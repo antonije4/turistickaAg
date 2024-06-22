@@ -71,7 +71,7 @@
                     <p:outputLabel value="Ugostiteljski objekat: "/>
                     <p:inputText disabled="true" value="#{submitCategorizationRequestController.selectedUgostiteljskiObjekat}"/>
                     <p:outputLabel value="Categorization data:"/>
-                    <p:inputText value="#{submitCategorizationRequestController.categorizationRequest.categorizationInfo}"/>
+                    <p:inputText value="#{submitCategorizationRequestController.zahtevZaKategorizaciju.categorizationInfo}"/>
                     <p:outputLabel value=""/>
                     <p:commandButton disabled="#{submitCategorizationRequestController.selectedUgostiteljskiObjekat eq null}" action="#{submitCategorizationRequestController.submitRequest()}" value="Submit"/>
                 </h:panelGrid>

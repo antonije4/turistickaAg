@@ -1,40 +1,30 @@
 package entities;
 
-import entities.info.AdditionalInfo;
 import enums.UgostiteljType;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @Getter
 @Setter
-public class Ugostitelj extends User{
-
-    private String firstName;
-
-    private String lastName;
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Ugostitelj extends Korisnik {
 
     @NotNull
-    private UgostiteljType ugostiteljType;
+    protected UgostiteljType tipUgostitelja;
 
     @OneToMany(mappedBy = "ugostitelj", cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
-    private List<UgostiteljskiObjekat> ugostiteljskiObjekti;
+    protected Set<UgostiteljskiObjekat> ugostiteljskiObjekti;
 
     @OneToMany(mappedBy = "ugostitelj",cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
-    private List<CategorizationRequest> categorizationRequests;
+    protected Set<ZahtevZaKategorizaciju> zahtevZaKategorizacijus;
 
     @OneToOne(fetch = FetchType.EAGER)
-    private Inbox inbox;
-
-    @Embedded
-    private AdditionalInfo additionalInfo;
+    protected Sanduce sanduce;
 
     public void linkUgostiteljskiObjekat(UgostiteljskiObjekat ugostiteljskiObjekat) {
         ugostiteljskiObjekti.add(ugostiteljskiObjekat);
@@ -44,7 +34,7 @@ public class Ugostitelj extends User{
         ugostiteljskiObjekti.remove(ugostiteljskiObjekat);
     }
 
-    public void unlinkCategorizationRequest(CategorizationRequest categorizationRequest) {
-        categorizationRequests.remove(categorizationRequest);
+    public void unlinkCategorizationRequest(ZahtevZaKategorizaciju zahtevZaKategorizaciju) {
+        zahtevZaKategorizacijus.remove(zahtevZaKategorizaciju);
     }
 }
