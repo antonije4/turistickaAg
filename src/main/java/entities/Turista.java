@@ -20,6 +20,7 @@ public class Turista extends Korisnik {
     private String prezime;
 
     private Date datumRodjenja;
+    private String drzavljanstvo;
 
     @OneToMany(mappedBy = "turista", fetch = FetchType.EAGER)
     private List<Rezervacija> rezervacijaList;
