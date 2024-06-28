@@ -63,7 +63,8 @@
                                                 id="unreadInbox" width="32" height="24" />
                                 <p:tooltip value="You have unread messages" for="unreadInbox" position="right"/>
                             </p:commandLink>
-                            <p:link rendered="#{!userController.loggedIn()}"  outcome="#{navigationController.goToLogin()}" value="Login"/>
+                            <p:link rendered="#{!userController.loggedIn()}"  outcome="#{navigationController.goToLogin()}" value="Prijava" style="margin-right: 40px;"/>
+                            <p:link rendered="#{!userController.loggedIn()}"  outcome="#{navigationController.goToRegistration()}" value="Registracija"/>
                             <i class="fa fa-fw fa-korisnik"/>
                             <p:link style="padding-right: 5px; alignment: top" outcome="#{navigationController.goToUserOverview(userController.username())}" rendered="#{userController.loggedIn()}" value="#{userController.username()}"/>
                             <p:commandLink style="alignment: top" rendered="#{userController.loggedIn()}" value="Log out" action="#{userController.logOut()}"/>

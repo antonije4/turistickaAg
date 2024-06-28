@@ -17,10 +17,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.EnumSet;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Named
 @ViewScoped
@@ -29,11 +27,11 @@ public class RegistrationController implements Serializable {
 
     @Getter
     @Setter
-    private Set<UserType> allUserTypes = new HashSet<>(EnumSet.allOf(UserType.class));;
+    private Map<UserType, String> allUserTypes = Arrays.stream(UserType.values()).collect(Collectors.toMap(ut -> ut, UserType::getKey));
 
     @Getter
     @Setter
-    private Set<UgostiteljType> allUgostiteljTypes = new HashSet<>(Arrays.asList(UgostiteljType.values()));
+    private Map<UgostiteljType, String> allUgostiteljTypes = Arrays.stream(UgostiteljType.values()).collect(Collectors.toMap(ugostiteljType -> ugostiteljType, UgostiteljType::getKey));
 
     @Getter
     @Setter
@@ -146,11 +144,11 @@ public class RegistrationController implements Serializable {
 
     private boolean checkPreconditionsTourist() {
         if (touristDomainHelper.getByEmail(turista.getEmail()) != null) {
-            messageController.showErrorMessage(MessageType.ShortLiveMessage, "Tourist with email "+ privilegovaniKorisnik.getEmail() +" already exists.");
+            messageController.showErrorMessage(MessageType.ShortLiveMessage, "Turista sa email-om "+ privilegovaniKorisnik.getEmail() +" vec postoji.");
             return false;
         }
         if (touristDomainHelper.getByUsername(turista.getUsername()) != null) {
-            messageController.showErrorMessage(MessageType.ShortLiveMessage, "Tourist with username "+ privilegovaniKorisnik.getUsername() +" already exists.");
+            messageController.showErrorMessage(MessageType.ShortLiveMessage, "Turista sa username-om "+ privilegovaniKorisnik.getUsername() +" vec postoji.");
             return false;
         }
         return true;
@@ -158,11 +156,11 @@ public class RegistrationController implements Serializable {
 
     private boolean checkPreconditionsUgostitelj() {
         if (ugostiteljDomainHelper.getUgostiteljByEmail(ugostitelj.getEmail()) != null) {
-            messageController.showErrorMessage(MessageType.ShortLiveMessage, "Ugostitelj with email "+ ugostitelj.getEmail() +" already exists.");
+            messageController.showErrorMessage(MessageType.ShortLiveMessage, "Ugostitelj sa email-om "+ ugostitelj.getEmail() +" vec postoji.");
             return false;
         }
         if (ugostiteljDomainHelper.getUgostiteljByUsername(ugostitelj.getUsername()) != null) {
-            messageController.showErrorMessage(MessageType.ShortLiveMessage, "Ugostitelj with username "+ ugostitelj.getUsername() +" already exists.");
+            messageController.showErrorMessage(MessageType.ShortLiveMessage, "Ugostitelj sa username-om "+ ugostitelj.getUsername() +" vec postoji.");
             return false;
         }
         return true;
@@ -170,11 +168,11 @@ public class RegistrationController implements Serializable {
 
     private boolean checkPreconditionsPrivileged() {
         if (privilegedUserDomainHelper.getByEmail(privilegovaniKorisnik.getEmail()) != null) {
-            messageController.showErrorMessage(MessageType.ShortLiveMessage, "Privileged user with email "+ privilegovaniKorisnik.getEmail() +" already exists.");
+            messageController.showErrorMessage(MessageType.ShortLiveMessage, "Privilegovani korisnik sa email-om "+ privilegovaniKorisnik.getEmail() +" vec postoji.");
             return false;
         }
         if (privilegedUserDomainHelper.getByUsername(privilegovaniKorisnik.getUsername()) != null) {
-            messageController.showErrorMessage(MessageType.ShortLiveMessage, "Privileged user with username "+ privilegovaniKorisnik.getUsername() +" already exists.");
+            messageController.showErrorMessage(MessageType.ShortLiveMessage, "Privilegovani korisnik sa username-om "+ privilegovaniKorisnik.getUsername() +" vec postoji.");
             return false;
         }
         return true;

@@ -27,8 +27,8 @@
                     <f:selectItems value="#{registrationController.allUgostiteljTypes}"/>
                 </p:selectOneMenu>
 
-                <p:outputLabel value="UserName"/>
-                <p:inputText id="userName" value="#{registrationController.ugostitelj.username}" label="UserName" />
+                <p:outputLabel value="Username"/>
+                <p:inputText id="username" value="#{registrationController.ugostitelj.username}" label="Username" />
 
                 <p:outputLabel value="Password"/>
                 <p:password id="password" value="#{registrationController.ugostitelj.password}" label="Password"/>
@@ -44,16 +44,16 @@
 
 
                 <p:outputLabel value="Username"/>
-                <p:inputText id="privilegedUserName" value="#{registrationController.privilegovaniKorisnik.username}" label="UserName" />
+                <p:inputText id="privilegedUsername" value="#{registrationController.privilegovaniKorisnik.username}" label="Username" />
 
                 <p:outputLabel value="Password"/>
                 <p:password id="privilegedPassword" value="#{registrationController.privilegovaniKorisnik.password}" label="Password"/>
 
-                <p:outputLabel value="FirstName"/>
-                <p:inputText id="privilegedFirstName" value="#{registrationController.privilegovaniKorisnik.firstName}" label="FirstName"/>
+                <p:outputLabel value="Ime"/>
+                <p:inputText id="privilegedIme" value="#{registrationController.privilegovaniKorisnik.ime}" label="Ime"/>
 
-                <p:outputLabel value="LastName"/>
-                <p:inputText id="privilegedLastName" value="#{registrationController.privilegovaniKorisnik.lastName}"/>
+                <p:outputLabel value="Prezime"/>
+                <p:inputText id="privilegedPrezime" value="#{registrationController.privilegovaniKorisnik.prezime}"/>
 
                 <p:outputLabel value="Email"/>
                 <p:inputText id="privilegedEmail" value="#{registrationController.privilegovaniKorisnik.email}"/>
@@ -66,16 +66,16 @@
 
 
                 <p:outputLabel value="Username"/>
-                <p:inputText id="touristUserName" value="#{registrationController.turista.username}" label="UserName" />
+                <p:inputText id="touristUsername" value="#{registrationController.turista.username}" label="Username" />
 
                 <p:outputLabel value="Password"/>
                 <p:password id="touristPassword" value="#{registrationController.turista.password}" label="Password"/>
 
-                <p:outputLabel value="FirstName"/>
-                <p:inputText id="touristFirstName" value="#{registrationController.turista.firstName}" label="FirstName"/>
+                <p:outputLabel value="Ime"/>
+                <p:inputText id="touristIme" value="#{registrationController.turista.ime}" label="Ime"/>
 
-                <p:outputLabel value="LastName"/>
-                <p:inputText id="touristLastName" value="#{registrationController.turista.lastName}"/>
+                <p:outputLabel value="Prezime"/>
+                <p:inputText id="touristPrezime" value="#{registrationController.turista.prezime}"/>
 
                 <p:outputLabel value="Email"/>
                 <p:inputText id="touristEmail" value="#{registrationController.turista.email}"/>

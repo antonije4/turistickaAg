@@ -26,21 +26,21 @@
 
                 <p:outputLabel value="Ugostiteljski objekat: "/>
                 <ui:include src="/link/ugostiteljskiObjekatLink.xhtml" >
-                    <ui:param name="name" value="#{categorizationRequestOverviewController.zahtevZaKategorizaciju.ugostiteljskiObjekat.name}" />
+                    <ui:param name="name" value="#{categorizationRequestOverviewController.zahtevZaKategorizaciju.ugostiteljskiObjekat.naziv}" />
                     <ui:param name="id" value="#{categorizationRequestOverviewController.zahtevZaKategorizaciju.ugostiteljskiObjekat.id}" />
                 </ui:include>
 
-                <p:outputLabel value="Dates of request: "/>
-                <p:outputLabel value="#{categorizationRequestOverviewController.zahtevZaKategorizaciju.dateOfRequest}"/>
+                <p:outputLabel value="Datum zahteva: "/>
+                <p:outputLabel value="#{categorizationRequestOverviewController.zahtevZaKategorizaciju.datumZahteva}"/>
 
-                <p:outputLabel value="Categorization info:"/>
-                <p:inputText disabled="#{!categorizationRequestOverviewController.canEdit()}" value="#{categorizationRequestOverviewController.zahtevZaKategorizaciju.categorizationInfo}"/>
+                <p:outputLabel value="Podaci kategorizacije:"/>
+                <p:inputText disabled="#{!categorizationRequestOverviewController.canEdit()}" value="#{categorizationRequestOverviewController.zahtevZaKategorizaciju.podaciKategorizacije}"/>
 
-                <p:outputLabel value="Reviewed: "/>
-                <p:selectBooleanButton disabled="true" onLabel="Yes" offLabel="No" value="#{categorizationRequestOverviewController.zahtevZaKategorizaciju.reviewed}"/>
+                <p:outputLabel value="Pregledan: "/>
+                <p:selectBooleanButton disabled="true" onLabel="Yes" offLabel="No" value="#{categorizationRequestOverviewController.zahtevZaKategorizaciju.pregledan}"/>
 
-                <p:outputLabel value="Approved: "/>
-                <p:selectBooleanButton disabled="true" onLabel="Yes" offLabel="No" value="#{categorizationRequestOverviewController.zahtevZaKategorizaciju.approved}"/>
+                <p:outputLabel value="Odobren: "/>
+                <p:selectBooleanButton disabled="true" onLabel="Yes" offLabel="No" value="#{categorizationRequestOverviewController.zahtevZaKategorizaciju.odobren}"/>
             </h:panelGrid>
 
         </p:panel>

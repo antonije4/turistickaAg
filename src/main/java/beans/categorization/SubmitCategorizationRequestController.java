@@ -79,7 +79,7 @@ public class SubmitCategorizationRequestController implements Serializable {
             }
         } else {
             if (newUgostiteljskiObjekat != null) {
-                selectedUgostiteljskiObjekat = newUgostiteljskiObjekat.getName();
+                selectedUgostiteljskiObjekat = newUgostiteljskiObjekat.getNaziv();
             } else {
                 selectedUgostiteljskiObjekat = null;
             }
@@ -91,7 +91,7 @@ public class SubmitCategorizationRequestController implements Serializable {
     }
 
     public void saveNewUgostiteljskiObjekat() {
-        selectedUgostiteljskiObjekat = newUgostiteljskiObjekat.getName();
+        selectedUgostiteljskiObjekat = newUgostiteljskiObjekat.getNaziv();
         inputEnabled = false;
     }
 

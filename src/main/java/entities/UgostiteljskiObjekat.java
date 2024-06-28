@@ -19,7 +19,7 @@ public class UgostiteljskiObjekat implements Serializable {
     private long id;
 
     @NotNull
-    private String name;
+    private String naziv;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Ugostitelj ugostitelj;
@@ -30,9 +30,9 @@ public class UgostiteljskiObjekat implements Serializable {
     @OneToMany(mappedBy = "ugostiteljskiObjekat", fetch = FetchType.EAGER)
     private Set<Rezervacija> rezervacije;
 
-    private boolean categorized;
-    private LocalDate categorizationExpiryDate;
-    private boolean notifiedOfCategorizationExpiry;
+    private boolean kategorizovan;
+    private LocalDate istekKategorizacije;
+    private boolean notifikovanOIstekuKategorizacije;
 
     public void unlinkReservation(Rezervacija rezervacija) {
         rezervacije.removeIf(reservation1 -> reservation1.getId() == rezervacija.getId());

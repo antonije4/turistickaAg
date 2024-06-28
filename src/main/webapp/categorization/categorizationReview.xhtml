@@ -28,9 +28,9 @@
                                  paginator="#{true}"
                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}">
 
-                        <p:column headerText="Ugostiteljski objekat" sortBy="#{item.ugostiteljskiObjekat.name}">
+                        <p:column headerText="Ugostiteljski objekat" sortBy="#{item.ugostiteljskiObjekat.naziv}">
                             <ui:include src="/link/ugostiteljskiObjekatLink.xhtml" >
-                                <ui:param name="name" value="#{item.ugostiteljskiObjekat.name}" />
+                                <ui:param name="name" value="#{item.ugostiteljskiObjekat.naziv}" />
                                 <ui:param name="id" value="#{item.ugostiteljskiObjekat.id}" />
                             </ui:include>
                         </p:column>

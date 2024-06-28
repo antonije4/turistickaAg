@@ -11,16 +11,16 @@
    <h:panelGrid columns="4" style="width: 100%" cellspacing="7" columnClasses="width20Per,width20Per,width20Per,width20Per,width20Per">
             <ui:param name="manager" value="#{ugostiteljSearchController.searchParams}" />
             <h:panelGrid columns="1" style="width:100%;">
-               <p:outputLabel class="wh-search-label" for="firstName"
+               <p:outputLabel class="wh-search-label" for="ime"
                               value="First name" />
                <p:inputText class="wh-select-input wh-select-info-item"
-                            id="firstName" value="#{ugostiteljSearchController.searchParams.firstName}" />
+                            id="ime" value="#{ugostiteljSearchController.searchParams.ime}" />
             </h:panelGrid>
             <h:panelGrid columns="1" style="width:100%;">
-               <p:outputLabel class="wh-search-label" for="lastName"
+               <p:outputLabel class="wh-search-label" for="prezime"
                               value="Last name" />
                <p:inputText class="wh-select-input wh-select-info-item"
-                            id="lastName" value="#{ugostiteljSearchController.searchParams.lastName}" />
+                            id="prezime" value="#{ugostiteljSearchController.searchParams.prezime}" />
             </h:panelGrid>
 
             <h:panelGrid columns="1" style="width:100%;">
@@ -82,12 +82,12 @@
             <h:outputText value="#{item.ugostiteljType.name()}" />
         </p:column>
 
-        <p:column headerText="First name" sortBy="#{item.firstName}">
-            <h:outputText value="#{item.firstName}" />
+        <p:column headerText="First name" sortBy="#{item.ime}">
+            <h:outputText value="#{item.ime}" />
         </p:column>
 
-        <p:column headerText="Last name" sortBy="#{item.lastName}">
-            <h:outputText value="#{item.lastName}" />
+        <p:column headerText="Last name" sortBy="#{item.prezime}">
+            <h:outputText value="#{item.prezime}" />
         </p:column>
 
     </p:dataTable>

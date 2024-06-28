@@ -14,11 +14,11 @@
         <p:panel id="panelpanel">
             <h:panelGrid id="ugostiteljGrid" columns="2">
 
-                <p:outputLabel value="Owner"/>
-                <p:inputText disabled="true" value="#{ugostiteljskiObjekatRegistrationController.owner.firstName} #{ugostiteljskiObjekatRegistrationController.owner.lastName}"/>
+                <p:outputLabel value="Vlasnik"/>
+                <p:inputText disabled="true" value="#{ugostiteljskiObjekatRegistrationController.owner.ime} #{ugostiteljskiObjekatRegistrationController.owner.prezime}"/>
 
-                <p:outputLabel value="Name"/>
-                <p:inputText id="name" required="true" requiredMessage="Name of Ugostiteljski Objekat is required!" value="#{ugostiteljskiObjekatRegistrationController.ugostiteljskiObjekat.name}" label="Name" />
+                <p:outputLabel value="Naziv"/>
+                <p:inputText id="name" required="true" requiredMessage="Naziv ugostiteljskog objekta je obavezno polje!" value="#{ugostiteljskiObjekatRegistrationController.ugostiteljskiObjekat.naziv}" label="Naziv" />
 
                 <p:outputLabel value=""/>
                 <p:commandButton action="#{ugostiteljskiObjekatRegistrationController.registerUgostiteljskiObjekat()}" value="Register"/>

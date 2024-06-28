@@ -31,8 +31,8 @@
         <p:panel header="Tourist overview">
 
             <h:panelGrid  columns="4" id="touristGrid" cellspacing="10" columnClasses=",,insideDetailsColumn70,">
-                <p:outputLabel value="UserName"/>
-                <p:inputText disabled="#{touristOverviewController.inputDisabled()}" id="userName" value="#{touristOverviewController.turista.username}" label="Username"/>
+                <p:outputLabel value="Username"/>
+                <p:inputText disabled="#{touristOverviewController.inputDisabled()}" id="username" value="#{touristOverviewController.turista.username}" label="Username"/>
 
                 <p:outputLabel value="Password"/>
                 <p:password disabled="#{touristOverviewController.inputDisabled()}" id="password" value="#{touristOverviewController.turista.password}" label="Password"/>
@@ -60,10 +60,10 @@
                     <f:attribute name="sortBy" value="#{item.startingDate}" />
                     <f:attribute name="sortOrder" value="ascending" />
 
-                    <p:column headerText="Ugostiteljski objekat" filterBy="#{item.ugostiteljskiObjekat.name}" filterMatchMode="contains"
-                              sortBy="#{item.ugostiteljskiObjekat.name}">
+                    <p:column headerText="Ugostiteljski objekat" filterBy="#{item.ugostiteljskiObjekat.naziv}" filterMatchMode="contains"
+                              sortBy="#{item.ugostiteljskiObjekat.naziv}">
                         <ui:include src="/link/ugostiteljskiObjekatLink.xhtml" >
-                            <ui:param name="name" value="#{item.ugostiteljskiObjekat.name}"/>
+                            <ui:param name="name" value="#{item.ugostiteljskiObjekat.naziv}"/>
                             <ui:param name="id" value="#{item.ugostiteljskiObjekat.id}"/>
                         </ui:include>
                     </p:column>

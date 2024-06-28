@@ -54,13 +54,13 @@ public class CategorizationReviewController implements Serializable {
 
     private void processUgostiteljskiObjekat(boolean approved, ZahtevZaKategorizaciju zahtevZaKategorizaciju) {
         UgostiteljskiObjekat ugostiteljskiObjekat = zahtevZaKategorizaciju.getUgostiteljskiObjekat();
-        ugostiteljskiObjekat.setCategorized(approved);
-        ugostiteljskiObjekat.setNotifiedOfCategorizationExpiry(false);
+        ugostiteljskiObjekat.setKategorizovan(approved);
+        ugostiteljskiObjekat.setNotifikovanOIstekuKategorizacije(false);
         if (approved) {
-            ugostiteljskiObjekat.setCategorizationExpiryDate(LocalDate.now().plusYears(2));
+            ugostiteljskiObjekat.setIstekKategorizacije(LocalDate.now().plusYears(2));
         }
 
         ugostiteljskiObjekatDomainHelper.updateUgostiteljskiObjekat(ugostiteljskiObjekat);
-        messageController.showInfoMessage(MessageType.ShortLiveMessage, "Successfully reviewed categorization request for ugostiteljski objekat "+ ugostiteljskiObjekat.getName());
+        messageController.showInfoMessage(MessageType.ShortLiveMessage, "Successfully reviewed categorization request for ugostiteljski objekat "+ ugostiteljskiObjekat.getNaziv());
     }
 }

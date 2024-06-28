@@ -12,6 +12,8 @@ import util.Util;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.ArrayList;
+import java.util.List;
 
 @Named
 @ViewScoped
@@ -30,6 +32,11 @@ public class UgostiteljOverviewController extends BaseOverview{
     private Ustanova ustanova;
     private boolean inputDisabled;
     private String ugostiteljUsername;
+    @Getter @Setter
+    private List<UgostiteljskiObjekat> ugostiteljskiObjekatList;
+    @Getter @Setter
+    private List<ZahtevZaKategorizaciju> zahtevZaKategorizacijuList;
+
 
     @Inject
     private UserController userController;
@@ -57,6 +64,8 @@ public class UgostiteljOverviewController extends BaseOverview{
                 preduzetnik = (Preduzetnik) ugostiteljDomainHelper.getUgostiteljByUsername(ugostitelj.getUsername());
                 break;
         }
+        ugostiteljskiObjekatList = new ArrayList<>(ugostitelj.getUgostiteljskiObjekti());
+        zahtevZaKategorizacijuList = new ArrayList<>(ugostitelj.getZahteviZaKategorizaciju());
     }
 
     @Override

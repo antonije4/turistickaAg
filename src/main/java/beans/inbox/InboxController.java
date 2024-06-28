@@ -18,7 +18,7 @@ import java.util.List;
 @ViewScoped
 @Getter @Setter
 public class InboxController implements Serializable {
-    private List<Poruka> porukaList;
+    private List<Poruka> listaPoruka;
     private Ugostitelj ugostitelj;
     private Sanduce sanduce;
     @Inject
@@ -29,13 +29,13 @@ public class InboxController implements Serializable {
     public void init() {
         ugostitelj = (Ugostitelj) userController.getLoggedInUser();
         sanduce = ugostitelj.getSanduce();
-        porukaList = messageDomainHelper.fetchMessagesFromInbox(sanduce.getId());
+        listaPoruka = messageDomainHelper.fetchMessagesFromInbox(sanduce.getId());
     }
 
     public void readMessage(Poruka poruka) {
-        int index = porukaList.indexOf(poruka);
-        porukaList.get(index).setProcitana(true);
-        messageDomainHelper.updateMessage(porukaList.get(index));
+        int index = listaPoruka.indexOf(poruka);
+        listaPoruka.get(index).setProcitana(true);
+        messageDomainHelper.updateMessage(listaPoruka.get(index));
     }
 
 

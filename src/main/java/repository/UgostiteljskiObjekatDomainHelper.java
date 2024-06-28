@@ -31,9 +31,9 @@ public class UgostiteljskiObjekatDomainHelper extends DomainHelper{
         JPAQuery<UgostiteljskiObjekat> query = new JPAQuery<>(entityManager).select(qUgostiteljskiObjekat)
                 .from(qUgostiteljskiObjekat);
 
-        addFilter(query, ugostiteljskiObjekatSearchParams.getName(), qUgostiteljskiObjekat.name::like);
+        addFilter(query, ugostiteljskiObjekatSearchParams.getName(), qUgostiteljskiObjekat.naziv::like);
         addFilter(query, ugostiteljskiObjekatSearchParams.getUgostiteljUsername(), qUgostiteljskiObjekat.ugostitelj.username::likeIgnoreCase);
-        addFilter(query, ugostiteljskiObjekatSearchParams.getCategorized(), qUgostiteljskiObjekat.categorized::eq);
+        addFilter(query, ugostiteljskiObjekatSearchParams.getCategorized(), qUgostiteljskiObjekat.kategorizovan::eq);
 
         List<UgostiteljskiObjekat> resultList = query.fetch();
         return ResultList.create(resultList, resultList.size());
@@ -56,7 +56,7 @@ public class UgostiteljskiObjekatDomainHelper extends DomainHelper{
     public List<UgostiteljskiObjekat> getUgostiteljskiObjekatCategorizationExpiryDateLessThan(LocalDate date) {
         JPAQuery<UgostiteljskiObjekat> query = new JPAQuery<>(entityManager).select(qUgostiteljskiObjekat)
                 .from(qUgostiteljskiObjekat)
-                .where(qUgostiteljskiObjekat.categorizationExpiryDate.before(date).and(qUgostiteljskiObjekat.notifiedOfCategorizationExpiry.eq(false)));
+                .where(qUgostiteljskiObjekat.istekKategorizacije.before(date).and(qUgostiteljskiObjekat.notifikovanOIstekuKategorizacije.eq(false)));
         return query.fetch();
     }
 }

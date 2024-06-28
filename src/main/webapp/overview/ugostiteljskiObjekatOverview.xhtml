@@ -28,21 +28,21 @@
 
    <ui:define name="mainContent">
 
-      <p:panel header="Ugostiteljski objekat overview">
+      <p:panel header="Pregled ugostiteljskog objekta">
 
          <h:panelGrid  columns="5" id="ugostiteljskiObjekatGrid" cellspacing="10" columnClasses=",,insideDetailsColumn70,">
-            <p:outputLabel value="Name: "/>
-            <p:inputText required="true" requiredMessage="Name can't be empty!" disabled="#{!ugostiteljskiObjekatOverviewController.inputEnabled()}" id="name" value="#{ugostiteljskiObjekatOverviewController.ugostiteljskiObjekat.name}" label="Name"/>
-            <p:poruka for="name"/>
+            <p:outputLabel value="Naziv: "/>
+            <p:inputText required="true" requiredMessage="Naziv ne sme biti prazan!" disabled="#{!ugostiteljskiObjekatOverviewController.inputEnabled()}" id="name" value="#{ugostiteljskiObjekatOverviewController.ugostiteljskiObjekat.naziv}" label="Naziv"/>
+            <p:message for="name"/>
 
             <p:outputLabel value="Ugostitelj: "/>
             <ui:include src="/link/ugostiteljLink.xhtml" >
                <ui:param name="username" value="#{ugostiteljskiObjekatOverviewController.owner.username}" />
             </ui:include>
-            <p:outputLabel value="Categorized: "/>
-            <p:selectBooleanButton onLabel="Yes" offLabel="No" disabled="true" value="#{ugostiteljskiObjekatOverviewController.ugostiteljskiObjekat.categorized}"/>
-            <p:outputLabel rendered="#{ugostiteljskiObjekatOverviewController.ugostiteljskiObjekat.categorized}" value="Categorization expiry: "/>
-            <p:outputLabel rendered="#{ugostiteljskiObjekatOverviewController.ugostiteljskiObjekat.categorized}" value="#{ugostiteljskiObjekatOverviewController.ugostiteljskiObjekat.categorizationExpiryDate}"/>
+            <p:outputLabel value="Kategorizovan: "/>
+            <p:selectBooleanButton onLabel="Yes" offLabel="No" disabled="true" value="#{ugostiteljskiObjekatOverviewController.ugostiteljskiObjekat.kategorizovan}"/>
+            <p:outputLabel rendered="#{ugostiteljskiObjekatOverviewController.ugostiteljskiObjekat.kategorizovan}" value="Istek kategorizacije: "/>
+            <p:outputLabel rendered="#{ugostiteljskiObjekatOverviewController.ugostiteljskiObjekat.kategorizovan}" value="#{ugostiteljskiObjekatOverviewController.ugostiteljskiObjekat.istekKategorizacije}"/>
 
          </h:panelGrid>
 
@@ -51,29 +51,29 @@
       <p:panel id="categorizationRequestsPanel" toggleable="true" collapsed="true">
 
          <f:facet name="header">
-            <p:outputLabel id="categorizationRequestsPanelId" value="Categorization requests : #{ugostiteljskiObjekatOverviewController.ugostiteljskiObjekat.categorizationRequests.size()}" />
+            <p:outputLabel id="categorizationRequestsPanelId" value="Zahtevi za kategorizaciju : #{ugostiteljskiObjekatOverviewController.ugostiteljskiObjekat.zahteviZaKategorizaciju.size()}" />
          </f:facet>
 
          <ui:decorate template="/common/tableTemplate.xhtml">
             <ui:param name="tableId" value="categorizationRequestsTableId" />
             <ui:param name="tableWV" value="categorizationRequestsTable" />
-            <ui:param name="tableItems" value="#{ugostiteljskiObjekatOverviewController.ugostiteljskiObjekat.categorizationRequests}" />
+            <ui:param name="tableItems" value="#{ugostiteljskiObjekatOverviewController.zahtevZaKategorizacijuList}" />
 
             <ui:define name="tableContent">
-               <f:attribute name="sortBy" value="#{item.dateOfRequest}" />
+               <f:attribute name="sortBy" value="#{item.datumZahteva}" />
                <f:attribute name="sortOrder" value="ascending" />
 
-               <p:column headerText="Date of request"
-                         sortBy="#{item.dateOfRequest}">
-                  <p:outputLabel value="#{item.dateOfRequest}"/>
+               <p:column headerText="Datum zahteva"
+                         sortBy="#{item.datumZahteva}">
+                  <p:outputLabel value="#{item.datumZahteva}"/>
                </p:column>
-               <p:column headerText="Reviewed"
-                         sortBy="#{item.reviewed}">
-                  <p:outputLabel value="#{item.reviewed}"/>
+               <p:column headerText="Pregledan"
+                         sortBy="#{item.pregledan}">
+                  <p:outputLabel value="#{item.pregledan}"/>
                </p:column>
-               <p:column headerText="Approved"
-                         sortBy="#{item.approved}">
-                  <p:outputLabel rendered="#{item.reviewed}" value="#{item.approved}"/>
+               <p:column headerText="Odobren"
+                         sortBy="#{item.odobren}">
+                  <p:outputLabel rendered="#{item.pregledan}" value="#{item.odobren}"/>
                </p:column>
                <p:column>
                   <p:commandButton action="#{ugostiteljskiObjekatOverviewController.editCategorizationRequest(item)}" value="Edit"/>
@@ -86,41 +86,41 @@
       <p:panel id="reservationsPanel" toggleable="true" collapsed="true">
 
          <f:facet name="header">
-            <p:outputLabel id="reservationsPanelId" value="Reservations : #{ugostiteljskiObjekatOverviewController.ugostiteljskiObjekat.reservations.size()}" />
+            <p:outputLabel id="reservationsPanelId" value="Rezervacije : #{ugostiteljskiObjekatOverviewController.ugostiteljskiObjekat.rezervacije.size()}" />
          </f:facet>
 
          <ui:decorate template="/common/tableTemplate.xhtml">
             <ui:param name="tableId" value="reservationsTableId" />
             <ui:param name="tableWV" value="reservationsTable" />
-            <ui:param name="tableItems" value="#{ugostiteljskiObjekatOverviewController.ugostiteljskiObjekat.reservations}" />
+            <ui:param name="tableItems" value="#{ugostiteljskiObjekatOverviewController.rezervacijaList}" />
 
             <ui:define name="tableContent">
-               <f:attribute name="sortBy" value="#{item.startingDate}" />
+               <f:attribute name="sortBy" value="#{item.pocetniDatum}" />
                <f:attribute name="sortOrder" value="ascending" />
 
-               <p:column headerText="Start Date"
-                         sortBy="#{item.startingDate}">
-                  <p:outputLabel value="#{item.startingDate}"/>
+               <p:column headerText="Pocetni datum"
+                         sortBy="#{item.pocetniDatum}">
+                  <p:outputLabel value="#{item.pocetniDatum}"/>
                </p:column>
-               <p:column headerText="End Date"
-                         sortBy="#{item.endingDate}">
-                  <p:outputLabel value="#{item.endingDate}"/>
+               <p:column headerText="Krajnji datum"
+                         sortBy="#{item.krajnjiDatum}">
+                  <p:outputLabel value="#{item.krajnjiDatum}"/>
                </p:column>
-               <p:column headerText="Tourist"
+               <p:column headerText="Turista"
                          sortBy="#{item.turista.username}">
                   <p:outputLabel value="#{item.turista.username}"/>
                </p:column>
-               <p:column headerText="Number Of People"
-                         sortBy="#{item.numberOfPeople}">
-                  <p:outputLabel value="#{item.numberOfPeople}"/>
+               <p:column headerText="Broj ljudi"
+                         sortBy="#{item.brojLjudi}">
+                  <p:outputLabel value="#{item.brojLjudi}"/>
                </p:column>
-               <p:column headerText="Boravisna Taksa"
-                         sortBy="#{item.boravisnaTaksaPrice}">
-                  <p:outputLabel value="#{item.boravisnaTaksaPrice}"/>
+               <p:column headerText="Boravisna taksa"
+                         sortBy="#{item.cenaBoravisneTakse}">
+                  <p:outputLabel value="#{item.cenaBoravisneTakse}"/>
                </p:column>
-               <p:column headerText="Boravisna Taksa Paid"
-                         sortBy="#{item.boravisnaTaksaPaid}">
-                  <p:outputLabel value="#{item.boravisnaTaksaPaid}"/>
+               <p:column headerText="Boravisna taksa placena"
+                         sortBy="#{item.boravisnaTaksaPlacena}">
+                  <p:outputLabel value="#{item.boravisnaTaksaPlacena}"/>
                </p:column>
                <p:column>
                   <p:commandButton action="#{ugostiteljskiObjekatOverviewController.editReservation(item)}" value="Edit"/>

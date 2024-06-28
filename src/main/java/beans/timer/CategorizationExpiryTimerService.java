@@ -48,7 +48,7 @@ public class CategorizationExpiryTimerService implements Serializable {
     private void addMessageToUgostiteljInbox(UgostiteljskiObjekat ugostiteljskiObjekat) {
         Sanduce sanduce = ugostiteljskiObjekat.getUgostitelj().getSanduce();
         Poruka poruka = Poruka.builder()
-                .sadrzaj(EXPIRY_MESSAGE + ugostiteljskiObjekat.getName())
+                .sadrzaj(EXPIRY_MESSAGE + ugostiteljskiObjekat.getNaziv())
                 .datumPrispeca(LocalDateTime.now())
                 .sanduce(sanduce)
                 .procitana(false)
@@ -56,7 +56,7 @@ public class CategorizationExpiryTimerService implements Serializable {
         messageDomainHelper.createMessage(poruka);
         sanduce.getPoruke().add(poruka);
         messageDomainHelper.updateInbox(sanduce);
-        ugostiteljskiObjekat.setNotifiedOfCategorizationExpiry(true);
+        ugostiteljskiObjekat.setNotifikovanOIstekuKategorizacije(true);
         ugostiteljskiObjekatDomainHelper.updateUgostiteljskiObjekat(ugostiteljskiObjekat);
     }
 }

@@ -21,7 +21,7 @@ public class Ugostitelj extends Korisnik {
     protected Set<UgostiteljskiObjekat> ugostiteljskiObjekti;
 
     @OneToMany(mappedBy = "ugostitelj",cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
-    protected Set<ZahtevZaKategorizaciju> zahtevZaKategorizacijus;
+    protected Set<ZahtevZaKategorizaciju> zahteviZaKategorizaciju;
 
     @OneToOne(fetch = FetchType.EAGER)
     protected Sanduce sanduce;
@@ -35,6 +35,6 @@ public class Ugostitelj extends Korisnik {
     }
 
     public void unlinkCategorizationRequest(ZahtevZaKategorizaciju zahtevZaKategorizaciju) {
-        zahtevZaKategorizacijus.remove(zahtevZaKategorizaciju);
+        this.zahteviZaKategorizaciju.remove(zahtevZaKategorizaciju);
     }
 }
