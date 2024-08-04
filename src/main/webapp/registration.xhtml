@@ -11,7 +11,7 @@
 
     <ui:define name="content">
 
-            <p:panel id="panelpanel">
+            <p:panel id="panelpanel" style="margin-left: 400px; margin-right: 400px">
                 <p:selectOneRadio id="userType"
                                   value="#{registrationController.userType}">
                     <p:ajax event="change" update="centralForm" process="@this"/>
@@ -36,7 +36,9 @@
                     <p:message for="username"/>
 
                     <p:outputLabel value="Password"/>
-                    <p:password required="true" requiredMessage="Polje password ne sme biti prazno!" id="password" value="#{registrationController.ugostitelj.password}" label="Password"/>
+                    <p:password required="true" requiredMessage="Polje password ne sme biti prazno!" validatorMessage="Password mora sadrzati makar osam karaktera, jedno slovo i jedan broj!" id="password" value="#{registrationController.ugostitelj.password}" label="Password">
+                        <f:validateRegex pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"/>
+                    </p:password>
                     <p:message for="password"/>
 
                     <p:outputLabel value="Email"/>

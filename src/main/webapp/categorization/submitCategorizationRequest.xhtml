@@ -13,7 +13,7 @@
 
         <p:panel id="panelpanel">
             <p:outputLabel value="Postojeci ugostiteljski objekat? "/>
-            <p:selectBooleanButton offLabel="No" onLabel="Yes" id="ugostiteljskiObjekatType"
+            <p:selectBooleanButton offLabel="Ne" onLabel="Da" id="ugostiteljskiObjekatType"
                               value="#{submitCategorizationRequestController.existingUgostiteljskiObjekat}">
                 <p:ajax event="change" listener="#{submitCategorizationRequestController.changeSelectedUgostiteljskiObjekat()}" update="centralForm" process="@this"/>
             </p:selectBooleanButton>
@@ -31,7 +31,7 @@
                             <ui:param name="tableItems" value="#{submitCategorizationRequestController.categorizationRequestRowList}" />
 
                             <ui:define name="tableContent">
-                                <f:attribute name="sortBy" value="#{item.name}" />
+                                <f:attribute name="sortBy" value="#{item.naziv}" />
                                 <f:attribute name="sortOrder" value="ascending" />
 
                                 <p:column headerText="Naziv" filterBy="#{item.naziv}" filterMatchMode="contains"
@@ -41,7 +41,7 @@
                                             <ui:param name="name" value="#{item.naziv}"/>
                                             <ui:param name="id" value="#{item.id}"/>
                                         </ui:include>
-                                        <p:selectBooleanButton offLabel="Select" onLabel="Selected"
+                                        <p:selectBooleanButton offLabel="Izaberi" onLabel="Izabran"
                                                                value="#{item.selected}">
                                             <p:ajax event="change"
                                                     listener="#{submitCategorizationRequestController.selectUgostiteljskiObjekat(item)}"
@@ -63,17 +63,28 @@
                     <p:outputLabel value="Naziv"/>
                     <p:inputText disabled="#{!submitCategorizationRequestController.inputEnabled}" id="name" required="true" requiredMessage="Naziv ugostiteljskog objekta je obavezno polje!" value="#{submitCategorizationRequestController.newUgostiteljskiObjekat.naziv}" label="Naziv" />
 
-                    <p:commandButton action="#{submitCategorizationRequestController.enableInput()}" value="Edit" update="newUgostiteljskiObjekatGrid"/>
-                    <p:commandButton disabled="#{!submitCategorizationRequestController.inputEnabled}" action="#{submitCategorizationRequestController.saveNewUgostiteljskiObjekat()}" value="Save changes" update="centralForm"/>
+                    <p:outputLabel value="Adresa"/>
+                    <p:inputText id="address" required="true" requiredMessage="Adresa ugostiteljskog objekta je obavezno polje!" value="#{submitCategorizationRequestController.newUgostiteljskiObjekat.adresa}" label="Adresa" />
+
+                    <p:outputLabel value="Tip"/>
+                    <p:selectOneMenu id="tip"
+                                     value="#{submitCategorizationRequestController.newUgostiteljskiObjekat.tipUgostiteljskogObjekta}" required="true"
+                                     styleClass="full-width val-static">
+                        <f:selectItems value="#{submitCategorizationRequestController.allUgostiteljskiObjekatTypes.entrySet()}" var="entry"
+                                       itemValue="#{entry.key}" itemLabel="#{entry.value}"/>
+                    </p:selectOneMenu>
+
+                    <p:commandButton action="#{submitCategorizationRequestController.enableInput()}" value="Izmeni" update="newUgostiteljskiObjekatGrid"/>
+                    <p:commandButton disabled="#{!submitCategorizationRequestController.inputEnabled}" action="#{submitCategorizationRequestController.saveNewUgostiteljskiObjekat()}" value="Sacuvaj Izmene" update="centralForm"/>
 
                 </h:panelGrid>
                 <h:panelGrid columns="2">
                     <p:outputLabel value="Ugostiteljski objekat: "/>
                     <p:inputText disabled="true" value="#{submitCategorizationRequestController.selectedUgostiteljskiObjekat}"/>
-                    <p:outputLabel value="Categorization data:"/>
+                    <p:outputLabel value="Podaci kategorizacije:"/>
                     <p:inputText value="#{submitCategorizationRequestController.zahtevZaKategorizaciju.podaciKategorizacije}"/>
                     <p:outputLabel value=""/>
-                    <p:commandButton disabled="#{submitCategorizationRequestController.selectedUgostiteljskiObjekat eq null}" action="#{submitCategorizationRequestController.submitRequest()}" value="Submit"/>
+                    <p:commandButton disabled="#{submitCategorizationRequestController.selectedUgostiteljskiObjekat eq null}" action="#{submitCategorizationRequestController.submitRequest()}" value="Potvrdi"/>
                 </h:panelGrid>
             </h:panelGrid>
         </p:panel>

@@ -44,6 +44,11 @@ public class TouristOverviewController extends BaseOverview {
         inputDisabled = false;
     }
 
+    public void saveChanges() {
+        touristDomainHelper.update(turista);
+        inputDisabled=true;
+    }
+
     public void editReservation(Rezervacija rezervacija) {
         navigationController.navigateToReservationOverview(rezervacija.getId());
     }

@@ -14,7 +14,7 @@
                     <p:outputLabel class="wh-search-label" for="name"
                                    value="Name" />
                     <p:inputText class="wh-select-input wh-select-info-item"
-                                 id="name" value="#{ugostiteljskiObjekatSearchController.searchParams.name}" />
+                                 id="name" value="#{ugostiteljskiObjekatSearchController.searchParams.naziv}" />
                 </h:panelGrid>
                 <h:panelGrid columns="1" style="width:100%;">
                     <p:outputLabel class="wh-search-label" for="ugostiteljUsername"
@@ -67,9 +67,9 @@
                      paginator="#{true}"
                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}">
 
-            <p:column headerText="Name" sortBy="#{item.name}">
+            <p:column headerText="Name" sortBy="#{item.naziv}">
                 <ui:include src="/link/ugostiteljskiObjekatLink.xhtml" >
-                    <ui:param name="name" value="#{item.name}" />
+                    <ui:param name="name" value="#{item.naziv}" />
                     <ui:param name="id" value="#{item.id}" />
                 </ui:include>
             </p:column>
@@ -80,7 +80,7 @@
                 </ui:include>
             </p:column>
             <p:column>
-                <p:commandButton rendered="#{userController.touristLoggedIn() or userController.ugostiteljLoggedIn()}" value="Make a rezervacija" action="#{navigationController.goToReservation(item.id)}"/>
+                <p:commandButton rendered="#{userController.touristLoggedIn() or userController.ugostiteljLoggedIn()}" value="Napravi rezervaciju" action="#{navigationController.goToReservation(item.id)}"/>
             </p:column>
 
         </p:dataTable>

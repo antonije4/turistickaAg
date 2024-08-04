@@ -1,5 +1,6 @@
 package beans.overview;
 
+import beans.general.NavigationController;
 import beans.general.UserController;
 import entities.*;
 import entities.mappers.UgostiteljMapper;
@@ -43,6 +44,9 @@ public class UgostiteljOverviewController extends BaseOverview{
 
     @Inject
     private UgostiteljDomainHelper ugostiteljDomainHelper;
+
+    @Inject
+    private NavigationController navigationController;
 
     @Inject
     private Util util;
@@ -111,6 +115,10 @@ public class UgostiteljOverviewController extends BaseOverview{
         } else {
             return false;
         }
+    }
+
+    public void editCategorizationRequest(ZahtevZaKategorizaciju zahtevZaKategorizaciju) {
+        navigationController.navigateToCategorizationRequestOverview(zahtevZaKategorizaciju.getId());
     }
 
     public boolean renderPreduzetnikData() {

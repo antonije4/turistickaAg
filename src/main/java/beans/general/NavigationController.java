@@ -25,7 +25,7 @@ public class NavigationController {
 
     private static final String UGOSTITELJ_OVERVIEW = "/overview/testOverview.xhtml";
     private static final String UGOSTITELJSKI_OBJEKAT_OVERVIEW = "/overview/ugostiteljskiObjekatOverview.xhtml";
-    private static final String CLIENT_OVERVIEW = "/overview/clientOverview.xhtml";
+    private static final String CATEGORIZATION_REQUEST_OVERVIEW = "/overview/categorizationRequestOverview.xhtml";
     private static final String RESERVATION_OVERVIEW = "/overview/reservationOverview.xhtml";
     private static final String TOURIST_OVERVIEW = "/overview/touristOverview.xhtml";
 
@@ -75,6 +75,15 @@ public class NavigationController {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         try {
             externalContext.redirect(externalContext.getRequestContextPath() + goToUgostiteljskiObjekatOverview(""+id));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void navigateToCategorizationRequestOverview(long id) {
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            externalContext.redirect(externalContext.getRequestContextPath() + goToCategorizationRequestOverview(""+id));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -169,6 +178,12 @@ public class NavigationController {
         Map<String, Object> params = new HashMap<>();
         params.put("ugostiteljskiObjekatId", id);
         return createRedirectLinkWithParams(UGOSTITELJSKI_OBJEKAT_OVERVIEW, params);
+    }
+
+    public String goToCategorizationRequestOverview(String id) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("categorizationRequestId", id);
+        return createRedirectLinkWithParams(CATEGORIZATION_REQUEST_OVERVIEW, params);
     }
 
     public String goToUgostiteljskiObjekatRegistration() {

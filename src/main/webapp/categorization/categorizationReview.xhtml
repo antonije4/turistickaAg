@@ -21,7 +21,7 @@
                     <p:dataTable id="categorizationRequestTable"
                                  var="item"
                                  value="#{categorizationReviewController.categorizationRequests.list}"
-                                 emptyMessage="No records found"
+                                 emptyMessage="Nemate zahteva za kategorizaciju"
                                  style="width: 100%;word-wrap: break-word"
                                  rows="10"
                                  rowsPerPageTemplate="5,10,15,20"
@@ -41,8 +41,8 @@
                             </ui:include>
                         </p:column>
 
-                        <p:column headerText="Date of submission" sortBy="#{item.dateOfRequest}">
-                            <p:outputLabel value="#{item.dateOfRequest}"/>
+                        <p:column headerText="Date of submission" sortBy="#{item.datumZahteva}">
+                            <p:outputLabel value="#{item.datumZahteva}"/>
                         </p:column>
 
                         <p:column>

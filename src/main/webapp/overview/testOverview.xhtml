@@ -12,8 +12,8 @@
    <ui:define name="actions">
       <h:panelGrid style="width: 100%;text-align: center;">
 
-         <p:commandButton rendered="#{ugostiteljOverviewController.currentUgostiteljLoggedIn()}" style="width: 100%" action="#{ugostiteljOverviewController.enableInput()}" value="Edit" update="ugostiteljGrid"/>
-         <p:commandButton rendered="#{ugostiteljOverviewController.currentUgostiteljLoggedIn()}" style="width: 100%" action="#{ugostiteljOverviewController.saveChanges()}" value="Save changes" update="ugostiteljGrid"/>
+         <p:commandButton rendered="#{ugostiteljOverviewController.currentUgostiteljLoggedIn()}" style="width: 100%" action="#{ugostiteljOverviewController.enableInput()}" value="Izmena Podataka" update="ugostiteljGrid"/>
+         <p:commandButton rendered="#{ugostiteljOverviewController.currentUgostiteljLoggedIn()}" style="width: 100%" action="#{ugostiteljOverviewController.saveChanges()}" value="Sacuvaj Podatke" update="ugostiteljGrid"/>
       </h:panelGrid>
    </ui:define>
 
@@ -107,7 +107,7 @@
                </p:column>
                <p:column headerText="Kategorizovan"
                          sortBy="#{item.kategorizovan}">
-                  <p:outputLabel value="#{item.kategorizovan}"/>
+                  <p:selectBooleanButton disabled="true" onLabel="Yes" offLabel="No" value="#{item.kategorizovan}"/>
                </p:column>
                <p:column headerText="Istek kategorizacije"
                          sortBy="#{item.istekKategorizacije}">
@@ -149,11 +149,14 @@
                </p:column>
                <p:column headerText="Pregledan"
                          sortBy="#{item.pregledan}">
-                  <p:outputLabel value="#{item.pregledan}"/>
+                  <p:selectBooleanButton offLabel="Ne" onLabel="Da" disabled="true" value="#{item.pregledan}"/>
                </p:column>
                <p:column headerText="Odobren"
                          sortBy="#{item.odobren}">
-                  <p:outputLabel rendered="#{item.pregledan}" value="#{item.odobren}"/>
+                  <p:selectBooleanButton offLabel="Ne" onLabel="Da" disabled="true" rendered="#{item.pregledan}" value="#{item.odobren}"/>
+               </p:column>
+               <p:column>
+                  <p:commandButton value="Izmeni Zahtev" action="#{ugostiteljOverviewController.editCategorizationRequest(item)}"/>
                </p:column>
             </ui:define>
 

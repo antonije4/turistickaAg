@@ -10,23 +10,24 @@
   </f:metadata>
 
   <ui:define name="content">
-      <div  class="centerDiv" style="width: 400px">
-        <p:panel>
+      <div  class="centerDiv">
+        <p:panel style="margin-left: 400px; margin-right: 400px">
           <p:selectOneRadio id="userType"
                             value="#{loginController.userType}">
             <p:ajax event="change" update="centralForm" process="@this"/>
             <f:selectItems value="#{loginController.userTypeSet}"/>
           </p:selectOneRadio>
-          <h:panelGrid columns="2" cellpadding="5">
+          <h:panelGrid columns="3" cellpadding="5">
             <h:outputLabel for="username" value="Username:" />
-            <p:inputText id="username" value="#{loginController.username}" required="true" label="username" />
+            <p:inputText id="username" value="#{loginController.username}" required="true" requiredMessage="Polje username ne sme biti prazno!" label="username" />
+            <p:message for="username"/>
 
             <h:outputLabel for="password" value="Password:" />
-            <p:password id="password" value="#{loginController.password}" required="true" label="password" />
+            <p:password id="password" value="#{loginController.password}" required="true" requiredMessage="Polje password ne sme biti prazno!" label="password" />
+            <p:message for="password"/>
 
             <f:facet name="footer">
-              <p:commandButton value="Prijava" action="#{loginController.login}"/>
-              <p:link value="Registracija" outcome="#{navigationController.goToRegistration()}"/>
+              <p:commandButton value="Prijava" action="#{loginController.login}" update="centralForm"/>
             </f:facet>
           </h:panelGrid>
         </p:panel>

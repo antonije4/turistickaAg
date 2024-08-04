@@ -1,12 +1,14 @@
 package beans.categorization;
 
 
+import beans.general.NavigationController;
 import beans.general.UserController;
 import dto.CategorizationRequestRow;
 import entities.ZahtevZaKategorizaciju;
 import entities.Ugostitelj;
 import entities.UgostiteljskiObjekat;
 import entities.mappers.UgostiteljskiObjekatMapper;
+import enums.UgostiteljskiObjekatTip;
 import lombok.Getter;
 import lombok.Setter;
 import repository.CategorizationRequestDomainHelper;
@@ -18,7 +20,10 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Named
 @ViewScoped
@@ -34,9 +39,13 @@ public class SubmitCategorizationRequestController implements Serializable {
     private CategorizationRequestRow selectedCategorizationRow;
     private String selectedUgostiteljskiObjekat;
     private boolean inputEnabled;
+    @Getter @Setter
+    private Map<UgostiteljskiObjekatTip, String> allUgostiteljskiObjekatTypes = Arrays.stream(UgostiteljskiObjekatTip.values()).collect(Collectors.toMap(tip -> tip, UgostiteljskiObjekatTip::getKey));
 
     @Inject
     private UserController userController;
+    @Inject
+    private NavigationController navigationController;
     @Inject
     private UgostiteljskiObjekatDomainHelper ugostiteljskiObjekatDomainHelper;
     @Inject
@@ -66,14 +75,14 @@ public class SubmitCategorizationRequestController implements Serializable {
             }
             selectedUgostiteljskiObjekatIndex = selectedIndex;
             selectedCategorizationRow = row;
-            selectedUgostiteljskiObjekat = row.getName();
+            selectedUgostiteljskiObjekat = row.getNaziv();
         }
     }
 
     public void changeSelectedUgostiteljskiObjekat() {
         if (existingUgostiteljskiObjekat) {
             if (selectedUgostiteljskiObjekatIndex >= 0) {
-                selectedUgostiteljskiObjekat = categorizationRequestRowList.get(selectedUgostiteljskiObjekatIndex).getName();
+                selectedUgostiteljskiObjekat = categorizationRequestRowList.get(selectedUgostiteljskiObjekatIndex).getNaziv();
             } else {
                 selectedUgostiteljskiObjekat = null;
             }
@@ -107,6 +116,7 @@ public class SubmitCategorizationRequestController implements Serializable {
         }
         fillCategorizationRequest();
         categorizationRequestDomainHelper.saveCategorizationRequest(zahtevZaKategorizaciju);
+        navigationController.navigateToCategorizationRequestOverview(zahtevZaKategorizaciju.getId());
     }
 
     public void fillCategorizationRequest() {

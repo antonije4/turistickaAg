@@ -12,14 +12,14 @@
    <ui:define name="actions">
       <h:panelGrid style="width: 100%;text-align: center;">
 
-         <p:commandButton rendered="#{ugostiteljskiObjekatOverviewController.canEdit()}" style="width: 100%" action="#{ugostiteljskiObjekatOverviewController.enableInput()}" value="Edit" update="ugostiteljskiObjekatGrid"/>
-         <p:commandButton rendered="#{ugostiteljskiObjekatOverviewController.canEdit()}" style="width: 100%" action="#{ugostiteljskiObjekatOverviewController.saveChanges()}" value="Save changes" update="ugostiteljskiObjekatGrid"/>
+         <p:commandButton rendered="#{ugostiteljskiObjekatOverviewController.canEdit()}" style="width: 100%" action="#{ugostiteljskiObjekatOverviewController.enableInput()}" value="Izmena Podataka" update="ugostiteljskiObjekatGrid"/>
+         <p:commandButton rendered="#{ugostiteljskiObjekatOverviewController.canEdit()}" style="width: 100%" action="#{ugostiteljskiObjekatOverviewController.saveChanges()}" value="Sacuvaj Izmene" update="ugostiteljskiObjekatGrid"/>
       </h:panelGrid>
    </ui:define>
 
    <ui:define name="navigations">
       <p:menuitem
-              value=" Make a rezervacija "
+              value=" Napravi Rezervaciju "
               icon="fa fa-play"
               outcome="#{navigationController.goToReservation(ugostiteljskiObjekatOverviewController.ugostiteljskiObjekat.id)}"
               actionListener="#"
@@ -39,8 +39,24 @@
             <ui:include src="/link/ugostiteljLink.xhtml" >
                <ui:param name="username" value="#{ugostiteljskiObjekatOverviewController.owner.username}" />
             </ui:include>
+
+            <p:outputLabel value="Adresa"/>
+            <p:inputText id="address" required="true" requiredMessage="Adresa ugostiteljskog objekta je obavezno polje!" disabled="#{!ugostiteljskiObjekatOverviewController.inputEnabled()}" value="#{ugostiteljskiObjekatOverviewController.ugostiteljskiObjekat.adresa}" label="Adresa" />
+            <p:message for="address"/>
+
+            <p:outputLabel value="Tip"/>
+            <p:selectOneMenu id="tip"
+                             value="#{ugostiteljskiObjekatOverviewController.ugostiteljskiObjekat.tipUgostiteljskogObjekta}" required="true"
+                             styleClass="full-width val-static"
+                             disabled="#{!ugostiteljskiObjekatOverviewController.inputEnabled()}"
+            >
+               <f:selectItems value="#{ugostiteljskiObjekatOverviewController.allUgostiteljskiObjekatTypes.entrySet()}" var="entry"
+                              itemValue="#{entry.key}" itemLabel="#{entry.value}"/>
+            </p:selectOneMenu>
+
             <p:outputLabel value="Kategorizovan: "/>
-            <p:selectBooleanButton onLabel="Yes" offLabel="No" disabled="true" value="#{ugostiteljskiObjekatOverviewController.ugostiteljskiObjekat.kategorizovan}"/>
+            <p:selectBooleanButton id="kategorizovan" onLabel="Da" offLabel="Ne" disabled="true" value="#{ugostiteljskiObjekatOverviewController.ugostiteljskiObjekat.kategorizovan}"/>
+            <p:message for="kategorizovan"/>
             <p:outputLabel rendered="#{ugostiteljskiObjekatOverviewController.ugostiteljskiObjekat.kategorizovan}" value="Istek kategorizacije: "/>
             <p:outputLabel rendered="#{ugostiteljskiObjekatOverviewController.ugostiteljskiObjekat.kategorizovan}" value="#{ugostiteljskiObjekatOverviewController.ugostiteljskiObjekat.istekKategorizacije}"/>
 
@@ -69,14 +85,14 @@
                </p:column>
                <p:column headerText="Pregledan"
                          sortBy="#{item.pregledan}">
-                  <p:outputLabel value="#{item.pregledan}"/>
+                  <p:selectBooleanButton onLabel="Da" offLabel="Ne" disabled="true" value="#{item.pregledan}"/>
                </p:column>
                <p:column headerText="Odobren"
                          sortBy="#{item.odobren}">
-                  <p:outputLabel rendered="#{item.pregledan}" value="#{item.odobren}"/>
+                  <p:selectBooleanButton onLabel="Da" offLabel="Ne" disabled="true" value="#{item.odobren}"/>
                </p:column>
                <p:column>
-                  <p:commandButton action="#{ugostiteljskiObjekatOverviewController.editCategorizationRequest(item)}" value="Edit"/>
+                  <p:commandButton rendered="${!item.pregledan}" action="#{ugostiteljskiObjekatOverviewController.editCategorizationRequest(item)}" value="Izmeni"/>
                </p:column>
             </ui:define>
 
@@ -120,10 +136,10 @@
                </p:column>
                <p:column headerText="Boravisna taksa placena"
                          sortBy="#{item.boravisnaTaksaPlacena}">
-                  <p:outputLabel value="#{item.boravisnaTaksaPlacena}"/>
+                  <p:selectBooleanButton onLabel="Da" offLabel="Ne" disabled="true" value="#{item.boravisnaTaksaPlacena}"/>
                </p:column>
                <p:column>
-                  <p:commandButton action="#{ugostiteljskiObjekatOverviewController.editReservation(item)}" value="Edit"/>
+                  <p:commandButton action="#{ugostiteljskiObjekatOverviewController.editReservation(item)}" value="Pregled"/>
                </p:column>
             </ui:define>
 

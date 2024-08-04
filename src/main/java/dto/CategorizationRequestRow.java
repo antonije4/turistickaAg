@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter @Setter
 public class CategorizationRequestRow {
     private long id;
-    private String name;
-    private boolean categorized;
+    private String naziv;
+    private boolean kategorizovan;
     private boolean selected;
 }

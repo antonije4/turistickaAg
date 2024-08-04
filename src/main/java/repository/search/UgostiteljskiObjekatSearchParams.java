@@ -6,13 +6,13 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UgostiteljskiObjekatSearchParams extends SearchParams {
-    private String name;
+    private String naziv;
     private String ugostiteljUsername;
-    private Boolean categorized;
+    private Boolean kategorizovan;
 
     public void reset() {
-        name=null;
+        naziv =null;
         ugostiteljUsername = null;
-        categorized = null;
+        kategorizovan = null;
     }
 }

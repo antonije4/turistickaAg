@@ -23,6 +23,7 @@ import java.util.Set;
 @ViewScoped
 public class LoginController implements Serializable {
 
+    public static final String WRONG_USERNAME_PASS_COMBINATION = "Pogresna kombinacija username/password!";
     @Getter @Setter
     private String username;
 
@@ -76,7 +77,7 @@ public class LoginController implements Serializable {
             navigationController.navigateToHome();
             messageController.showErrorMessage(MessageType.ShortLiveMessage, "Jek jek");
         } else {
-            messageController.showErrorMessage(MessageType.ShortLiveMessage, "Username password combination doesn't exist");
+            messageController.showErrorMessage(MessageType.ShortLiveMessage, WRONG_USERNAME_PASS_COMBINATION);
         }
     }
 
@@ -87,7 +88,7 @@ public class LoginController implements Serializable {
             navigationController.navigateToHome();
             messageController.showErrorMessage(MessageType.ShortLiveMessage, "Jek jek");
         } else {
-            messageController.showErrorMessage(MessageType.ShortLiveMessage, "Username password combination doesn't exist");
+            messageController.showErrorMessage(MessageType.ShortLiveMessage, WRONG_USERNAME_PASS_COMBINATION);
         }
     }
 
@@ -98,7 +99,7 @@ public class LoginController implements Serializable {
             navigationController.navigateToHome();
             messageController.showErrorMessage(MessageType.ShortLiveMessage, "Jek jek");
         } else {
-            messageController.showErrorMessage(MessageType.ShortLiveMessage, "Username password combination doesn't exist");
+            messageController.showErrorMessage(MessageType.ShortLiveMessage, WRONG_USERNAME_PASS_COMBINATION);
         }
     }
 }

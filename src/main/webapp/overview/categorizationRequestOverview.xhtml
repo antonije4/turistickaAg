@@ -12,9 +12,15 @@
     <ui:define name="actions">
         <h:panelGrid style="width: 100%;text-align: center;">
 
-            <p:commandButton rendered="#{categorizationRequestOverviewController.canEdit()}" style="width: 100%" action="#{categorizationRequestOverviewController.enableInput()}" value="Edit" update="categorizationRequestGrid"/>
-            <p:commandButton rendered="#{categorizationRequestOverviewController.canEdit()}" style="width: 100%" action="#{categorizationRequestOverviewController.saveChanges()}" value="Save changes" update="categorizationRequestGrid"/>
-            <p:commandButton rendered="#{categorizationRequestOverviewController.canEdit() and userController.ugostiteljLoggedIn()}" style="width: 100%" action="#{categorizationRequestOverviewController.delete()}" value="Delete categorization request" update="categorizationRequestGrid"/>
+            <p:commandButton id="editButton" disabled="#{!categorizationRequestOverviewController.canEdit()}" style="width: 100%" action="#{categorizationRequestOverviewController.enableInput()}" value="Izmena Podataka" update="categorizationRequestGrid"/>
+            <p:tooltip rendered="#{!categorizationRequestOverviewController.canEdit()}" for="editButton" value="Zahtev vec pregledan" position="right"/>
+
+            <p:commandButton id="saveButton" disabled="#{!categorizationRequestOverviewController.canEdit()}" style="width: 100%" action="#{categorizationRequestOverviewController.saveChanges()}" value="Sacuvaj Izmene" update="categorizationRequestGrid"/>
+            <p:tooltip rendered="#{!categorizationRequestOverviewController.canEdit()}" for="saveButton" value="Zahtev vec pregledan" position="right"/>
+
+            <p:commandButton id="deleteButton" disabled="#{!categorizationRequestOverviewController.canEdit() and userController.ugostiteljLoggedIn()}" style="width: 100%" action="#{categorizationRequestOverviewController.delete()}" value="Obrisi Zahtev" update="categorizationRequestGrid"/>
+            <p:tooltip rendered="#{!categorizationRequestOverviewController.canEdit()}" for="deleteButton" value="Zahtev vec pregledan" position="right"/>
+
         </h:panelGrid>
     </ui:define>
 
@@ -34,7 +40,7 @@
                 <p:outputLabel value="#{categorizationRequestOverviewController.zahtevZaKategorizaciju.datumZahteva}"/>
 
                 <p:outputLabel value="Podaci kategorizacije:"/>
-                <p:inputText disabled="#{!categorizationRequestOverviewController.canEdit()}" value="#{categorizationRequestOverviewController.zahtevZaKategorizaciju.podaciKategorizacije}"/>
+                <p:inputText disabled="#{!categorizationRequestOverviewController.inputEnabled()}" value="#{categorizationRequestOverviewController.zahtevZaKategorizaciju.podaciKategorizacije}"/>
 
                 <p:outputLabel value="Pregledan: "/>
                 <p:selectBooleanButton disabled="true" onLabel="Yes" offLabel="No" value="#{categorizationRequestOverviewController.zahtevZaKategorizaciju.pregledan}"/>

@@ -68,7 +68,7 @@ public class ReservationController implements Serializable {
 
     public void calculateBoravisnaTaksa() {
         int bor = 24000;
-        boravisnaTaksa = bor+ "$";
+        boravisnaTaksa = bor+ " din";
     }
 
     public void reserve() {
@@ -76,25 +76,25 @@ public class ReservationController implements Serializable {
         if (!touristLoggedIn()) {
             turista = touristDomainHelper.getByUsername(touristUsername);
             if (turista == null) {
-                messageController.showErrorMessage(MessageType.MediumLiveMessage, "Tourist with username "+touristUsername+" doesn't exist!");
+                messageController.showErrorMessage(MessageType.MediumLiveMessage, "Turista sa korisnickim imenom "+touristUsername+" ne postoji!");
                 return;
             }
         }
-        Rezervacija rezervacija = new Rezervacija.Builder()
-                .boravisnaTaksaPaid(false)
-                .boravisnaTaksaPrice(boravisnaTaksa)
-                .numberOfPeople(numberOfPeople)
-                .tourist(turista)
+        Rezervacija rezervacija = Rezervacija.builder()
+                .boravisnaTaksaPlacena(false)
+                .cenaBoravisneTakse(boravisnaTaksa)
+                .brojLjudi(numberOfPeople)
+                .turista(turista)
                 .ugostiteljskiObjekat(ugostiteljskiObjekat)
-                .startingDate(dateToLocalDate(dateRange.get(0)))
-                .endingDate(dateToLocalDate(dateRange.get(1)))
+                .pocetniDatum(dateToLocalDate(dateRange.get(0)))
+                .krajnjiDatum(dateToLocalDate(dateRange.get(1)))
                 .build();
 
         reservationDomainHelper.createReservation(rezervacija);
         turista.getRezervacijaList().add(rezervacija);
         touristDomainHelper.update(turista);
         navigationController.navigateToReservationOverview(rezervacija.getId());
-        messageController.showInfoMessage(MessageType.MediumLiveMessage, "Successfully created reservation.");
+        messageController.showInfoMessage(MessageType.MediumLiveMessage, "Uspesno kreirana rezervacija!");
     }
 
     private LocalDate dateToLocalDate(Date date) {

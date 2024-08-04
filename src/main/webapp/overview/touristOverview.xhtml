@@ -12,14 +12,14 @@
     <ui:define name="actions">
         <h:panelGrid style="width: 100%;text-align: center;">
 
-            <p:commandButton rendered="#{touristOverviewController.currentTouristLoggedIn()}" style="width: 100%" action="#{touristOverviewController.enableInput()}" value="Edit" update="touristGrid"/>
-            <p:commandButton rendered="#{touristOverviewController.currentTouristLoggedIn()}" style="width: 100%" action="#{touristOverviewController.saveChanges()}" value="Save changes" update="touristGrid"/>
+            <p:commandButton rendered="#{touristOverviewController.currentTouristLoggedIn()}" style="width: 100%" action="#{touristOverviewController.enableInput()}" value="Izmena Podataka" update="touristGrid"/>
+            <p:commandButton rendered="#{touristOverviewController.currentTouristLoggedIn()}" style="width: 100%" action="#{touristOverviewController.saveChanges()}" value="Sacuvaj Izmene" update="touristGrid"/>
         </h:panelGrid>
     </ui:define>
 
     <ui:define name="navigations">
         <p:menuitem
-                value=" Ugostiteljski objekat search "
+                value=" Pretraga Ugostiteljskih Objekata "
                 icon="fa fa-play"
                 outcome="#{navigationController.goToUgostiteljskiObjekatSearch()}"
                 actionListener="#"
@@ -48,16 +48,16 @@
         <p:panel id="reservationPanel" toggleable="true" collapsed="true">
 
             <f:facet name="header">
-                <p:outputLabel id="reservationPanelId" value="Reservations : #{touristOverviewController.turista.reservationList.size()}" />
+                <p:outputLabel id="reservationPanelId" value="Rezervacije : #{touristOverviewController.turista.rezervacijaList.size()}" />
             </f:facet>
 
             <ui:decorate template="/common/tableTemplate.xhtml">
                 <ui:param name="tableId" value="reservationsTableId" />
                 <ui:param name="tableWV" value="reservationsTable" />
-                <ui:param name="tableItems" value="#{touristOverviewController.turista.reservationList}" />
+                <ui:param name="tableItems" value="#{touristOverviewController.turista.rezervacijaList}" />
 
                 <ui:define name="tableContent">
-                    <f:attribute name="sortBy" value="#{item.startingDate}" />
+                    <f:attribute name="sortBy" value="#{item.pocetniDatum}" />
                     <f:attribute name="sortOrder" value="ascending" />
 
                     <p:column headerText="Ugostiteljski objekat" filterBy="#{item.ugostiteljskiObjekat.naziv}" filterMatchMode="contains"
@@ -67,20 +67,20 @@
                             <ui:param name="id" value="#{item.ugostiteljskiObjekat.id}"/>
                         </ui:include>
                     </p:column>
-                    <p:column headerText="Dates of stay"
-                              sortBy="#{item.startingDate}">
-                        <p:outputLabel value="#{item.startingDate} - #{item.endingDate}"/>
+                    <p:column headerText="Datum rezervacije"
+                              sortBy="#{item.pocetniDatum}">
+                        <p:outputLabel value="#{item.pocetniDatum} - #{item.krajnjiDatum}"/>
                     </p:column>
                     <p:column headerText="Boravisna taksa"
-                              sortBy="#{item.boravisnaTaksaPrice}">
-                        <p:outputLabel value="#{item.boravisnaTaksaPrice}"/>
+                              sortBy="#{item.cenaBoravisneTakse}">
+                        <p:outputLabel value="#{item.cenaBoravisneTakse}"/>
                     </p:column>
-                    <p:column headerText="Boravisna taksa paid"
-                              sortBy="#{item.boravisnaTaksaPaid}">
-                        <p:outputLabel value="#{item.boravisnaTaksaPaid}"/>
+                    <p:column headerText="Boravisna taksa placena"
+                              sortBy="#{item.boravisnaTaksaPlacena}">
+                        <p:outputLabel value="#{item.boravisnaTaksaPlacena}"/>
                     </p:column>
                     <p:column>
-                        <p:commandButton value="Edit Reservation" action="#{touristOverviewController.editReservation(item)}"/>
+                        <p:commandButton value="Izmeni Rezervaciju" action="#{touristOverviewController.editReservation(item)}"/>
                     </p:column>
                 </ui:define>
 

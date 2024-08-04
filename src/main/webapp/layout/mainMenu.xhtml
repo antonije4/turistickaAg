@@ -11,45 +11,45 @@
             <div class="ui-g-12" style="padding: 0 .5em;">
                 <p:menubar styleClass="persoStarMenu">
 
-                    <p:submenu style="padding-right: 10px" rendered="#{userController.ugostiteljLoggedIn() or userController.privilegedUserLoggedIn()}" label="Control"
+                    <p:submenu style="padding-right: 10px" rendered="#{userController.ugostiteljLoggedIn() or userController.privilegedUserLoggedIn()}" label="Kontrola"
                                icon="fa fa-gears"
                     >
                         <p:menuitem
-                                value=" Ugostiteljski Objekat Registration "
+                                value=" Prijavljivanje Ugostiteljskog Objekta "
                                 icon="fa fa-play"
                                 outcome="#{navigationController.goToUgostiteljskiObjekatRegistration()}"
                                 actionListener="#"
                         />
 
+                        <p:menuitem
+                                value=" Podnosenje Zahteva za Kategorizaciju "
+                                icon="fa fa-play"
+                                rendered="#{userController.ugostiteljLoggedIn()}"
+                                outcome="#{navigationController.goToSubmitCategorizationRequest()}"
+                                actionListener="#"
+                        />
 
                     </p:submenu>
-                    <p:submenu style="padding-right: 10px" rendered="#{userController.loggedIn()}" label="Search">
+                    <p:submenu style="padding-right: 10px" rendered="#{userController.loggedIn()}" label="Pretraga">
                         <p:menuitem
-                                value=" Ugostitelj Search "
+                                value=" Pretraga Ugostitelja "
                                 icon="fa fa-play"
                                 rendered="#{userController.ugostiteljLoggedIn() or userController.privilegedUserLoggedIn()}"
                                 outcome="#{navigationController.goToUgostiteljSearch()}"
                                 actionListener="#"
                         />
                         <p:menuitem
-                                value=" Ugostiteljski Objekat Search "
+                                value=" Pretraga Ugostiteljskih Objekata "
                                 icon="fa fa-play"
                                 outcome="#{navigationController.goToUgostiteljskiObjekatSearch()}"
                                 actionListener="#"
                         />
                     </p:submenu>
-                    <p:submenu style="padding-right: 10px" rendered="#{userController.ugostiteljLoggedIn() or userController.privilegedUserLoggedIn()}" label="Categorization">
+                    <p:submenu style="padding-right: 10px" rendered="#{userController.privilegedUserLoggedIn()}" label="Kategorizacija">
                         <p:menuitem
-                                value=" Submit Categorization Request "
+                                value=" Pregled Zahteva "
                                 icon="fa fa-play"
-                                rendered="#{userController.ugostiteljLoggedIn()}"
-                                outcome="#{navigationController.goToSubmitCategorizationRequest()}"
-                                actionListener="#"
-                        />
-                        <p:menuitem
-                                value=" Categorization Review "
-                                icon="fa fa-play"
-                                rendered="#{userController.privilegedUserLoggedIn() or userController.ugostiteljLoggedIn()}"
+                                rendered="#{userController.privilegedUserLoggedIn()}"
                                 outcome="#{navigationController.goToCategorizationReview()}"
                                 actionListener="#"
                         />
@@ -57,17 +57,17 @@
                     <f:facet name="options">
                         <p:outputPanel class="logged-in-username not-selectable">
                             <p:commandLink style="padding-right: 5px" rendered="#{userController.ugostiteljLoggedIn()}" action="#{navigationController.goToInbox()}">
-                                <h:graphicImage rendered="#{!userController.hasUnreadMessages()}" value="/resources/img/sanduce.png"
+                                <h:graphicImage rendered="#{!userController.hasUnreadMessages()}" value="/resources/img/inbox.png"
                                                 id="sanduce" width="32" height="24" />
                                 <h:graphicImage rendered="#{userController.hasUnreadMessages()}" value="/resources/img/inboxUnread.png"
                                                 id="unreadInbox" width="32" height="24" />
-                                <p:tooltip value="You have unread messages" for="unreadInbox" position="right"/>
+                                <p:tooltip value="Imate neprocitanih poruka" for="unreadInbox" position="right"/>
                             </p:commandLink>
                             <p:link rendered="#{!userController.loggedIn()}"  outcome="#{navigationController.goToLogin()}" value="Prijava" style="margin-right: 40px;"/>
                             <p:link rendered="#{!userController.loggedIn()}"  outcome="#{navigationController.goToRegistration()}" value="Registracija"/>
                             <i class="fa fa-fw fa-korisnik"/>
                             <p:link style="padding-right: 5px; alignment: top" outcome="#{navigationController.goToUserOverview(userController.username())}" rendered="#{userController.loggedIn()}" value="#{userController.username()}"/>
-                            <p:commandLink style="alignment: top" rendered="#{userController.loggedIn()}" value="Log out" action="#{userController.logOut()}"/>
+                            <p:commandLink style="alignment: top" rendered="#{userController.loggedIn()}" value="Odjava" action="#{userController.logOut()}"/>
                         </p:outputPanel>
                     </f:facet>
                 </p:menubar>

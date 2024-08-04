@@ -1,5 +1,6 @@
 package entities;
 
+import enums.UgostiteljskiObjekatTip;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,6 +30,9 @@ public class UgostiteljskiObjekat implements Serializable {
 
     @OneToMany(mappedBy = "ugostiteljskiObjekat", fetch = FetchType.EAGER)
     private Set<Rezervacija> rezervacije;
+
+    private String adresa;
+    private UgostiteljskiObjekatTip tipUgostiteljskogObjekta;
 
     private boolean kategorizovan;
     private LocalDate istekKategorizacije;

@@ -84,7 +84,9 @@ public class RegistrationController implements Serializable {
     private NavigationController navigationController;
 
     public void init() {
-
+        allUserTypes = allUserTypes.entrySet().stream()
+                .filter(userTypeStringEntry -> !userTypeStringEntry.getKey().equals(UserType.PrivilegedUser))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     public boolean renderUgostiteljData() {

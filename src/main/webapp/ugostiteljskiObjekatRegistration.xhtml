@@ -12,16 +12,30 @@
     <ui:define name="content">
 
         <p:panel id="panelpanel">
-            <h:panelGrid id="ugostiteljGrid" columns="2">
+            <h:panelGrid id="ugostiteljGrid" columns="3">
 
                 <p:outputLabel value="Vlasnik"/>
-                <p:inputText disabled="true" value="#{ugostiteljskiObjekatRegistrationController.owner.ime} #{ugostiteljskiObjekatRegistrationController.owner.prezime}"/>
+                <p:inputText id="vlasnik" disabled="true" value="#{ugostiteljskiObjekatRegistrationController.owner.ime} #{ugostiteljskiObjekatRegistrationController.owner.prezime}"/>
+                <p:message for="vlasnik"/>
 
                 <p:outputLabel value="Naziv"/>
                 <p:inputText id="name" required="true" requiredMessage="Naziv ugostiteljskog objekta je obavezno polje!" value="#{ugostiteljskiObjekatRegistrationController.ugostiteljskiObjekat.naziv}" label="Naziv" />
+                <p:message for="name"/>
+
+                <p:outputLabel value="Adresa"/>
+                <p:inputText id="address" required="true" requiredMessage="Adresa ugostiteljskog objekta je obavezno polje!" value="#{ugostiteljskiObjekatRegistrationController.ugostiteljskiObjekat.adresa}" label="Adresa" />
+                <p:message for="address"/>
+
+                <p:outputLabel value="Tip"/>
+                <p:selectOneMenu id="tip"
+                                 value="#{ugostiteljskiObjekatRegistrationController.ugostiteljskiObjekat.tipUgostiteljskogObjekta}" required="true"
+                                 styleClass="full-width val-static">
+                    <f:selectItems value="#{ugostiteljskiObjekatRegistrationController.allUgostiteljskiObjekatTypes.entrySet()}" var="entry"
+                                   itemValue="#{entry.key}" itemLabel="#{entry.value}"/>
+                </p:selectOneMenu>
 
                 <p:outputLabel value=""/>
-                <p:commandButton action="#{ugostiteljskiObjekatRegistrationController.registerUgostiteljskiObjekat()}" value="Register"/>
+                <p:commandButton action="#{ugostiteljskiObjekatRegistrationController.registerUgostiteljskiObjekat()}" value="Prijavi" update="centralForm"/>
 
             </h:panelGrid>
         </p:panel>

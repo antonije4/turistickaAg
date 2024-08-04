@@ -1,5 +1,6 @@
 package repository;
 
+import com.querydsl.core.util.StringUtils;
 import com.querydsl.jpa.impl.JPAQuery;
 import entities.QUgostiteljskiObjekat;
 import entities.UgostiteljskiObjekat;
@@ -31,9 +32,13 @@ public class UgostiteljskiObjekatDomainHelper extends DomainHelper{
         JPAQuery<UgostiteljskiObjekat> query = new JPAQuery<>(entityManager).select(qUgostiteljskiObjekat)
                 .from(qUgostiteljskiObjekat);
 
-        addFilter(query, ugostiteljskiObjekatSearchParams.getName(), qUgostiteljskiObjekat.naziv::like);
-        addFilter(query, ugostiteljskiObjekatSearchParams.getUgostiteljUsername(), qUgostiteljskiObjekat.ugostitelj.username::likeIgnoreCase);
-        addFilter(query, ugostiteljskiObjekatSearchParams.getCategorized(), qUgostiteljskiObjekat.kategorizovan::eq);
+        if (!StringUtils.isNullOrEmpty(ugostiteljskiObjekatSearchParams.getNaziv())) {
+            addFilter(query, ugostiteljskiObjekatSearchParams.getNaziv(), qUgostiteljskiObjekat.naziv::like);
+        }
+        if (!StringUtils.isNullOrEmpty(ugostiteljskiObjekatSearchParams.getUgostiteljUsername())) {
+            addFilter(query, ugostiteljskiObjekatSearchParams.getUgostiteljUsername(), qUgostiteljskiObjekat.ugostitelj.username::likeIgnoreCase);
+        }
+        addFilter(query, ugostiteljskiObjekatSearchParams.getKategorizovan(), qUgostiteljskiObjekat.kategorizovan::eq);
 
         List<UgostiteljskiObjekat> resultList = query.fetch();
         return ResultList.create(resultList, resultList.size());

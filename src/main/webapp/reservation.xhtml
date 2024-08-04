@@ -21,16 +21,16 @@
                 </ui:include>
                 <p:outputLabel/>
 
-                <p:outputLabel value="Tourist username: "/>
-                <p:inputText id="touristUsername" required="true" requiredMessage="Tourist username can't be empty!" disabled="#{reservationController.touristLoggedIn()}" value="#{reservationController.touristUsername}"/>
+                <p:outputLabel value="Korisnicko ime turiste"/>
+                <p:inputText id="touristUsername" required="true" requiredMessage="Korisnicko ime turiste ne sme biti prazno!" disabled="#{reservationController.touristLoggedIn()}" value="#{reservationController.touristUsername}"/>
                 <p:message for="touristUsername"/>
 
-                <p:outputLabel value="Number of people: "/>
-                <p:inputNumber id="numberOfPeople" requiredMessage="Number of people can't be empty!" required="true" decimalPlaces="0" value="#{reservationController.numberOfPeople}"/>
+                <p:outputLabel value="Broj gostiju: "/>
+                <p:inputNumber id="numberOfPeople" requiredMessage="Broj gostiju ne sme biti prazan!" required="true" decimalPlaces="0" value="#{reservationController.numberOfPeople}"/>
                 <p:message for="numberOfPeople"/>
 
-                <p:outputLabel value="Dates of stay: "/>
-                <p:datePicker id="dates" required="true" requiredMessage="Dates of stay can't be empty!" selectionMode="range" value="#{reservationController.dateRange}" readonlyInput="true"/>
+                <p:outputLabel value="Datum rezervacije: "/>
+                <p:datePicker id="dates" required="true" requiredMessage="Datum rezervacije ne sme biti prazan!" selectionMode="range" value="#{reservationController.dateRange}" readonlyInput="true"/>
                 <p:message for="dates"/>
 
                 <p:outputLabel value="Boravisna taksa: "/>

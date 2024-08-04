@@ -43,10 +43,11 @@ public class CategorizationRequestOverviewController extends BaseOverview {
 
     public void init() {
         super.init();
+        inputEnabled = false;
     }
 
     public boolean canEdit() {
-        return zahtevZaKategorizaciju.getDatumZahteva().isAfter(LocalDate.now()) && isUgostiteljskiObjekatOwnerLoggedIn() && !zahtevZaKategorizaciju.isPregledan();
+        return isUgostiteljskiObjekatOwnerLoggedIn() && !zahtevZaKategorizaciju.isPregledan();
     }
 
     public boolean isUgostiteljskiObjekatOwnerLoggedIn() {
@@ -89,6 +90,10 @@ public class CategorizationRequestOverviewController extends BaseOverview {
 
     public boolean canEditBoravisnaTaksa() {
         return inputEnabled && userController.ugostiteljLoggedIn();
+    }
+
+    public boolean inputEnabled() {
+        return inputEnabled && canEdit();
     }
 
     protected boolean processParams() {

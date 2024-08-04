@@ -6,6 +6,7 @@ import entities.Rezervacija;
 import entities.ZahtevZaKategorizaciju;
 import entities.Ugostitelj;
 import entities.UgostiteljskiObjekat;
+import enums.UgostiteljskiObjekatTip;
 import lombok.Getter;
 import lombok.Setter;
 import repository.UgostiteljskiObjekatDomainHelper;
@@ -15,7 +16,9 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Named
@@ -42,6 +45,9 @@ public class UgostiteljskiObjekatOverviewController extends BaseOverview {
 
     private boolean inputEnabled;
     private long ugostiteljskiObjekatId;
+
+    @Getter @Setter
+    private Map<UgostiteljskiObjekatTip, String> allUgostiteljskiObjekatTypes = Arrays.stream(UgostiteljskiObjekatTip.values()).collect(Collectors.toMap(tip -> tip, UgostiteljskiObjekatTip::getKey));
 
 
     public void init() {
@@ -101,6 +107,6 @@ public class UgostiteljskiObjekatOverviewController extends BaseOverview {
     }
 
     public void editCategorizationRequest(ZahtevZaKategorizaciju zahtevZaKategorizaciju) {
-//        navigationController.navigateTo(reservation.getId());
+        navigationController.navigateToCategorizationRequestOverview(zahtevZaKategorizaciju.getId());
     }
 }
