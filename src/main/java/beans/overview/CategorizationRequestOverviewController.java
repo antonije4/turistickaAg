@@ -4,11 +4,16 @@ package beans.overview;
 import beans.general.MessageController;
 import beans.general.NavigationController;
 import beans.general.UserController;
-import entities.*;
+import entities.Korisnik;
+import entities.Ugostitelj;
+import entities.UgostiteljskiObjekat;
+import entities.ZahtevZaKategorizaciju;
 import enums.MessageType;
 import lombok.Getter;
 import lombok.Setter;
-import repository.*;
+import repository.CategorizationRequestDomainHelper;
+import repository.UgostiteljDomainHelper;
+import repository.UgostiteljskiObjekatDomainHelper;
 import util.Util;
 
 import javax.faces.view.ViewScoped;
@@ -114,5 +119,29 @@ public class CategorizationRequestOverviewController extends BaseOverview {
             //log exception
             return false;
         }
+    }
+
+    public void reviewRequest(boolean approved) {
+        processReviewedRequest(approved);
+        processUgostiteljskiObjekat(approved);
+    }
+
+    private void processReviewedRequest(boolean approved) {
+        zahtevZaKategorizaciju.setPregledan(true);
+        zahtevZaKategorizaciju.setOdobren(approved);
+        zahtevZaKategorizaciju.setKorisnikPregleda(userController.getLoggedInUser().getUsername());
+        categorizationRequestDomainHelper.updateCategorizationRequest(zahtevZaKategorizaciju);
+    }
+
+    private void processUgostiteljskiObjekat(boolean approved) {
+        UgostiteljskiObjekat ugostiteljskiObjekat = zahtevZaKategorizaciju.getUgostiteljskiObjekat();
+        ugostiteljskiObjekat.setKategorizovan(approved);
+        ugostiteljskiObjekat.setNotifikovanOIstekuKategorizacije(false);
+        if (approved) {
+            ugostiteljskiObjekat.setIstekKategorizacije(LocalDate.now().plusYears(2));
+        }
+
+        ugostiteljskiObjekatDomainHelper.updateUgostiteljskiObjekat(ugostiteljskiObjekat);
+        messageController.showInfoMessage(MessageType.ShortLiveMessage, "Successfully reviewed categorization request for ugostiteljski objekat "+ ugostiteljskiObjekat.getNaziv());
     }
 }

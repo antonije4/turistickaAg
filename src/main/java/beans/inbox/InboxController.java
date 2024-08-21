@@ -12,6 +12,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Named
@@ -25,6 +27,7 @@ public class InboxController implements Serializable {
     private UserController userController;
     @Inject
     private MessageDomainHelper messageDomainHelper;
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
     public void init() {
         ugostitelj = (Ugostitelj) userController.getLoggedInUser();
@@ -38,5 +41,7 @@ public class InboxController implements Serializable {
         messageDomainHelper.updateMessage(listaPoruka.get(index));
     }
 
-
+    public String getDateFormat(LocalDateTime localDateTime) {
+        return localDateTime.format(FORMATTER);
+    }
 }

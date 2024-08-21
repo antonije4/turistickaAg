@@ -27,14 +27,14 @@ public class CategorizationExpiryTimerService implements Serializable {
 
     @Inject
     private UgostiteljskiObjekatDomainHelper ugostiteljskiObjekatDomainHelper;
-    private static final String EXPIRY_MESSAGE = "Categorization is expiring in less than 60 days for ugostiteljski objekat: ";
+    private static final String EXPIRY_MESSAGE = "Kategorizacija ugostiteljskog objekta: %s istice za 60 dana.";
 
     @PostConstruct
     private void init() {
         TimerConfig timerConfig = new TimerConfig();
         timerConfig.setPersistent(false);
         ScheduleExpression scheduleExpression = new ScheduleExpression();
-        scheduleExpression.dayOfWeek("1-5").hour("15").minute("42").second("0");
+        scheduleExpression.dayOfWeek("1-7").hour("13").minute("23").second("0");
         timerService.createCalendarTimer(scheduleExpression, timerConfig);
     }
 
@@ -48,7 +48,7 @@ public class CategorizationExpiryTimerService implements Serializable {
     private void addMessageToUgostiteljInbox(UgostiteljskiObjekat ugostiteljskiObjekat) {
         Sanduce sanduce = ugostiteljskiObjekat.getUgostitelj().getSanduce();
         Poruka poruka = Poruka.builder()
-                .sadrzaj(EXPIRY_MESSAGE + ugostiteljskiObjekat.getNaziv())
+                .sadrzaj(String.format(EXPIRY_MESSAGE, ugostiteljskiObjekat.getNaziv()))
                 .datumPrispeca(LocalDateTime.now())
                 .sanduce(sanduce)
                 .procitana(false)

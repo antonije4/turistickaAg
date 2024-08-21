@@ -12,7 +12,7 @@
     <ui:define name="content">
 
         <p:panel id="panelpanel">
-            <h:panelGrid id="ugostiteljGrid" columns="3">
+            <h:panelGrid rendered="#{userController.ugostiteljLoggedIn()}" id="ugostiteljGrid" columns="3">
 
                 <p:outputLabel value="Vlasnik"/>
                 <p:inputText id="vlasnik" disabled="true" value="#{ugostiteljskiObjekatRegistrationController.owner.ime} #{ugostiteljskiObjekatRegistrationController.owner.prezime}"/>
@@ -28,6 +28,37 @@
 
                 <p:outputLabel value="Tip"/>
                 <p:selectOneMenu id="tip"
+                                 value="#{ugostiteljskiObjekatRegistrationController.ugostiteljskiObjekat.tipUgostiteljskogObjekta}" required="true"
+                                 styleClass="full-width val-static">
+                    <f:selectItems value="#{ugostiteljskiObjekatRegistrationController.allUgostiteljskiObjekatTypes.entrySet()}" var="entry"
+                                   itemValue="#{entry.key}" itemLabel="#{entry.value}"/>
+                </p:selectOneMenu>
+
+                <p:outputLabel value=""/>
+                <p:commandButton action="#{ugostiteljskiObjekatRegistrationController.registerUgostiteljskiObjekat()}" value="Prijavi" update="centralForm"/>
+
+            </h:panelGrid>
+            <h:panelGrid columns="3" rendered="#{userController.privilegedUserLoggedIn()}" id="adminGrid">
+                <p:outputLabel value="Korisnicko ime vlasnika: "/>
+                <p:inputText value="#{ugostiteljskiObjekatRegistrationController.ownerUsername}"/>
+                <p:commandButton action="#{ugostiteljskiObjekatRegistrationController.fetchUgostitelj()}" value="Dohvati" update="centralForm"/>
+            </h:panelGrid>
+            <h:panelGrid rendered="#{ugostiteljskiObjekatRegistrationController.owner != null}" id="privilegedUgostiteljGrid" columns="3">
+
+                <p:outputLabel value="Vlasnik"/>
+                <p:inputText id="pvlasnik" disabled="true" value="#{ugostiteljskiObjekatRegistrationController.owner.ime} #{ugostiteljskiObjekatRegistrationController.owner.prezime}"/>
+                <p:message for="pvlasnik"/>
+
+                <p:outputLabel value="Naziv"/>
+                <p:inputText id="pname" required="true" requiredMessage="Naziv ugostiteljskog objekta je obavezno polje!" value="#{ugostiteljskiObjekatRegistrationController.ugostiteljskiObjekat.naziv}" label="Naziv" />
+                <p:message for="pname"/>
+
+                <p:outputLabel value="Adresa"/>
+                <p:inputText id="paddress" required="true" requiredMessage="Adresa ugostiteljskog objekta je obavezno polje!" value="#{ugostiteljskiObjekatRegistrationController.ugostiteljskiObjekat.adresa}" label="Adresa" />
+                <p:message for="paddress"/>
+
+                <p:outputLabel value="Tip"/>
+                <p:selectOneMenu id="ptip"
                                  value="#{ugostiteljskiObjekatRegistrationController.ugostiteljskiObjekat.tipUgostiteljskogObjekta}" required="true"
                                  styleClass="full-width val-static">
                     <f:selectItems value="#{ugostiteljskiObjekatRegistrationController.allUgostiteljskiObjekatTypes.entrySet()}" var="entry"

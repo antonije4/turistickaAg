@@ -6,36 +6,47 @@
                 template="/layout/operationalLayout.xhtml">
 
     <ui:define name="mainContent">
-        <p:panel header="Search parameters" style="padding-top: 0.571em">
+        <p:panel header="Parametri pretrage" style="padding-top: 0.571em">
 
             <h:panelGrid columns="4" style="width: 100%" cellspacing="7" columnClasses="width20Per,width20Per,width20Per,width20Per,width20Per">
                 <ui:param name="manager" value="#{ugostiteljskiObjekatSearchController.searchParams}" />
                 <h:panelGrid columns="1" style="width:100%;">
                     <p:outputLabel class="wh-search-label" for="name"
-                                   value="Name" />
+                                   value="Naziv " />
                     <p:inputText class="wh-select-input wh-select-info-item"
                                  id="name" value="#{ugostiteljskiObjekatSearchController.searchParams.naziv}" />
                 </h:panelGrid>
                 <h:panelGrid columns="1" style="width:100%;">
                     <p:outputLabel class="wh-search-label" for="ugostiteljUsername"
-                                   value="Ugostitelj username" />
+                                   value="Korisnicko ime ugostitelja " />
                     <p:inputText class="wh-select-input wh-select-info-item"
                                  id="ugostiteljUsername" value="#{ugostiteljskiObjekatSearchController.searchParams.ugostiteljUsername}" />
                 </h:panelGrid>
                 <h:panelGrid columns="1" style="width:100%;">
+                    <p:outputLabel class="wh-search-label" for="types"
+                                   value="Tip" />
+                    <p:selectCheckboxMenu style="max-width:100%; display:block;"
+                                          multiple="true" styleClass="selectCheckboxMenuFixHeight"
+                                          filter="true" filterMatchMode="contains"
+                                          id="types" value="#{ugostiteljskiObjekatSearchController.searchParams.types}">
+                        <f:selectItems value="#{enums.allUgostiteljskiObjekatTypes.entrySet()}" var="entry"
+                                       itemValue="#{entry.key}" itemLabel="#{entry.value}"/>
+                    </p:selectCheckboxMenu>
+                </h:panelGrid>
+                <h:panelGrid columns="1" style="width:100%;">
                     <p:outputLabel class="wh-search-label" for="kategorizovan"
-                                   value="Categorized" />
-                    <p:selectBooleanButton id="kategorizovan" onLabel="Yes" offLabel="No" value="#{ugostiteljskiObjekatSearchController.searchParams.kategorizovan}"/>
+                                   value="Kategorizovan" />
+                    <p:selectBooleanButton id="kategorizovan" onLabel="Da" offLabel="Ne" value="#{ugostiteljskiObjekatSearchController.searchParams.kategorizovan}"/>
                 </h:panelGrid>
             </h:panelGrid>
         </p:panel>
         <h:panelGrid columns="2" style="width: 100%;">
 
             <h:panelGrid columns="5">
-                <p:commandButton value="Search"
+                <p:commandButton value="Pretraga"
                                  update="centralForm" action="#{ugostiteljskiObjekatSearchController.search()}"
                                  icon="fa fa-fw fa-search" />
-                <p:commandButton value="Reset"
+                <p:commandButton value="Resetuj"
                                  update="centralForm"
                                  action="#{ugostiteljskiObjekatSearchController.reset()}"
                                  icon="fa fa-fw fa-refresh"
@@ -43,16 +54,16 @@
                     <p:resetInput target="centralForm"/>
                 </p:commandButton>
 
-                <p:outputLabel value="Max results" />
+                <p:outputLabel value="Maksimalan broj" />
                 <p:selectOneMenu id="selectOneMaxResultId"
                                  value="#{ugostiteljskiObjekatSearchController.searchParams.maxResults}"
                                  style="min-width: 120px;">
                     <f:selectItems value="#{enums.maxResults}" />
                 </p:selectOneMenu>
                 <p:outputLabel
-                        value="Showing: #{ugostiteljskiObjekatSearchController.results.totalResultCount > ugostiteljskiObjekatSearchController.searchParams.maxResults ? (ugostiteljskiObjekatSearchController.searchParams.maxResults eq -1 ? ugostiteljskiObjekatSearchController.results.totalResultCount : ugostiteljskiObjekatSearchController.searchParams.maxResults) : ugostiteljskiObjekatSearchController.results.totalResultCount} of #{ugostiteljskiObjekatSearchController.results.totalResultCount}"
+                        value="Prikaz: #{ugostiteljskiObjekatSearchController.results.totalResultCount > ugostiteljskiObjekatSearchController.searchParams.maxResults ? (ugostiteljskiObjekatSearchController.searchParams.maxResults eq -1 ? ugostiteljskiObjekatSearchController.results.totalResultCount : ugostiteljskiObjekatSearchController.searchParams.maxResults) : ugostiteljskiObjekatSearchController.results.totalResultCount} od #{ugostiteljskiObjekatSearchController.results.totalResultCount}"
                         rendered="#{ugostiteljskiObjekatSearchController.results.totalResultCount gt 0 }" />
-                <p:outputLabel value="No records found"
+                <p:outputLabel value="Nema ugostiteljski objekata po ovim parametrima."
                                rendered="#{ugostiteljskiObjekatSearchController.results.totalResultCount eq 0 and ugostiteljskiObjekatSearchController.results.list.size() eq 0}" />
             </h:panelGrid>
         </h:panelGrid>
@@ -60,18 +71,21 @@
                      var="item"
                      rendered="#{not empty ugostiteljskiObjekatSearchController.results.list}"
                      value="#{ugostiteljskiObjekatSearchController.results.list}"
-                     emptyMessage="No records found"
+                     emptyMessage="Nema ugostiteljski objekata po ovim parametrima."
                      style="width: 100%;word-wrap: break-word"
                      rows="10"
                      rowsPerPageTemplate="5,10,15,20"
                      paginator="#{true}"
                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}">
 
-            <p:column headerText="Name" sortBy="#{item.naziv}">
+            <p:column headerText="Naziv" sortBy="#{item.naziv}">
                 <ui:include src="/link/ugostiteljskiObjekatLink.xhtml" >
                     <ui:param name="name" value="#{item.naziv}" />
                     <ui:param name="id" value="#{item.id}" />
                 </ui:include>
+            </p:column>
+            <p:column headerText="Tip" sortBy="#{item.tipUgostiteljskogObjekta}">
+                <h:outputText value="#{item.tipUgostiteljskogObjekta.key}" />
             </p:column>
 
             <p:column headerText="Ugostitelj" sortBy="#{item.ugostitelj.username}">
@@ -80,7 +94,7 @@
                 </ui:include>
             </p:column>
             <p:column>
-                <p:commandButton rendered="#{userController.touristLoggedIn() or userController.ugostiteljLoggedIn()}" value="Napravi rezervaciju" action="#{navigationController.goToReservation(item.id)}"/>
+                <p:commandButton rendered="#{userController.touristLoggedIn() or (userController.ugostiteljLoggedIn() and userController.loggedInUser.username eq item.ugostitelj.username)}" value="Napravi rezervaciju" action="#{navigationController.goToReservation(item.id)}"/>
             </p:column>
 
         </p:dataTable>

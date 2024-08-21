@@ -31,15 +31,27 @@
         <p:panel header="Tourist overview">
 
             <h:panelGrid  columns="4" id="touristGrid" cellspacing="10" columnClasses=",,insideDetailsColumn70,">
-                <p:outputLabel value="Username"/>
+                <p:outputLabel value="Korisnicko Ime"/>
                 <p:inputText disabled="#{touristOverviewController.inputDisabled()}" id="username" value="#{touristOverviewController.turista.username}" label="Username"/>
 
-                <p:outputLabel value="Password"/>
+                <p:outputLabel value="Lozinka"/>
                 <p:password disabled="#{touristOverviewController.inputDisabled()}" id="password" value="#{touristOverviewController.turista.password}" label="Password"/>
+
+
+                <p:outputLabel value="Ime"/>
+                <p:inputText disabled="#{touristOverviewController.inputDisabled()}" id="name" value="#{touristOverviewController.turista.ime}"/>
+
+                <p:outputLabel value="Prezime"/>
+                <p:inputText disabled="#{touristOverviewController.inputDisabled()}" id="surname" value="#{touristOverviewController.turista.prezime}"/>
 
                 <p:outputLabel value="Email"/>
                 <p:inputText disabled="#{touristOverviewController.inputDisabled()}" id="email" value="#{touristOverviewController.turista.email}"/>
 
+                <p:outputLabel value="Drzavljanstvo"/>
+                <p:inputText disabled="#{touristOverviewController.inputDisabled()}" id="touristNationality" value="#{touristOverviewController.turista.drzavljanstvo}" label="Drzavljanstvo"/>
+
+                <p:outputLabel value="Datum rodjenja"/>
+                <p:datePicker id="dates" disabled="#{touristOverviewController.inputDisabled()}" value="#{touristOverviewController.turista.datumRodjenja}"/>
 
             </h:panelGrid>
 

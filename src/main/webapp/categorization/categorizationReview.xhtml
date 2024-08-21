@@ -41,15 +41,18 @@
                             </ui:include>
                         </p:column>
 
-                        <p:column headerText="Date of submission" sortBy="#{item.datumZahteva}">
+                        <p:column headerText="Datum zahteva" sortBy="#{item.datumZahteva}">
                             <p:outputLabel value="#{item.datumZahteva}"/>
+                        </p:column>
+                        <p:column>
+                            <p:commandButton value="Pregledaj" action="#{navigationController.goToCategorizationRequestOverview(item.id)}" update="categorizationRequestTable"/>
                         </p:column>
 
                         <p:column>
-                            <p:commandButton value="Accept" action="#{categorizationReviewController.reviewRequest(item, true)}" update="categorizationRequestTable"/>
+                            <p:commandButton value="Odobri" action="#{categorizationReviewController.reviewRequest(item, true)}" update="categorizationRequestTable"/>
                         </p:column>
                         <p:column>
-                            <p:commandButton value="Reject" action="#{categorizationReviewController.reviewRequest(item, false)}" update="categorizationRequestTable"/>
+                            <p:commandButton value="Odbij" action="#{categorizationReviewController.reviewRequest(item, false)}" update="categorizationRequestTable"/>
                         </p:column>
                     </p:dataTable>
 

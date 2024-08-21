@@ -12,21 +12,23 @@
     <ui:define name="actions">
         <h:panelGrid style="width: 100%;text-align: center;">
 
-            <p:commandButton id="editButton" disabled="#{!categorizationRequestOverviewController.canEdit()}" style="width: 100%" action="#{categorizationRequestOverviewController.enableInput()}" value="Izmena Podataka" update="categorizationRequestGrid"/>
-            <p:tooltip rendered="#{!categorizationRequestOverviewController.canEdit()}" for="editButton" value="Zahtev vec pregledan" position="right"/>
+            <p:commandButton rendered="#{userController.ugostiteljLoggedIn()}" id="editButton" disabled="#{!categorizationRequestOverviewController.canEdit()}" style="width: 100%" action="#{categorizationRequestOverviewController.enableInput()}" value="Izmena Podataka" update="categorizationRequestGrid"/>
+            <p:tooltip rendered="#{!categorizationRequestOverviewController.canEdit() and userController.ugostiteljLoggedIn()}" for="editButton" value="Zahtev vec pregledan" position="right"/>
 
-            <p:commandButton id="saveButton" disabled="#{!categorizationRequestOverviewController.canEdit()}" style="width: 100%" action="#{categorizationRequestOverviewController.saveChanges()}" value="Sacuvaj Izmene" update="categorizationRequestGrid"/>
-            <p:tooltip rendered="#{!categorizationRequestOverviewController.canEdit()}" for="saveButton" value="Zahtev vec pregledan" position="right"/>
+            <p:commandButton rendered="#{userController.ugostiteljLoggedIn()}" id="saveButton" disabled="#{!categorizationRequestOverviewController.canEdit()}" style="width: 100%" action="#{categorizationRequestOverviewController.saveChanges()}" value="Sacuvaj Izmene" update="categorizationRequestGrid"/>
+            <p:tooltip rendered="#{!categorizationRequestOverviewController.canEdit() and userController.ugostiteljLoggedIn()}" for="saveButton" value="Zahtev vec pregledan" position="right"/>
 
-            <p:commandButton id="deleteButton" disabled="#{!categorizationRequestOverviewController.canEdit() and userController.ugostiteljLoggedIn()}" style="width: 100%" action="#{categorizationRequestOverviewController.delete()}" value="Obrisi Zahtev" update="categorizationRequestGrid"/>
-            <p:tooltip rendered="#{!categorizationRequestOverviewController.canEdit()}" for="deleteButton" value="Zahtev vec pregledan" position="right"/>
+            <p:commandButton rendered="#{userController.ugostiteljLoggedIn()}" id="deleteButton" disabled="#{!categorizationRequestOverviewController.canEdit() and userController.ugostiteljLoggedIn()}" style="width: 100%" action="#{categorizationRequestOverviewController.delete()}" value="Obrisi Zahtev" update="categorizationRequestGrid"/>
+            <p:tooltip rendered="#{!categorizationRequestOverviewController.canEdit() and userController.ugostiteljLoggedIn()}" for="deleteButton" value="Zahtev vec pregledan" position="right"/>
 
+            <p:commandButton rendered="#{userController.privilegedUserLoggedIn()}" id="acceptButton" style="width: 100%" action="#{categorizationRequestOverviewController.reviewRequest(true)}" value="Odobri" update="categorizationRequestGrid"/>
+            <p:commandButton rendered="#{userController.privilegedUserLoggedIn()}" id="rejectButton" style="width: 100%" action="#{categorizationRequestOverviewController.reviewRequest(false)}" value="Odbij" update="categorizationRequestGrid"/>
         </h:panelGrid>
     </ui:define>
 
     <ui:define name="mainContent">
 
-        <p:panel header="Categorization Request Overview">
+        <p:panel header="Zahtev Za Kategorizaciju">
 
             <h:panelGrid  columns="4" id="categorizationRequestGrid" cellspacing="10" columnClasses=",,insideDetailsColumn70,">
 
@@ -43,10 +45,10 @@
                 <p:inputText disabled="#{!categorizationRequestOverviewController.inputEnabled()}" value="#{categorizationRequestOverviewController.zahtevZaKategorizaciju.podaciKategorizacije}"/>
 
                 <p:outputLabel value="Pregledan: "/>
-                <p:selectBooleanButton disabled="true" onLabel="Yes" offLabel="No" value="#{categorizationRequestOverviewController.zahtevZaKategorizaciju.pregledan}"/>
+                <p:selectBooleanButton disabled="true" onLabel="Da" offLabel="Ne" value="#{categorizationRequestOverviewController.zahtevZaKategorizaciju.pregledan}"/>
 
                 <p:outputLabel value="Odobren: "/>
-                <p:selectBooleanButton disabled="true" onLabel="Yes" offLabel="No" value="#{categorizationRequestOverviewController.zahtevZaKategorizaciju.odobren}"/>
+                <p:selectBooleanButton disabled="true" onLabel="Da" offLabel="Ne" value="#{categorizationRequestOverviewController.zahtevZaKategorizaciju.odobren}"/>
             </h:panelGrid>
 
         </p:panel>

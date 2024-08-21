@@ -1,8 +1,6 @@
 package entities;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +13,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter @Setter
 @Builder
+@NoArgsConstructor @AllArgsConstructor
 public class Poruka implements Serializable {
 
     @Id

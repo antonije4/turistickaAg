@@ -29,8 +29,7 @@ public class RegistrationController implements Serializable {
     @Setter
     private Map<UserType, String> allUserTypes = Arrays.stream(UserType.values()).collect(Collectors.toMap(ut -> ut, UserType::getKey));
 
-    @Getter
-    @Setter
+    @Getter @Setter
     private Map<UgostiteljType, String> allUgostiteljTypes = Arrays.stream(UgostiteljType.values()).collect(Collectors.toMap(ugostiteljType -> ugostiteljType, UgostiteljType::getKey));
 
     @Getter
@@ -85,7 +84,7 @@ public class RegistrationController implements Serializable {
 
     public void init() {
         allUserTypes = allUserTypes.entrySet().stream()
-                .filter(userTypeStringEntry -> !userTypeStringEntry.getKey().equals(UserType.PrivilegedUser))
+//                .filter(userTypeStringEntry -> !userTypeStringEntry.getKey().equals(UserType.PrivilegedUser))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 

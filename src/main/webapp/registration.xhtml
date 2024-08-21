@@ -110,12 +110,12 @@
                 <h:panelGrid rendered="#{registrationController.renderTouristData()}" id="touristGrid" columns="3">
 
 
-                    <p:outputLabel value="Username"/>
+                    <p:outputLabel value="Korisnicko ime"/>
                     <p:inputText required="true" requiredMessage="Username can't be emtpy!" id="touristUsername" value="#{registrationController.turista.username}" label="Username" />
                     <p:message for="touristUsername"/>
 
 
-                    <p:outputLabel value="Password"/>
+                    <p:outputLabel value="Lozinka"/>
                     <p:password required="true" requiredMessage="Password can't be emtpy!" id="touristPassword" value="#{registrationController.turista.password}" label="Password"/>
                     <p:message for="touristPassword"/>
 
@@ -134,8 +134,16 @@
                     </p:inputText>
                     <p:message for="touristEmail"/>
 
+                    <p:outputLabel value="Drzavljanstvo"/>
+                    <p:inputText required="true" requiredMessage="Drzavljanstvo ne sme biti prazno!" id="touristNationality" value="#{registrationController.turista.drzavljanstvo}" label="Drzavljanstvo"/>
+                    <p:message for="touristNationality"/>
+
+                    <p:outputLabel value="Datum rodjenja: "/>
+                    <p:datePicker id="dates" required="true" requiredMessage="Datum rodjenja ne sme biti prazan!" value="#{registrationController.turista.datumRodjenja}"/>
+                    <p:message for="dates"/>
+
                     <p:outputLabel value=""/>
-                    <p:commandButton action="#{registrationController.registerTourist()}" value="Register" update="centralForm"/>
+                    <p:commandButton action="#{registrationController.registerTourist()}" value="Registruj" update="centralForm"/>
 
                 </h:panelGrid>
                 <h:panelGrid rendered="#{registrationController.renderPrivilegedUserData()}" id="privilegedGrid" columns="3">

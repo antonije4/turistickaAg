@@ -28,13 +28,13 @@
                              paginator="#{true}"
                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}">
 
-                    <p:column headerText="Poruka" sortBy="#{item.content}">
-                        <p:commandLink actionListener="#{inboxController.readMessage(item)}" rendered="#{!item.read}" style="font-weight: bold" value="#{item.content}" update="inboxTable"/>
-                        <p:outputLabel rendered="#{item.read}" style="font-weight: normal" value="#{item.content}"/>
+                    <p:column headerText="Poruka" sortBy="#{item.sadrzaj}">
+                        <p:commandLink actionListener="#{inboxController.readMessage(item)}" rendered="#{!item.procitana}" style="font-weight: bold" value="#{item.sadrzaj}" update="inboxTable"/>
+                        <p:outputLabel rendered="#{item.procitana}" style="font-weight: normal" value="#{item.sadrzaj}"/>
                     </p:column>
 
-                    <p:column headerText="Primljena:" sortBy="#{item.deliveryTime}">
-                        <p:outputLabel value="#{item.deliveryTime}"/>
+                    <p:column headerText="Primljena:" sortBy="#{item.datumPrispeca}">
+                        <p:outputLabel value="#{inboxController.getDateFormat(item.datumPrispeca)}"/>
                     </p:column>
 
                 </p:dataTable>

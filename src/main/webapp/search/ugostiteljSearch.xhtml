@@ -11,26 +11,21 @@
    <h:panelGrid columns="4" style="width: 100%" cellspacing="7" columnClasses="width20Per,width20Per,width20Per,width20Per,width20Per">
             <ui:param name="manager" value="#{ugostiteljSearchController.searchParams}" />
             <h:panelGrid columns="1" style="width:100%;">
-               <p:outputLabel class="wh-search-label" for="ime"
-                              value="First name" />
+               <p:outputLabel class="wh-search-label" for="username"
+                              value="Korisnicko ime" />
                <p:inputText class="wh-select-input wh-select-info-item"
-                            id="ime" value="#{ugostiteljSearchController.searchParams.ime}" />
-            </h:panelGrid>
-            <h:panelGrid columns="1" style="width:100%;">
-               <p:outputLabel class="wh-search-label" for="prezime"
-                              value="Last name" />
-               <p:inputText class="wh-select-input wh-select-info-item"
-                            id="prezime" value="#{ugostiteljSearchController.searchParams.prezime}" />
+                            id="username" value="#{ugostiteljSearchController.searchParams.username}" />
             </h:panelGrid>
 
             <h:panelGrid columns="1" style="width:100%;">
                <p:outputLabel class="wh-search-label" for="ugostiteljTypes"
-                              value="Ugostitelj type" />
+                              value="Tip ugostitelja" />
                <p:selectCheckboxMenu style="max-width:100%; display:block;"
                                      multiple="true" styleClass="selectCheckboxMenuFixHeight"
                                      filter="true" filterMatchMode="contains"
                                      id="ugostiteljTypes" value="#{ugostiteljSearchController.searchParams.ugostiteljTypes}">
-                  <f:selectItems value="#{enums.ugostiteljTypes}" />
+                   <f:selectItems value="#{enums.allUgostiteljTypes.entrySet()}" var="entry"
+                                  itemValue="#{entry.key}" itemLabel="#{entry.value}"/>
                </p:selectCheckboxMenu>
             </h:panelGrid>
          </h:panelGrid>
@@ -38,56 +33,62 @@
    <h:panelGrid columns="2" style="width: 100%;">
 
       <h:panelGrid columns="5">
-         <p:commandButton value="Search"
+         <p:commandButton value="Pretraga"
                           update="centralForm" action="#{ugostiteljSearchController.search()}"
-                          icon="fa fa-fw fa-search" />
-         <p:commandButton value="Reset"
+                          icon="fa fa-fw fa-search"
+                          style="align-content: center"/>
+         <p:commandButton value="Resetuj"
                           update="centralForm"
                           action="#{ugostiteljSearchController.reset()}"
                           icon="fa fa-fw fa-refresh"
-                          process="@this">
+                          process="@this"
+                          style="align-content: center">
             <p:resetInput target="centralForm"/>
          </p:commandButton>
 
-         <p:outputLabel value="Max results" />
+         <p:outputLabel value="Maksimalan broj" />
          <p:selectOneMenu id="selectOneMaxResultId"
                           value="#{ugostiteljSearchController.searchParams.maxResults}"
                           style="min-width: 120px;">
             <f:selectItems value="#{enums.maxResults}" />
          </p:selectOneMenu>
          <p:outputLabel
-                 value="Showing: #{ugostiteljSearchController.results.totalResultCount > ugostiteljSearchController.searchParams.maxResults ? (ugostiteljSearchController.searchParams.maxResults eq -1 ? ugostiteljSearchController.results.totalResultCount : ugostiteljSearchController.searchParams.maxResults) : ugostiteljSearchController.results.totalResultCount} of #{ugostiteljSearchController.results.totalResultCount}"
+                 value="Prikaz: #{ugostiteljSearchController.results.totalResultCount > ugostiteljSearchController.searchParams.maxResults ? (ugostiteljSearchController.searchParams.maxResults eq -1 ? ugostiteljSearchController.results.totalResultCount : ugostiteljSearchController.searchParams.maxResults) : ugostiteljSearchController.results.totalResultCount} of #{ugostiteljSearchController.results.totalResultCount}"
                  rendered="#{ugostiteljSearchController.results.totalResultCount gt 0 }" />
-         <p:outputLabel value="No records found"
+         <p:outputLabel value="Nema ugostitelja po datim parametrima."
                         rendered="#{ugostiteljSearchController.results.totalResultCount eq 0 and ugostiteljSearchController.results.list.size() eq 0}" />
       </h:panelGrid>
    </h:panelGrid>
     <p:dataTable id="searchTable"
                  var="item"
                  value="#{ugostiteljSearchController.results.list}"
-                 emptyMessage="No records found"
+                 emptyMessage="Nema ugostitelja po datim parametrima."
                  style="width: 100%;word-wrap: break-word"
                  rows="10"
                  rowsPerPageTemplate="5,10,15,20"
                  paginator="#{true}"
                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}">
 
-        <p:column headerText="Username" sortBy="#{item.username}">
+        <p:column headerText="Korisnicko ime" sortBy="#{item.username}">
             <ui:include src="/link/ugostiteljLink.xhtml" >
                 <ui:param name="username" value="#{item.username}" />
             </ui:include>
         </p:column>
 
-        <p:column headerText="Ugostitelj type" sortBy="#{item.ugostiteljType}">
-            <h:outputText value="#{item.ugostiteljType.name()}" />
+        <p:column headerText="Tip ugostitelja" sortBy="#{item.tipUgostitelja}">
+            <h:outputText value="#{item.tipUgostitelja.key}" />
         </p:column>
 
-        <p:column headerText="First name" sortBy="#{item.ime}">
+        <p:column headerText="Ime" sortBy="#{item.ime}">
             <h:outputText value="#{item.ime}" />
         </p:column>
 
-        <p:column headerText="Last name" sortBy="#{item.prezime}">
+        <p:column headerText="Prezime" sortBy="#{item.prezime}">
             <h:outputText value="#{item.prezime}" />
+        </p:column>
+
+        <p:column headerText="Naziv Firme/Ustanove" sortBy="#{item.naziv}">
+            <h:outputText value="#{item.naziv}" />
         </p:column>
 
     </p:dataTable>

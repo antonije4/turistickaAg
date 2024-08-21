@@ -61,6 +61,6 @@ public class CategorizationReviewController implements Serializable {
         }
 
         ugostiteljskiObjekatDomainHelper.updateUgostiteljskiObjekat(ugostiteljskiObjekat);
-        messageController.showInfoMessage(MessageType.ShortLiveMessage, "Successfully reviewed categorization request for ugostiteljski objekat "+ ugostiteljskiObjekat.getNaziv());
+        messageController.showInfoMessage(MessageType.ShortLiveMessage, "Uspesno pregledan zahtev za kategorizaciju objekta: "+ ugostiteljskiObjekat.getNaziv());
     }
 }

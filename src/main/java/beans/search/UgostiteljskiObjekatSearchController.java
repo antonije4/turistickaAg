@@ -1,5 +1,6 @@
 package beans.search;
 
+import entities.Ugostitelj;
 import entities.UgostiteljskiObjekat;
 import lombok.Getter;
 import lombok.Setter;
@@ -44,5 +45,9 @@ public class UgostiteljskiObjekatSearchController implements SearchController, S
     @Override
     public ResultList<?> getResults() {
         return results;
+    }
+
+    public boolean isUgostiteljOwner(Ugostitelj ugostitelj, UgostiteljskiObjekat ugostiteljskiObjekat) {
+        return ugostitelj.getUsername().equals(ugostiteljskiObjekat.getUgostitelj().getUsername());
     }
 }

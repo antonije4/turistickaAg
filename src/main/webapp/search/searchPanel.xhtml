@@ -40,7 +40,7 @@
                 <f:selectItems value="#{manager.maxResults}" />
             </p:selectOneMenu>
             <p:outputLabel
-                    value="Showing: #{manager.results.totalResultCount > manager.searchParams.maxResults ? (manager.searchParams.maxResults eq -1 ? manager.results.totalResultCount : manager.searchParams.maxResults) : manager.results.totalResultCount} of #{manager.results.totalResultCount}"
+                    value="P: #{manager.results.totalResultCount > manager.searchParams.maxResults ? (manager.searchParams.maxResults eq -1 ? manager.results.totalResultCount : manager.searchParams.maxResults) : manager.results.totalResultCount} of #{manager.results.totalResultCount}"
                     rendered="#{manager.results.totalResultCount gt 0 }" />
             <p:outputLabel value="No records found"
                            rendered="#{manager.results.totalResultCount eq 0 and manager.results.list.size() eq 0}" />

@@ -12,6 +12,7 @@ public class UgostiteljDTO extends UserDTO{
     private UgostiteljType tipUgostitelja;
     private String ime;
     private String prezime;
+    private String naziv;
     private List<UgostiteljskiObjekatDTO> ugostiteljskiObjekti;
 
     public UgostiteljDTO() {

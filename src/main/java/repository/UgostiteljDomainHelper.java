@@ -30,6 +30,7 @@ public class UgostiteljDomainHelper extends DomainHelper {
                 .from(qUgostitelj);
 
         addFilter(query, ugostiteljSearchParams.getUgostiteljTypes(), qUgostitelj.tipUgostitelja::in);
+        addFilter(query, ugostiteljSearchParams.getUsername(), qUgostitelj.username::eq);
         List<Ugostitelj> resultList = query.fetch();
         return ResultList.create(resultList, resultList.size());
     }

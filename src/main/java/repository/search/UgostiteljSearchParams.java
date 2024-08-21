@@ -9,13 +9,11 @@ import java.util.List;
 @Getter
 @Setter
 public class UgostiteljSearchParams extends SearchParams{
-    private String ime;
-    private String prezime;
+    private String username;
     private List<UgostiteljType> ugostiteljTypes;
 
     public void reset() {
-        ime = null;
-        prezime = null;
+        username = null;
         ugostiteljTypes.clear();
     }
 }

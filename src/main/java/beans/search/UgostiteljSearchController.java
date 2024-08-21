@@ -37,7 +37,7 @@ public class UgostiteljSearchController implements SearchController, Serializabl
         ResultList<Ugostitelj> ugostiteljResultList = ugostiteljDomainHelper.search(searchParams);
         ResultList<UgostiteljDTO> ugostiteljDTOResultList = new ResultList<>();
         ugostiteljDTOResultList.setTotalResultCount(ugostiteljResultList.getTotalResultCount());
-        ugostiteljDTOResultList.setList(UgostiteljMapper.INSTANCE.mapUgostiteljListToDTOList(ugostiteljResultList.getList()));
+        ugostiteljDTOResultList.setList(UgostiteljMapper.INSTANCE.mapUgostiteljList(ugostiteljResultList.getList()));
         results = ugostiteljDTOResultList;
     }
 

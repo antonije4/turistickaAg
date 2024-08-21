@@ -2,9 +2,7 @@ package enums;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
@@ -13,6 +11,7 @@ import javax.faces.model.SelectItem;
 import javax.inject.Named;
 
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 @Named("enums")
 @SessionScoped
@@ -23,6 +22,10 @@ public class EnumsSelectItems implements Serializable {
 	
 	@Getter
 	private List<SelectItem> ugostiteljTypes;
+	@Getter @Setter
+	private Map<UgostiteljType, String> allUgostiteljTypes = Arrays.stream(UgostiteljType.values()).collect(Collectors.toMap(ugostiteljType -> ugostiteljType, UgostiteljType::getKey));
+	@Getter @Setter
+	private Map<UgostiteljskiObjekatTip, String> allUgostiteljskiObjekatTypes = Arrays.stream(UgostiteljskiObjekatTip.values()).collect(Collectors.toMap(tip -> tip, UgostiteljskiObjekatTip::getKey));
 	@Getter
 	private List<SelectItem> maxResults;
 

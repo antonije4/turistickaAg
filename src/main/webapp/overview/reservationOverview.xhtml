@@ -35,6 +35,14 @@
                     <ui:param name="id" value="#{reservationOverviewController.rezervacija.ugostiteljskiObjekat.id}" />
                 </ui:include>
 
+                <p:outputLabel value="Turista: "/>
+                <ui:include src="/link/touristLink.xhtml" >
+                    <ui:param name="username" value="#{reservationOverviewController.rezervacija.turista.username}" />
+                </ui:include>
+
+                <p:outputLabel value="Broj gostiju: "/>
+                <p:inputText disabled="#{!reservationOverviewController.inputEnabled}" value="#{reservationOverviewController.rezervacija.brojLjudi}"/>
+
                 <p:outputLabel value="Datum rezervacije: "/>
                 <p:datePicker disabled="#{!reservationOverviewController.inputEnabled}" id="dates" selectionMode="range" value="#{reservationOverviewController.dateRange}" readonlyInput="true"/>
 
